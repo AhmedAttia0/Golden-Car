@@ -7,7 +7,7 @@ members: -Ahmed Attia Abdelfattah\
 project name: Golden-Car
 
 description:\
-Golden Car is a car rental website that lets customers browse cars, view details, and book online. It includes an Admin Dashboard for managing cars and reservations.\ Built to scale with future features like search, payments, and calendar availability.
+Golden Car is a car rental website that lets customers browse cars, view details, and book online. It includes an Admin Dashboard for managing cars and reservations. Built to scale with future features like search, payments, and calendar availability.
 
 objective:\
 The objective of Golden Car is to provide a digital platform that modernizes and simplifies the traditional car rental process. The website aims to:\
