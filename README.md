@@ -1,6 +1,6 @@
-members: -Ahmed Attia Abdelfattah
-         -Hassan Mohamed Fathy
-         -Mostafa Mohamed Zaki
+members: -Ahmed Attia Abdelfattah\
+         -Hassan Mohamed Fathy\
+         -Mostafa Mohamed Zaki\
          -Yousef Nader Sayed
          -Abdallah Mahmoud ismael
 
