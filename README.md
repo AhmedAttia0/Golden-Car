@@ -1,8 +1,8 @@
 members: -Ahmed Attia Abdelfattah\
          -Hassan Mohamed Fathy\
          -Mostafa Mohamed Zaki\
-         -Yousef Nader Sayed
-         -Abdallah Mahmoud ismael
+         -Yousef Nader Sayed\
+         -Abdallah Mahmoud ismael\
 
 project name: Golden-Car
 
