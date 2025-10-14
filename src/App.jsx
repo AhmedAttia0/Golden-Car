@@ -10,12 +10,62 @@ import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
 import Header from "./components/Header/Header";
 const App = () => {
+  const carsList = [
+    {
+      id: 1,
+      price: 50,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "اوتوماتيكي",
+      hasAirConditioner: true,
+    },
+    {
+      id: 2,
+      price: 20,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "يدوي",
+      hasAirConditioner: true,
+    },
+    {
+      id: 3,
+      price: 100,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "اوتوماتيكي",
+      hasAirConditioner: true,
+    },
+    {
+      id: 4,
+      price: 15,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "اوتوماتيكي",
+      hasAirConditioner: false,
+    },
+    {
+      id: 5,
+      price: 20,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "اوتوماتيكي",
+      hasAirConditioner: true,
+    },
+    {
+      id: 6,
+      price: 15,
+      name: "Toyota Camry",
+      Category: "Sedan",
+      Transmission: "اوتوماتيكي",
+      hasAirConditioner: false,
+    },
+  ];
   return (
     <div>
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/cars" element={<Cars />} />
+        <Route path="/cars" element={<Cars carsList={carsList} />} />
         <Route path="/CarDetails" element={<Details />} />
         <Route path="/booking" element={<BookingRequest />} />
         <Route path="/about" element={<About />} />
