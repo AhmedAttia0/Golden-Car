@@ -6,7 +6,7 @@ import CarCard from "../../components/carCard/CarCard";
 import { TbCarSuv } from "react-icons/tb";
 
 const Cars = ({ carsList }) => {
-  const [showFilterMobile, setShowFilterMobile] = useState(false);
+  
   return (
     <div>
       <h2 className="font-bold text-4xl text-center mt-[3.5rem]">
@@ -55,6 +55,7 @@ export default Cars;
 
 // import Filter from "../../components/Filter/Filter";
 // import CarCard from "../../components/carCard/CarCard";
+// const [showFilterMobile, setShowFilterMobile] = useState(false);
 /*  fillter and cards
 <div className="md:hidden flex justify-center my-4 px-4">
         <button
