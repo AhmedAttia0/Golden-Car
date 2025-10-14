@@ -30,9 +30,9 @@ const Header = () => {
         <Typography
           as={Link}
           to="/"
-          className="flex items-center transition-colors relative after:content-[''] after:absolute  after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full"
+          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute  after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full"
         >
-          Home
+          الرئيسية
         </Typography>
       </Typography>
       <Typography
@@ -44,9 +44,9 @@ const Header = () => {
         <Typography
           as={Link}
           to="/cars"
-          className="flex items-center transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
         >
-          Vehicles
+          سياراتنا
         </Typography>
       </Typography>
       <Typography
@@ -57,10 +57,10 @@ const Header = () => {
       >
         <Typography
           as={Link}
-          to="/cars"
-          className="flex items-center transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          to="/CarDetails"
+          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
         >
-          Details
+          التفاصيل
         </Typography>
       </Typography>
       <Typography
@@ -72,9 +72,9 @@ const Header = () => {
         <Typography
           as={Link}
           to="/about"
-          className="flex items-center transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
         >
-          About Us
+          من نحن
         </Typography>
       </Typography>
       <Typography
@@ -86,9 +86,9 @@ const Header = () => {
         <Typography
           as={Link}
           to="/contact"
-          className="flex items-center transition-colors relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
         >
-          Contact Us
+          تواصل معنا
         </Typography>
       </Typography>
     </ul>
@@ -99,7 +99,7 @@ const Header = () => {
         <Typography
           as={Link}
           to="/"
-          className="mr-4 flex items-center cursor-pointer py-1.5 font-medium"
+          className="mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
         >
           <IoCarSportSharp className="text-4xl" />
           <span className="ml-1 text-lg font-semibold">Golden Car</span>
@@ -113,7 +113,7 @@ const Header = () => {
                 size="sm"
                 className="hidden lg:inline-block"
               >
-                <span>Log In</span>
+                <span>تسجيل الدخول</span>
               </Button>
             </Typography>
             <Typography as={Link} to="/register">
@@ -121,7 +121,7 @@ const Header = () => {
                 size="sm"
                 className="hidden lg:inline-block bg-[#5937E0] hover:bg-[#5937e0ec] "
               >
-                <span>Sign in</span>
+                <span>إنشاء حساب</span>
               </Button>
             </Typography>
           </div>
@@ -169,7 +169,7 @@ const Header = () => {
         <div className="flex items-center gap-x-1">
           <Typography as={Link} to="/login" className="w-full">
             <Button fullWidth variant="text" size="sm">
-              <span>Log In</span>
+              <span>تسجيل الدخول</span>
             </Button>
           </Typography>
           <Typography as={Link} to="/register" className="w-full">
@@ -178,7 +178,7 @@ const Header = () => {
               className="bg-[#5937E0] hover:bg-[#5937e0ec]"
               size="sm"
             >
-              <span>Sign in</span>
+              <span>إنشاء حساب</span>
             </Button>
           </Typography>
         </div>
