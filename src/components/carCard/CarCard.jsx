@@ -3,7 +3,7 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  Typography,
+  
   Button,
 } from "@material-tailwind/react";
 import { BsFillFuelPumpFill } from "react-icons/bs";
@@ -33,7 +33,7 @@ const CarCard = () => {
             </div>
           </div>
 
-          <Typography variant="small" color="gray" className="font-normal opacity-75">
+          
             <div className="flex gap-5 justify-center mt-6">
               <div className="flex gap-1 items-center">
                 <TbManualGearbox className="text-[#5937E0]" />
@@ -48,7 +48,7 @@ const CarCard = () => {
                 <h1 className="font-bold text-sm">مكيف الهواء</h1>
               </div>
             </div>
-          </Typography>
+        
         </CardBody>
 
         <CardFooter className="pt-0">
