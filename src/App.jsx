@@ -8,9 +8,11 @@ import Contact from "./pages/contact/Contact";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
+import Header from "./components/Header/Header";
 const App = () => {
   return (
     <div>
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cars" element={<Cars />} />
