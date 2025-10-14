@@ -14,18 +14,18 @@ const CarDetails = () => {
           <h2 className="">
             <span className="text-[#5937E0] font-bold text-xl">$25</span>/day
           </h2>
-          <img src="./../../../public/defaultcar.png" className="w-80" />
+          <img src="/defaultcar.png" className="w-80" />
           <div className="flex w-1/3 justify-center  gap-3 ">
             <img
-              src="./../../../public/1.png"
+              src="/1.png"
               className="w-20 h-16 rounded-md"
             />
             <img
-              src="./../../../public/2.png"
+              src="/2.png"
               className="w-20 h-16 rounded-md"
             />
             <img
-              src="./../../../public/3.png"
+              src="/3.png"
               className="w-20 h-16 rounded-md"
             />
           </div>
