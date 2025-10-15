@@ -69,7 +69,7 @@ const CarDetails = () => {
             <h2>500 كم</h2>
           </div>
 
-          <div className="flex justify-center w-full mt-2">
+          <div className="flex justify-center  md:justify-start  w-full mt-2">
             <button className="bg-[#5937E0] text-white rounded-md w-40 h-10 hover:bg-[#452cb8] transition-all">
               احجز سيارة
             </button>

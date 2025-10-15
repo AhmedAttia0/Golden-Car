@@ -26,8 +26,8 @@ const CarCard = ({
         >
           <img
             src="/defaultcar.png"
-            alt="car"
-            className="h-full w-full object-cover rounded-t-xl transform transition-transform duration-500 group-hover:scale-110"
+            alt="card-image"
+            className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
           />
         </CardHeader>
 
@@ -38,24 +38,6 @@ const CarCard = ({
               /اليوم
             </h2>
             <div className="flex flex-col items-end">
-              <h1 className="font-bold text-xl">Mercedes</h1>
-              <h3>sedan</h3>
-            </div>
-          </div>
-
-          <div className="flex gap-5 justify-center mt-6">
-            <div className="flex gap-1 items-center">
-              <TbManualGearbox className="text-[#5937E0]" />
-              <h1 className="font-bold text-sm">آلي</h1>
-            </div>
-            <div className="flex gap-1 items-center">
-              <BsFillFuelPumpFill className="text-[#5937E0]" />
-              <h1 className="font-bold text-sm">PB-95</h1>
-            </div>
-            <div className="flex gap-1 items-center">
-              <FaSnowflake className="text-[#5937E0]" />
-              <h1 className="font-bold text-sm">مكيف الهواء</h1>
-              =======
               <h1 className="font-bold text-xl transition-colors group-hover:text-[#5937E0]">
                 {name}
               </h1>
