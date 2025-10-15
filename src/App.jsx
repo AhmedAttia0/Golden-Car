@@ -22,6 +22,7 @@ const App = () => {
         <Route path="/register" element={<SignUp />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      
     </div>
   );
 };

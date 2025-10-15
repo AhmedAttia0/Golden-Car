@@ -1,8 +1,17 @@
-import React from 'react'
+
+import First from './components/first_section/First'
+import Second from './components/second_section/Second'
+import Third from './components/thrid-section/Third'
 
 const Contact = () => {
   return (
-    <div>Contact</div>
+    <>
+      <First/>
+      <Second/>
+      <Third/>
+      
+      
+    </>
   )
 }
 
