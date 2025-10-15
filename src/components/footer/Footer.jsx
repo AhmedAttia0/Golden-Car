@@ -1,3 +1,4 @@
+
 import { Typography } from "@material-tailwind/react";
 import { Logo } from "../../components/Header/Header.jsx";
 import { CiLocationOn } from "react-icons/ci";
