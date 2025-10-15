@@ -96,14 +96,7 @@ const Header = () => {
   return (
     <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none px-4 py-2 lg:px-8 lg:py-4 shadow-none">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Typography
-          as={Link}
-          to="/"
-          className="mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
-        >
-          <IoCarSportSharp className="text-4xl" />
-          <span className="ml-1 text-lg font-semibold">Golden Car</span>
-        </Typography>
+        <Logo />
         <div className="mr-4 hidden lg:block">{navList}</div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-x-1">
@@ -186,5 +179,18 @@ const Header = () => {
     </Navbar>
   );
 };
+
+export function Logo() {
+  return (
+    <Typography
+      as={Link}
+      to="/"
+      className="mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
+    >
+      <IoCarSportSharp className="text-4xl" />
+      <span className="ml-1 text-lg font-semibold">Golden Car</span>
+    </Typography>
+  );
+}
 
 export default Header;
