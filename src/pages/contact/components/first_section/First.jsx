@@ -5,7 +5,7 @@ function First() {
   return (
     <div className="md:p-12 p-5 mb-12">
       <div className="text-center flex flex-col items-center gap-4">
-        <h1 className="text-[2.8em] font-bold">من نحن </h1>
+        <h1 className="text-[2.8em] font-bold"> تواصل معنا </h1>
         <Breadcrumbs className="mb-4">
           <Link to="/" className="opacity-60">
             <svg
