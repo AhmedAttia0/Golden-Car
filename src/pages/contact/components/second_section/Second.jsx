@@ -2,7 +2,7 @@
 
 function Second() {
   return (
-    <div className="flex justify-center gap-[4.5em] flex-wrap mb-12">
+    <div className="flex justify-start md:justify-center gap-[4.5em] flex-wrap mb-12">
         <section className="flex gap-2 ">
             <img src="phone.png" alt="phone" className="self-start" />
             <div>
