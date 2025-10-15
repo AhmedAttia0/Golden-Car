@@ -3,7 +3,6 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  
   Button,
 } from "@material-tailwind/react";
 import { BsFillFuelPumpFill } from "react-icons/bs";
@@ -16,8 +15,8 @@ const CarCard = () => {
       <Card className="w-80 shadow-md rounded-xl">
         <CardHeader shadow={false} floated={false} className="h-56">
           <img
-            src="./../../../public/defaultcar.png"
-            alt="card-image"
+            src="/defaultcar.png"
+            alt="car"
             className="h-full w-full object-cover rounded-t-xl"
           />
         </CardHeader>
@@ -28,27 +27,25 @@ const CarCard = () => {
               <span className="text-[#5937E0] font-bold text-xl">$25</span>/اليوم
             </h2>
             <div className="flex flex-col items-end">
-              <h1 className="font-bold text-xl">mercedes</h1>
-              <h3 className="justify-end">sedan</h3>
+              <h1 className="font-bold text-xl">Mercedes</h1>
+              <h3>sedan</h3>
             </div>
           </div>
 
-          
-            <div className="flex gap-5 justify-center mt-6">
-              <div className="flex gap-1 items-center">
-                <TbManualGearbox className="text-[#5937E0]" />
-                <h1 className="font-bold text-sm">آلي</h1>
-              </div>
-              <div className="flex gap-1 items-center">
-                <BsFillFuelPumpFill className="text-[#5937E0]" />
-                <h1 className="font-bold text-sm">pb-95</h1>
-              </div>
-              <div className="flex gap-1 items-center">
-                <FaSnowflake className="text-[#5937E0]" />
-                <h1 className="font-bold text-sm">مكيف الهواء</h1>
-              </div>
+          <div className="flex gap-5 justify-center mt-6">
+            <div className="flex gap-1 items-center">
+              <TbManualGearbox className="text-[#5937E0]" />
+              <h1 className="font-bold text-sm">آلي</h1>
             </div>
-        
+            <div className="flex gap-1 items-center">
+              <BsFillFuelPumpFill className="text-[#5937E0]" />
+              <h1 className="font-bold text-sm">PB-95</h1>
+            </div>
+            <div className="flex gap-1 items-center">
+              <FaSnowflake className="text-[#5937E0]" />
+              <h1 className="font-bold text-sm">مكيف الهواء</h1>
+            </div>
+          </div>
         </CardBody>
 
         <CardFooter className="pt-0">

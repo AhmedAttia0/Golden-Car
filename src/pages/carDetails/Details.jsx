@@ -131,12 +131,12 @@ const CarDetails = () => {
       <div className="flex justify-center mt-28">
         <h1 className="font-bold text-3xl"> العربيات الاخري</h1>
       </div>
-      <div className="flex gap-24 justify-center mt-10">
+      <div className="flex gap-6 justify-center mt-10">
         <CarCard />
         <CarCard />
         <CarCard />
       </div>
-      <div className="flex gap-24 justify-center mt-10">
+      <div className="flex gap-6 justify-center mt-10">
         <CarCard />
         <CarCard />
         <CarCard />
