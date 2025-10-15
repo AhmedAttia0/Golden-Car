@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Last() {
   return (
     <div className="p-10 md:h-[80vh] h-auto">
-      <div className="p-12 bg-[url('last.png')] bg-cover bg-center h-[100%] rounded-xl  ">
+      <div className="p-12 bg-[url('/last.png')] bg-cover bg-center h-[100%] rounded-xl  ">
         <div className="flex flex-col items-end gap-6">
           <h1 className="text-white font-bold text-3xl  self-start md:self-end">
             هل تبحث علي سياره ؟
