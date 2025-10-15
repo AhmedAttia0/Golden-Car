@@ -9,6 +9,7 @@ import Login from "./pages/login/Login";
 import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
 import Header from "./components/Header/Header";
+import Footer from "./components/footer/Footer";
 const App = () => {
   const carsList = [
     {
@@ -61,19 +62,22 @@ const App = () => {
     },
   ];
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/cars" element={<Cars carsList={carsList} />} />
-        <Route path="/CarDetails" element={<Details />} />
-        <Route path="/booking" element={<BookingRequest />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<SignUp />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <main className="flex-1">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cars" element={<Cars carsList={carsList} />} />
+          <Route path="/CarDetails" element={<Details />} />
+          <Route path="/booking" element={<BookingRequest />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUp />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </main>
+      <Footer />
     </div>
   );
 };
