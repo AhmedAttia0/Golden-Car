@@ -185,7 +185,7 @@ export function Logo() {
     <Typography
       as={Link}
       to="/"
-      className="mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
+      className="md:mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
     >
       <IoCarSportSharp className="text-4xl" />
       <span className="ml-1 text-lg font-semibold">Golden Car</span>
