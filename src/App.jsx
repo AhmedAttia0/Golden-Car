@@ -9,6 +9,8 @@ import Login from "./pages/login/Login";
 import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
 const App = () => {
+  console.log("hello");
+
   return (
     <div>
       <Routes>
