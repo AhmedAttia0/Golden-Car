@@ -4,12 +4,13 @@ import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import CarCard from "../../components/carCard/CarCard";
 import { TbCarSuv } from "react-icons/tb";
+import { Outlet } from "react-router-dom";
 
 const Cars = ({ carsList }) => {
-  
   return (
-    <div>
-      <h2 className="font-bold text-4xl text-center mt-[3.5rem]">
+    <>
+      <Outlet />
+      <h2 className="font-bold text-4xl text-center mt-[4.5rem]">
         اختار سيارتك
       </h2>
       <div className="flex gap-5 flex-wrap justify-center my-6">
@@ -41,17 +42,22 @@ shadow-none"
         </Button>
       </div>
       <main className="container mx-auto px-4 mb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {carsList.map((car) => (
-            <CarCard key={car.id} {...car} />
-          ))}
-        </div>
+        <CarsList carsList={carsList} />
       </main>
-    </div>
+    </>
   );
 };
 
 export default Cars;
+export function CarsList({ carsList }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+      {carsList.map((car) => (
+        <CarCard key={car.id} {...car} />
+      ))}
+    </div>
+  );
+}
 
 // import Filter from "../../components/Filter/Filter";
 // import CarCard from "../../components/carCard/CarCard";

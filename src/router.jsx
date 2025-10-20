@@ -4,7 +4,7 @@ import EmptyLayout from "./layouts/EmptyLayout";
 import App from "./App";
 import Home from "./pages/home/Home";
 import Cars from "./pages/cars/Cars";
-import Details from "./pages/carDetails/Details";
+import CarDetails from "./pages/carDetails/Details";
 import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
 import Login from "./pages/login/Login";
@@ -15,7 +15,7 @@ const carsList = [
   {
     id: 1,
     price: 50,
-    name: "Toyota Camry",
+    name: "BMW",
     Category: "Sedan",
     Transmission: "اوتوماتيكي",
     hasAirConditioner: true,
@@ -23,7 +23,7 @@ const carsList = [
   {
     id: 2,
     price: 20,
-    name: "Toyota Camry",
+    name: "Toyota",
     Category: "Sedan",
     Transmission: "يدوي",
     hasAirConditioner: true,
@@ -67,8 +67,13 @@ export const router = createBrowserRouter([
     element: <MainLayout />,
     children: [
       { index: true, element: <Home /> },
-      { path: "cars", element: <Cars carsList={carsList} /> },
-      { path: "CarDetails", element: <Details /> },
+      {
+        path: "cars",
+        element: <Cars carsList={carsList} />,
+        children: [
+          { path: ":id", element: <CarDetails carsList={carsList} /> },
+        ],
+      },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "login", element: <Login /> },
