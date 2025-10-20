@@ -5,17 +5,20 @@ import {
   CardFooter,
   Button,
 } from "@material-tailwind/react";
+import { useNavigate } from "react-router-dom";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { TbManualGearbox } from "react-icons/tb";
 import { FaSnowflake } from "react-icons/fa";
 
 const CarCard = ({
+  id,
   price = 25,
   name = "Mercedes",
   Category = "رياضية",
   Transmission = "اوتوماتيكي",
   hasAirConditioner = false,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className="container mx-auto px-4 mt-20 flex justify-center">
       <Card className="group shadow-lg rounded-xl w-full max-w-sm transition-all hover:shadow-[0_8px_30px_rgba(89,55,224,0.22),0_2px_8px_rgba(89,55,224,0.06)] hover:ring-1 hover:ring-[#5937E0]/20">
@@ -72,6 +75,13 @@ const CarCard = ({
             ripple={false}
             fullWidth={true}
             className="bg-div-purple text-white shadow-none hover:scale-105 transition-all"
+            onClick={() => {
+              navigate(`/cars/${id}`);
+              setTimeout(
+                () => window.scrollTo({ top: 0, left: 0, behavior: "smooth" }),
+                50
+              );
+            }}
           >
             عرض التفاصيل
           </Button>
