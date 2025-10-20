@@ -77,10 +77,6 @@ const CarCard = ({
             className="bg-div-purple text-white shadow-none hover:scale-105 transition-all"
             onClick={() => {
               navigate(`/cars/${id}`);
-              setTimeout(
-                () => window.scrollTo({ top: 0, left: 0, behavior: "smooth" }),
-                50
-              );
             }}
           >
             عرض التفاصيل
