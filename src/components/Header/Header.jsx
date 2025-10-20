@@ -57,20 +57,6 @@ const Header = () => {
       >
         <Typography
           as={Link}
-          to="/CarDetails"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
-        >
-          التفاصيل
-        </Typography>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Typography
-          as={Link}
           to="/about"
           className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
         >
