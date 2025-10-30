@@ -5,14 +5,33 @@ import { GiCarDoor } from "react-icons/gi";
 import { RiPinDistanceLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 const CarDetails = ({ carsList }) => {
   const { id } = useParams();
+
   const car = carsList.find((car) => car.id === Number(id));
   if (!car) {
     throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
   }
   const { Transmission, hasAirConditioner, name, price } = car;
+
+  const { Transmission, hasAirConditioner, name, price } = carsList.find(
+    (car) => car.id === Number(id)
+  );
+
+  const [mainImage, setMainImage] = useState("/defaultcar.png");
+  const [carImages, setCarImages] = useState(["/1.png", "/2.png", "/3.png"]);
+
+  const switchimage = (img) => {
+    const newImages = carImages.map((image) =>
+      image === img ? mainImage : image
+    );
+    setCarImages(newImages);
+    setMainImage(img);
+  };
+
+
   return (
     <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start mx-auto mt-5">
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4">
@@ -23,15 +42,20 @@ const CarDetails = ({ carsList }) => {
         </h2>
 
         <img
-          src="/defaultcar.png"
+          src={mainImage}
           className="w-80 md:w-96 rounded-lg"
           alt="car"
         />
 
         <div className="flex flex-wrap justify-center gap-3 mt-4">
-          <img src="/1.png" className="w-20 h-16 rounded-md" />
-          <img src="/2.png" className="w-20 h-16 rounded-md" />
-          <img src="/3.png" className="w-20 h-16 rounded-md" />
+          {carImages.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              className="w-20 h-16 rounded-md cursor-pointer border-2 transition-all hover:scale-105"
+              onClick={() => switchimage(img)}
+            />
+          ))}
         </div>
       </div>
 
