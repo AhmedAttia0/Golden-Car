@@ -1,6 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import EmptyLayout from "./layouts/EmptyLayout";
 import Home from "./pages/home/Home";
 import Cars from "./pages/cars/Cars";
 import CarDetails from "./pages/carDetails/Details";
@@ -63,7 +62,8 @@ const carsList = [
 
 export const router = createBrowserRouter([
   {
-    element: <MainLayout />,
+    Component: MainLayout,
+    ErrorBoundary: NotFound,
     children: [
       { index: true, element: <Home /> },
       {
@@ -78,9 +78,5 @@ export const router = createBrowserRouter([
       { path: "login", element: <Login /> },
       { path: "signUp", element: <SignUp /> },
     ],
-  },
-  {
-    element: <EmptyLayout />,
-    children: [{ path: "*", element: <NotFound /> }],
   },
 ]);
