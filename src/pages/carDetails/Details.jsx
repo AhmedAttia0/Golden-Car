@@ -9,6 +9,13 @@ import { useState } from "react";
 
 const CarDetails = ({ carsList }) => {
   const { id } = useParams();
+
+  const car = carsList.find((car) => car.id === Number(id));
+  if (!car) {
+    throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
+  }
+  const { Transmission, hasAirConditioner, name, price } = car;
+
   const { Transmission, hasAirConditioner, name, price } = carsList.find(
     (car) => car.id === Number(id)
   );
@@ -23,6 +30,7 @@ const CarDetails = ({ carsList }) => {
     setCarImages(newImages);
     setMainImage(img);
   };
+
 
   return (
     <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start mx-auto mt-5">
