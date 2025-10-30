@@ -8,10 +8,11 @@ import { useParams } from "react-router-dom";
 
 const CarDetails = ({ carsList }) => {
   const { id } = useParams();
-  const { Transmission, hasAirConditioner, name, price } = carsList.find(
-    (car) => car.id === Number(id)
-  );
-
+  const car = carsList.find((car) => car.id === Number(id));
+  if (!car) {
+    throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
+  }
+  const { Transmission, hasAirConditioner, name, price } = car;
   return (
     <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start mx-auto mt-5">
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4">
