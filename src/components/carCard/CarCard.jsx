@@ -5,23 +5,33 @@ import {
   CardFooter,
   Button,
 } from "@material-tailwind/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { TbManualGearbox } from "react-icons/tb";
 import { FaSnowflake } from "react-icons/fa";
 
 const CarCard = ({
-  id,
-  price = 25,
-  name = "Mercedes",
-  Category = "رياضية",
-  Transmission = "اوتوماتيكي",
-  hasAirConditioner = false,
+  active,
+  car: {
+    id,
+    price = 25,
+    name = "Mercedes",
+    Category = "رياضية",
+    Transmission = "اوتوماتيكي",
+    hasAirConditioner = false,
+  },
 }) => {
   const navigate = useNavigate();
+
   return (
     <div className="container mx-auto px-4 mt-20 flex justify-center">
-      <Card className="group shadow-lg rounded-xl w-full max-w-sm transition-all hover:shadow-[0_8px_30px_rgba(89,55,224,0.22),0_2px_8px_rgba(89,55,224,0.06)] hover:ring-1 hover:ring-[#5937E0]/20">
+      <Card
+        className={`group shadow-lg rounded-xl w-full max-w-sm transition-all hover:shadow-[0_8px_30px_rgba(89,55,224,0.22),0_2px_8px_rgba(89,55,224,0.06)] hover:ring-1 hover:ring-[#5937E0]/20 ${
+          active
+            ? "ring-2 ring-[#5937E0]/30 shadow-[0_8px_30px_rgba(89,55,224,0.22),0_2px_8px_rgba(89,55,224,0.06)] "
+            : ""
+        }`}
+      >
         <CardHeader
           shadow={false}
           floated={false}
@@ -48,19 +58,19 @@ const CarCard = ({
             </div>
           </div>
 
-          <div className="flex gap-5 mt-6">
-            <div className="flex gap-1 items-center">
-              <TbManualGearbox className="text-[#5937E0]" />
+          <div className="flex justify-between gap-5 mt-6">
+            <div className="flex flex-col lg:flex-row  gap-1 items-center">
+              <TbManualGearbox className="text-[#5937E0] justify-center" />
               <h1 className="font-bold text-lg">{Transmission}</h1>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex flex-col lg:flex-row self-center gap-1 items-center">
               <BsFillFuelPumpFill className="text-[#5937E0]" />
               <h1 className="font-bold text-lg">pb-95</h1>
             </div>
-            <div className="flex gap-1 items-center">
+            <div className="flex flex-col lg:flex-row gap-1 items-center">
               <FaSnowflake className="text-[#5937E0]" />
               <h1
-                className={`font-bold text-lg ${
+                className={`font-bold text-lg  ${
                   !hasAirConditioner && "line-through"
                 }`}
               >
