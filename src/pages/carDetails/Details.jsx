@@ -6,8 +6,10 @@ import { RiPinDistanceLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useCars } from "../../context/CarsContext";
 
-const CarDetails = ({ carsList }) => {
+const CarDetails = () => {
+  const { carsList } = useCars();
   const { id } = useParams();
 
   const car = carsList.find((car) => car.id === Number(id));
@@ -15,10 +17,6 @@ const CarDetails = ({ carsList }) => {
     throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
   }
   const { Transmission, hasAirConditioner, name, price } = car;
-
-  const { Transmission, hasAirConditioner, name, price } = carsList.find(
-    (car) => car.id === Number(id)
-  );
 
   const [mainImage, setMainImage] = useState("/defaultcar.png");
   const [carImages, setCarImages] = useState(["/1.png", "/2.png", "/3.png"]);
@@ -31,7 +29,6 @@ const CarDetails = ({ carsList }) => {
     setMainImage(img);
   };
 
-
   return (
     <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start mx-auto mt-5">
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4">
@@ -41,11 +38,7 @@ const CarDetails = ({ carsList }) => {
           /day
         </h2>
 
-        <img
-          src={mainImage}
-          className="w-80 md:w-96 rounded-lg"
-          alt="car"
-        />
+        <img src={mainImage} className="w-80 md:w-96 rounded-lg" alt="car" />
 
         <div className="flex flex-wrap justify-center gap-3 mt-4">
           {carImages.map((img, index) => (
