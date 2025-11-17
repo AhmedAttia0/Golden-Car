@@ -5,7 +5,7 @@ import {
   CardFooter,
   Button,
 } from "@material-tailwind/react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { TbManualGearbox } from "react-icons/tb";
 import { FaSnowflake } from "react-icons/fa";
@@ -15,7 +15,7 @@ const CarCard = ({
   car: {
     id,
     price = 25,
-    name = "Mercedes",
+    brand = "Mercedes",
     Category = "رياضية",
     Transmission = "اوتوماتيكي",
     hasAirConditioner = false,
@@ -52,7 +52,7 @@ const CarCard = ({
             </h2>
             <div className="flex flex-col items-end">
               <h1 className="font-bold text-xl transition-colors group-hover:text-[#5937E0]">
-                {name}
+                {brand}
               </h1>
               <h3 className="justify-end">{Category}</h3>
             </div>

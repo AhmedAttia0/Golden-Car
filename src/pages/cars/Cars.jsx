@@ -1,14 +1,38 @@
-import { Outlet, useLocation, useMatch } from "react-router-dom";
-import { useCars } from "../../context/CarsContext";
+import { Outlet, useMatch, useSearchParams } from "react-router-dom";
 import Pagination from "./Pagination";
-import CarsList from "./CarsList";
 import Filteration from "./Filtertion";
+import CarsList from "./CarsList";
+import { useEffect, useReducer } from "react";
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "SET_ACTIVE":
+      return action.payload;
+    case "NEXT":
+      return state + 1;
+    case "PREV":
+      return state - 1;
+    case "INIT_PAGE":
+      return action.payload;
+    default:
+      return state;
+  }
+};
 
 const Cars = () => {
-  const { carsList } = useCars();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentPageFromUrl = parseInt(searchParams.get("page")) || 1;
+  const [currentPage, dispatch] = useReducer(reducer, currentPageFromUrl);
   const match = useMatch("/cars/:carId");
   const acitveCarId = match ? match.params.carId : null;
-
+  useEffect(() => {
+    if (!currentPage) setSearchParams({ page: currentPage });
+  }, [currentPage, setSearchParams]);
+  useEffect(() => {
+    if (currentPage !== currentPageFromUrl) {
+      dispatch({ type: "SET_ACTIVE", payload: currentPageFromUrl });
+    }
+  }, [currentPageFromUrl]);
   return (
     <>
       <Outlet />
@@ -17,10 +41,18 @@ const Cars = () => {
       </h2>
       <Filteration />
       <main className="container mx-auto px-4 mb-10">
-        <CarsList carsList={carsList} acitveCarId={acitveCarId} />
+        <CarsList
+          currentPage={currentPage}
+          limit={6}
+          acitveCarId={acitveCarId}
+        />
       </main>
       <div className="flex justify-center my-10">
-        <Pagination currentPage={1} totalPages={9} onPageChange={() => {}} />
+        <Pagination
+          totalPages={9}
+          currentPage={currentPage}
+          dispatch={dispatch}
+        />
       </div>
     </>
   );
