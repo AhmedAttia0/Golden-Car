@@ -6,20 +6,27 @@ import { RiPinDistanceLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { useCars } from "../../context/CarsContext";
-
+import { getCarById } from "../../Services/dataService";
+import { useQuery } from "@tanstack/react-query";
 const CarDetails = () => {
-  const { carsList } = useCars();
-  const { id } = useParams();
-
-  const car = carsList.find((car) => car.id === Number(id));
-  if (!car) {
-    throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
-  }
-  const { Transmission, hasAirConditioner, name, price } = car;
-
   const [mainImage, setMainImage] = useState("/defaultcar.png");
   const [carImages, setCarImages] = useState(["/1.png", "/2.png", "/3.png"]);
+  const { id } = useParams();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["car", id],
+    queryFn: async () => {
+      const response = await getCarById(id);
+
+      return response;
+    },
+    keepPreviousData: true,
+  });
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) {
+    throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
+  }
+  const { price, brand, Transmission, hasAirConditioner } = data;
 
   const switchimage = (img) => {
     const newImages = carImages.map((image) =>
@@ -32,7 +39,7 @@ const CarDetails = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-10 items-center lg:items-start mx-auto mt-5">
       <div className="w-full lg:w-1/2 flex flex-col items-center gap-4">
-        <h1 className="font-bold text-2xl text-center lg:text-left">{name}</h1>
+        <h1 className="font-bold text-2xl text-center lg:text-left">{brand}</h1>
         <h2 className="text-lg">
           <span className="text-[#5937E0] font-bold text-xl">${price}</span>
           /day
