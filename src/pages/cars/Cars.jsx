@@ -33,6 +33,12 @@ const Cars = () => {
       dispatch({ type: "SET_ACTIVE", payload: currentPageFromUrl });
     }
   }, [currentPageFromUrl]);
+   useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }, [currentPage]);
   return (
     <>
       <Outlet />
