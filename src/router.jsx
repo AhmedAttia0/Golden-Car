@@ -8,6 +8,8 @@ import Contact from "./pages/contact/Contact";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
+// import { carsLoader } from "./loaders/carsLoader";
+import { getCars } from "./Services/dataService";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,7 @@ export const router = createBrowserRouter([
       {
         path: "cars",
         element: <Cars />,
+        loader: getCars,
         children: [{ path: ":id", element: <CarDetails /> }],
       },
       { path: "about", element: <About /> },

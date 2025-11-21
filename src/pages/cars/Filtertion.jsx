@@ -2,35 +2,85 @@ import { Button } from "@material-tailwind/react";
 import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import { TbCarSuv } from "react-icons/tb";
-export default function Filteration() {
+
+const carCategories = [
+  {
+    key: "all",
+    label: "كل السيارات",
+    icon: null,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+  {
+    key: "sedan",
+    label: "Sedan",
+    icon: IoCarSportOutline,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+  {
+    key: "cabriolet",
+    label: "Cabriolet",
+    icon: IoCarSportOutline,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+  {
+    key: "pickup",
+    label: "Pickup",
+    icon: LiaTruckPickupSolid,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+  {
+    key: "suv",
+    label: "Suv",
+    icon: TbCarSuv,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+  {
+    key: "minivan",
+    label: "Minivan",
+    icon: IoCarSportOutline,
+    activeStyle: "bg-[#5937E0] text-white",
+    defaultStyle: "bg-white text-black",
+  },
+];
+export default function Filteration({
+  onFilter,
+  activeFilter,
+  filterKey = "category",
+}) {
   return (
     <div className="flex gap-5 flex-wrap justify-center my-6">
-      <Button
-        className="bg-[#5937E0] text-md flex rounded-2xl text-white hover:bg-[#5937E0] hover:text-white normal-case
-        shadow-none"
-      >
-        كل السيارات
-      </Button>
-      <Button className="rounded-2xl flex gap-1 font-medium items-center text-md bg-white hover:bg-[#5937E0] hover:text-white normal-case  text-black text shadow-none">
-        Sedan
-        <IoCarSportOutline className="text-xl" />
-      </Button>
-      <Button className="rounded-2xl flex gap-1 font-medium items-center text-md bg-white hover:bg-[#5937E0] hover:text-white normal-case  text-black text shadow-none">
-        Cabriolet
-        <IoCarSportOutline className="text-xl" />
-      </Button>
-      <Button className="rounded-2xl flex gap-1 font-medium items-center text-md bg-white hover:bg-[#5937E0] hover:text-white normal-case  text-black text shadow-none">
-        Pickup
-        <LiaTruckPickupSolid className="text-xl" />
-      </Button>
-      <Button className="rounded-2xl flex gap-1 font-medium items-center text-md bg-white hover:bg-[#5937E0] hover:text-white normal-case  text-black text shadow-none">
-        Suv
-        <TbCarSuv className="text-xl" />
-      </Button>
-      <Button className="rounded-2xl flex gap-1 font-medium items-center text-md bg-white hover:bg-[#5937E0] hover:text-white normal-case  text-black text shadow-none">
-        Minivan
-        <IoCarSportOutline className="text-xl" />
-      </Button>
+      {carCategories.map((category) => {
+        const isActive = activeFilter === category.key;
+        const activeClass = isActive
+          ? category.activeStyle
+          : category.defaultStyle;
+        const baseClass =
+          "rounded-2xl flex gap-1 font-medium items-center text-md normal-case shadow-none " +
+          "hover:bg-[#5937E0] hover:text-white";
+
+        const finalClass = `${baseClass} ${activeClass} ${
+          category.key === "all" ? "px-4 py-2" : "px-2 sm:px-4"
+        }`;
+
+        const IconComponent = category.icon;
+
+        return (
+          <Button
+            key={category.key}
+            onClick={() => onFilter(filterKey, category.key)}
+            className={finalClass}
+          >
+            {category.label}
+
+            {IconComponent && <IconComponent className="text-xl" />}
+          </Button>
+        );
+      })}
     </div>
   );
 }
