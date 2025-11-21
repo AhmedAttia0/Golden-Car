@@ -4,7 +4,6 @@ import { FaFlag } from "react-icons/fa";
 const NotFound = () => {
   const navigate = useNavigate();
   const error = useRouteError();
-  console.log("error:", error);
   return (
     <div className="h-screen mx-auto grid place-items-center text-center px-8">
       <div>

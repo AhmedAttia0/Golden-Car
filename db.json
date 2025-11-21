@@ -12,7 +12,7 @@
       "engine": "1.6L",
       "color": "White",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1001/img1.jpg"],
       "location": { "city": "Cairo", "area": "Nasr City" },
       "seller": { "id": "seller_32", "name": "Ahmed Khaled", "type": "Dealer" },
@@ -30,7 +30,7 @@
       "engine": "2.0L Turbo",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "فارهة/فاخرة",
+      "category": "sedan",
       "images": ["https://example.com/cars/1002/img1.jpg"],
       "location": { "city": "Giza", "area": "Dokki" },
       "seller": {
@@ -52,7 +52,7 @@
       "engine": "1.6L",
       "color": "Silver",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "minivan",
       "images": ["https://example.com/cars/1003/img1.jpg"],
       "location": { "city": "Alexandria", "area": "Smouha" },
       "seller": {
@@ -74,7 +74,7 @@
       "engine": "1.5L Turbo",
       "color": "Grey",
       "hasAirConditioner": true,
-      "Category": "فارهة/فاخرة",
+      "category": "sedan",
       "images": ["https://example.com/cars/1004/img1.jpg"],
       "location": { "city": "Cairo", "area": "Maadi" },
       "seller": {
@@ -96,7 +96,7 @@
       "engine": "1.6L Turbo",
       "color": "Red",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1005/img1.jpg"],
       "location": { "city": "Giza", "area": "6th October" },
       "seller": {
@@ -118,7 +118,7 @@
       "engine": "1.5L",
       "color": "Blue",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1006/img1.jpg"],
       "location": { "city": "Cairo", "area": "Heliopolis" },
       "seller": {
@@ -140,7 +140,7 @@
       "engine": "1.5L Turbo",
       "color": "Brown",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1007/img1.jpg"],
       "location": { "city": "Ismailia", "area": "City Center" },
       "seller": { "id": "seller_40", "name": "Mega Auto", "type": "Showroom" },
@@ -158,7 +158,7 @@
       "engine": "1.6L Turbo",
       "color": "Orange",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1008/img1.jpg"],
       "location": { "city": "Giza", "area": "Sheikh Zayed" },
       "seller": {
@@ -180,7 +180,7 @@
       "engine": "1.6L",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1009/img1.jpg"],
       "location": { "city": "Cairo", "area": "Zamalek" },
       "seller": {
@@ -202,7 +202,7 @@
       "engine": "1.6L",
       "color": "Grey",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1010/img1.jpg"],
       "location": { "city": "Alexandria", "area": "Miami" },
       "seller": {
@@ -224,7 +224,7 @@
       "engine": "1.4L Turbo",
       "color": "Silver",
       "hasAirConditioner": true,
-      "Category": "فارهة/فاخرة",
+      "category": "sedan",
       "images": ["https://example.com/cars/1011/img1.jpg"],
       "location": { "city": "Cairo", "area": "5th Settlement" },
       "seller": { "id": "seller_15", "name": "Samir Fouad", "type": "Dealer" },
@@ -242,7 +242,7 @@
       "engine": "3.6L V6",
       "color": "Red",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1012/img1.jpg"],
       "location": { "city": "Giza", "area": "Zayed" },
       "seller": {
@@ -264,7 +264,7 @@
       "engine": "1.2L",
       "color": "Yellow",
       "hasAirConditioner": true,
-      "Category": "هاتشباك",
+      "category": "sedan",
       "images": ["https://example.com/cars/1013/img1.jpg"],
       "location": { "city": "Suez", "area": "Arbaeen" },
       "seller": {
@@ -286,7 +286,7 @@
       "engine": "2.0L Turbo",
       "color": "White",
       "hasAirConditioner": true,
-      "Category": "فارهة/فاخرة",
+      "category": "sedan",
       "images": ["https://example.com/cars/1014/img1.jpg"],
       "location": { "city": "Cairo", "area": "Heliopolis" },
       "seller": {
@@ -308,7 +308,7 @@
       "engine": "1.5L",
       "color": "Blue",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1015/img1.jpg"],
       "location": { "city": "Alexandria", "area": "Luran" },
       "seller": {
@@ -330,7 +330,7 @@
       "engine": "1.5L",
       "color": "White",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1016/img1.jpg"],
       "location": { "city": "Giza", "area": "Mohandessin" },
       "seller": {
@@ -352,7 +352,7 @@
       "engine": "1.5L EcoBoost",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "هاتشباك",
+      "category": "sedan",
       "images": ["https://example.com/cars/1017/img1.jpg"],
       "location": { "city": "Cairo", "area": "Zamalek" },
       "seller": {
@@ -374,7 +374,7 @@
       "engine": "1.5L Turbo",
       "color": "Grey",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1018/img1.jpg"],
       "location": { "city": "Luxor", "area": "East Bank" },
       "seller": { "id": "seller_122", "name": "Valley Auto", "type": "Dealer" },
@@ -392,7 +392,7 @@
       "engine": "2.0L",
       "color": "Red",
       "hasAirConditioner": true,
-      "Category": "رياضية",
+      "category": "sedan",
       "images": ["https://example.com/cars/1019/img1.jpg"],
       "location": { "city": "Cairo", "area": "Nasr City" },
       "seller": {
@@ -414,7 +414,7 @@
       "engine": "2.0L Turbo",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "فارهة/فاخرة",
+      "category": "sedan",
       "images": ["https://example.com/cars/1020/img1.jpg"],
       "location": { "city": "Giza", "area": "5th Settlement" },
       "seller": {
@@ -436,7 +436,7 @@
       "engine": "1.5L Turbo",
       "color": "Yellow",
       "hasAirConditioner": true,
-      "Category": "رياضية",
+      "category": "suv",
       "images": ["https://example.com/cars/1021/img1.jpg"],
       "location": { "city": "Alexandria", "area": "Sidi Gaber" },
       "seller": {
@@ -458,7 +458,7 @@
       "engine": "1.6L Turbo",
       "color": "White",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1022/img1.jpg"],
       "location": { "city": "Cairo", "area": "New Cairo" },
       "seller": { "id": "seller_180", "name": "French Auto", "type": "Dealer" },
@@ -476,7 +476,7 @@
       "engine": "1.6L",
       "color": "Blue",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1023/img1.jpg"],
       "location": { "city": "Giza", "area": "Haram" },
       "seller": {
@@ -498,7 +498,7 @@
       "engine": "3.0L V6",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "رياضية",
+      "category": "suv",
       "images": ["https://example.com/cars/1024/img1.jpg"],
       "location": { "city": "Cairo", "area": "Zamalek" },
       "seller": {
@@ -520,7 +520,7 @@
       "engine": "1.4L Turbo",
       "color": "Red",
       "hasAirConditioner": true,
-      "Category": "هاتشباك",
+      "category": "sedan",
       "images": ["https://example.com/cars/1025/img1.jpg"],
       "location": { "city": "Alexandria", "area": "Raml" },
       "seller": {
@@ -542,7 +542,7 @@
       "engine": "1.5L",
       "color": "Grey",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1026/img1.jpg"],
       "location": { "city": "Giza", "area": "Faisal" },
       "seller": { "id": "seller_220", "name": "Adel Refaat", "type": "Dealer" },
@@ -560,7 +560,7 @@
       "engine": "1.6L",
       "color": "Silver",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1027/img1.jpg"],
       "location": { "city": "Cairo", "area": "Shoubra" },
       "seller": {
@@ -582,7 +582,7 @@
       "engine": "1.4L TSI",
       "color": "Black",
       "hasAirConditioner": true,
-      "Category": "عائلية/SUV",
+      "category": "suv",
       "images": ["https://example.com/cars/1028/img1.jpg"],
       "location": { "city": "Giza", "area": "Sheikh Zayed" },
       "seller": {
@@ -604,7 +604,7 @@
       "engine": "1.6L",
       "color": "Red",
       "hasAirConditioner": true,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1029/img1.jpg"],
       "location": { "city": "Assiut", "area": "City Center" },
       "seller": {
@@ -626,7 +626,7 @@
       "engine": "1.2L",
       "color": "Blue",
       "hasAirConditioner": true,
-      "Category": "هاتشباك",
+      "category": "sedan",
       "images": ["https://example.com/cars/1030/img1.jpg"],
       "location": { "city": "Cairo", "area": "Maadi" },
       "seller": {
@@ -648,7 +648,7 @@
       "engine": "1.6L",
       "color": "White",
       "hasAirConditioner": false,
-      "Category": "اقتصادية/سيدان",
+      "category": "sedan",
       "images": ["https://example.com/cars/1031/img1.jpg"],
       "location": { "city": "Minya", "area": "East Nile" },
       "seller": {
@@ -670,7 +670,7 @@
       "engine": "2.0L Turbo",
       "color": "Green",
       "hasAirConditioner": true,
-      "Category": "رياضية",
+      "category": "sedan",
       "images": ["https://example.com/cars/1032/img1.jpg"],
       "location": { "city": "Cairo", "area": "Heliopolis" },
       "seller": {
