@@ -5,7 +5,7 @@ class LocalCarService {
   constructor() {
     this.allCars = mockData.cars;
   }
-  async getCars(pageNumber, limit) {
+  async getCars(pageNumber, limit = 10) {
     const start = (pageNumber - 1) * limit;
     const end = start + limit;
 
@@ -23,13 +23,26 @@ class LocalCarService {
 }
 
 class RemoteCarService {
-  async getCars(pageNumber, limit) {
-    const start = (pageNumber - 1) * limit;
-    return httpGet(`cars?_start=_${start}&_limit=${limit}`);
+  async getCars(pageParam = 1, filter) {
+    const limit = 10;
+    const filterParams = new URLSearchParams(filter).toString();
+    const pagingationParams = `_page=${pageParam}&_limit=${limit}`;
+    const queryString = `cars?${pagingationParams}${
+      filterParams ? `&${filterParams}` : ""
+    }`;
+    const { data, total } = await httpGet(queryString);
+
+    return {
+      data,
+      total,
+      page: pageParam,
+      hasMore: pageParam * limit < total,
+    };
   }
 
   async getCarById(id) {
-    return httpGet(`cars/${id}`);
+    const { data } = await httpGet(`cars/${id}`);
+    return data;
   }
 }
 
