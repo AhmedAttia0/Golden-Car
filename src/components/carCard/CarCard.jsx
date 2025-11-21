@@ -16,7 +16,7 @@ const CarCard = ({
     id,
     price = 25,
     brand = "Mercedes",
-    Category = "رياضية",
+    category = "رياضية",
     Transmission = "اوتوماتيكي",
     hasAirConditioner = false,
   },
@@ -54,7 +54,7 @@ const CarCard = ({
               <h1 className="font-bold text-xl transition-colors group-hover:text-[#5937E0]">
                 {brand}
               </h1>
-              <h3 className="justify-end">{Category}</h3>
+              <h3 className="justify-end">{category}</h3>
             </div>
           </div>
 
