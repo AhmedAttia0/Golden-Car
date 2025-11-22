@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCar } from "react-icons/fa";
+import { IoCarSportSharp } from "react-icons/io5";
 import InputField from "../inputField/InputField";
 import { Link, useLocation } from "react-router-dom";
 import Button from "../button/Button";
@@ -14,7 +14,7 @@ const LoginForm = () => {
         id="branding"
         className="text-center mb-8 flex flex-col justify-center space-y-4"
       >
-        <FaCar className="text-[#5937E0] text-3xl self-center" />
+        <IoCarSportSharp className="text-[#5937E0] text-3xl self-center" />
         <h1 className="text-2xl">Golden Car</h1>
       </header>
       <form className="space-y-6">
@@ -52,7 +52,7 @@ const LoginForm = () => {
         <p className="text-sm text-slate-700 text-center">
           ليس لديك حساب ؟ قم ب
           <Link
-            to={"/register"}
+            to={"/signup"}
             className="text-sm text-orange-300 hover:text-orange-500"
           >
             إنشاء حساب
