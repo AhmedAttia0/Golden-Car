@@ -18,17 +18,20 @@ const LoginForm = () => {
         <h1 className="text-2xl">Golden Car</h1>
       </header>
       <form className="space-y-6">
-        <h1 className="text-center text-2xl">أهلا بعودتك!</h1>
+        <h2 className="text-center text-2xl">أهلا بعودتك!</h2>
         <InputField type={"email"} id={"email"} label={"البريد الإلكتروني"} />
         <InputField type={"password"} id={"password"} label={"كلمة السر"} />
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <input
               id="remember-me"
               type="checkbox"
               className="h-4 w-4 text-primary-blue border-gray-300 rounded focus:ring-primary-blue"
             />
-            <label for="remember-me" class="mr-2 block text-sm text-gray-900">
+            <label
+              for="remember-me"
+              className="mr-2 block text-sm text-gray-900"
+            >
               تذكرني
             </label>
           </div>
