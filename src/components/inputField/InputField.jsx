@@ -7,16 +7,17 @@ const InputField = ({ type = "text", id, label, className = "" }) => {
     email: "you@example.com",
     password: "كلمة السر الخاصة بك",
   };
+  const defaultClassName =
+    "mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1";
+  let finalClassName = (defaultClassName + className).trim();
   return (
-    <label className="block">
+    <label className="block" htmlFor={id}>
       <span className="block text-sm font-medium text-slate-700">{label}</span>
       <input
+        id={id}
         type={type}
         name={id}
-        className={(
-          "mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" +
-          className
-        ).trim()}
+        className={finalClassName}
         placeholder={placeHolders[id]}
       />
     </label>
