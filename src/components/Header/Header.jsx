@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect, use } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
 
 import {
@@ -27,13 +27,16 @@ const Header = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Typography
-          as={Link}
+        <NavLink
           to="/"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute  after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full"
+          className={({ isActive }) =>
+            `flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 
+     after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full
+     ${isActive ? "after:h-[2px]" : "after:h-0"}`
+          }
         >
           الرئيسية
-        </Typography>
+        </NavLink>
       </Typography>
       <Typography
         as="li"
@@ -41,13 +44,16 @@ const Header = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Typography
-          as={Link}
+        <NavLink
           to="/cars"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className={({ isActive }) =>
+            `flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 
+     after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full
+     ${isActive ? "after:h-[2px]" : "after:h-0"}`
+          }
         >
           سياراتنا
-        </Typography>
+        </NavLink>
       </Typography>
       <Typography
         as="li"
@@ -55,27 +61,16 @@ const Header = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Typography
-          as={Link}
-          to="/CarDetails"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
-        >
-          التفاصيل
-        </Typography>
-      </Typography>
-      <Typography
-        as="li"
-        variant="small"
-        color="blue-gray"
-        className="p-1 font-normal"
-      >
-        <Typography
-          as={Link}
+        <NavLink
           to="/about"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className={({ isActive }) =>
+            `flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 
+     after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full
+     ${isActive ? "after:h-[2px]" : "after:h-0"}`
+          }
         >
           من نحن
-        </Typography>
+        </NavLink>
       </Typography>
       <Typography
         as="li"
@@ -83,13 +78,16 @@ const Header = () => {
         color="blue-gray"
         className="p-1 font-normal"
       >
-        <Typography
-          as={Link}
+        <NavLink
           to="/contact"
-          className="flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 after:h-[2px] after:bg-[#5937E0] after:w-0 after:transition-all after:duration-300 hover:after:w-full"
+          className={({ isActive }) =>
+            `flex items-center transition-colors relative after:content-[''] font-bold after:absolute after:left-0 after:bottom-0 
+     after:bg-[#5937E0] after:w-full after:transition-all after:duration-300 hover:after:w-full
+     ${isActive ? "after:h-[2px]" : "after:h-0"}`
+          }
         >
           تواصل معنا
-        </Typography>
+        </NavLink>
       </Typography>
     </ul>
   );
@@ -100,7 +98,7 @@ const Header = () => {
         <div className="mr-4 hidden lg:block">{navList}</div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-x-1">
-            <Typography as={Link} to="/login">
+            <NavLink to="/login">
               <Button
                 variant="text"
                 size="sm"
@@ -108,15 +106,15 @@ const Header = () => {
               >
                 <span>تسجيل الدخول</span>
               </Button>
-            </Typography>
-            <Typography as={Link} to="/register">
+            </NavLink>
+            <NavLink to="/register">
               <Button
                 size="sm"
                 className="hidden lg:inline-block bg-[#5937E0] hover:bg-[#5937e0ec] "
               >
                 <span>إنشاء حساب</span>
               </Button>
-            </Typography>
+            </NavLink>
           </div>
           <IconButton
             variant="text"
@@ -160,12 +158,12 @@ const Header = () => {
       <Collapse open={openNav}>
         {navList}
         <div className="flex items-center gap-x-1">
-          <Typography as={Link} to="/login" className="w-full">
+          <NavLink to="/login" className="w-full">
             <Button fullWidth variant="text" size="sm">
               <span>تسجيل الدخول</span>
             </Button>
-          </Typography>
-          <Typography as={Link} to="/register" className="w-full">
+          </NavLink>
+          <NavLink to="/register" className="w-full">
             <Button
               fullWidth
               className="bg-[#5937E0] hover:bg-[#5937e0ec]"
@@ -173,7 +171,7 @@ const Header = () => {
             >
               <span>إنشاء حساب</span>
             </Button>
-          </Typography>
+          </NavLink>
         </div>
       </Collapse>
     </Navbar>
@@ -182,14 +180,13 @@ const Header = () => {
 
 export function Logo() {
   return (
-    <Typography
-      as={Link}
+    <NavLink
       to="/"
       className="md:mr-4 flex gap-1 items-center cursor-pointer py-1.5 font-medium"
     >
       <IoCarSportSharp className="text-4xl" />
       <span className="ml-1 text-lg font-semibold">Golden Car</span>
-    </Typography>
+    </NavLink>
   );
 }
 
