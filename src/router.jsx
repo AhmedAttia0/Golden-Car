@@ -8,6 +8,7 @@ import Contact from "./pages/contact/Contact";
 import Login from "./pages/login/Login";
 import SignUp from "./pages/signUp/SignUp";
 import NotFound from "./pages/notFound/NotFound";
+import AdminLayout from "./layouts/AdminLayout";
 // import { carsLoader } from "./loaders/carsLoader";
 import { getCars } from "./Services/dataService";
 
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "login", element: <Login /> },
-      { path: "signUp", element: <SignUp /> },
+      { path: "signup", element: <SignUp /> },
     ],
   },
 ]);
