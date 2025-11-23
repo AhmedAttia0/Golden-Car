@@ -17,7 +17,7 @@ const CarCard = ({
     price = 25,
     brand = "Mercedes",
     category = "رياضية",
-    Transmission = "اوتوماتيكي",
+    transmission = "اوتوماتيكي",
     hasAirConditioner = false,
   },
 }) => {
@@ -61,7 +61,7 @@ const CarCard = ({
           <div className="flex justify-between gap-5 mt-6">
             <div className="flex flex-col lg:flex-row  gap-1 items-center">
               <TbManualGearbox className="text-[#5937E0] justify-center" />
-              <h1 className="font-bold text-lg">{Transmission}</h1>
+              <h1 className="font-bold text-lg">{transmission}</h1>
             </div>
             <div className="flex flex-col lg:flex-row self-center gap-1 items-center">
               <BsFillFuelPumpFill className="text-[#5937E0]" />

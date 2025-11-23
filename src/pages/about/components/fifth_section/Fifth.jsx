@@ -143,7 +143,7 @@ function Fifth() {
 
       <div className="border-[2px] border-[#ADB5BD] rounded-xl p-2">
         <button
-          onClick={() => toggleAccordion(3)}
+          onClick={() => toggleAccordion(4)}
           className="w-full flex justify-between items-center py-5 text-slate-800"
         >
           <span className="font-bold">
@@ -168,7 +168,7 @@ function Fifth() {
           </span>
         </button>
         <div
-          id="content-3"
+          id="content-4"
           className="max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
         >
           <div className="pb-5 text-sm text-slate-500">
@@ -181,7 +181,7 @@ function Fifth() {
 
       <div className="border-[2px] border-[#ADB5BD] rounded-xl p-2">
         <button
-          onClick={() => toggleAccordion(4)}
+          onClick={() => toggleAccordion(5)}
           className="w-full flex justify-between items-center py-5 text-slate-800"
         >
           <span className="font-bold">
@@ -206,7 +206,7 @@ function Fifth() {
           </span>
         </button>
         <div
-          id="content-4"
+          id="content-5"
           className="max-h-0 overflow-hidden transition-all duration-300 ease-in-out"
         >
           <div className="pb-5 text-sm text-slate-500">

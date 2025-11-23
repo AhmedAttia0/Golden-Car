@@ -1,5 +1,5 @@
 import DataFactory from "../api/DataFactory";
-const IS_LOCAL_MOCK = true;
+const IS_LOCAL_MOCK = false;
 export const carService = DataFactory.createCarService(IS_LOCAL_MOCK);
 export const getCars = ({ pageParam = 1 }, filters) => {
   return carService.getCars(pageParam, filters);

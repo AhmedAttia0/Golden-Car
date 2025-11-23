@@ -2,7 +2,9 @@ import { Button } from "@material-tailwind/react";
 import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import { TbCarSuv } from "react-icons/tb";
-
+import Filter from "../../components/Filter/Filter";
+import CarCard from "../../components/carCard/CarCard";
+import { useEffect, useState } from "react";
 const carCategories = [
   {
     key: "all",
@@ -47,71 +49,89 @@ const carCategories = [
     defaultStyle: "bg-white text-black",
   },
 ];
-export default function Filteration({
-  onFilter,
-  activeFilter,
-  filterKey = "category",
-}) {
+
+export default function Filteration({ onFilter, activeFilter, searchParams }) {
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const onKey = (e) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   return (
-    <div className="flex gap-5 flex-wrap justify-center my-6">
-      {carCategories.map((category) => {
-        const isActive = activeFilter === category.key;
-        const activeClass = isActive
-          ? category.activeStyle
-          : category.defaultStyle;
-        const baseClass =
-          "rounded-2xl flex gap-1 font-medium items-center text-md normal-case shadow-none " +
-          "hover:bg-[#5937E0] hover:text-white";
+    <>
+      {/* Desktop sidebar (right side) — show only on large screens and up (tablet uses mobile UI) */}
+      <aside className="hidden lg:block lg:shrink-0 lg:w-72 xl:w-80">
+        <div className="sticky top-24 p-4 bg-white rounded-md shadow-sm">
+          <Filter
+            searchParams={searchParams}
+            onFilter={onFilter}
+            activeFilter={activeFilter}
+          />
+        </div>
+      </aside>
 
-        const finalClass = `${baseClass} ${activeClass} ${
-          category.key === "all" ? "px-4 py-2" : "px-2 sm:px-4"
-        }`;
-
-        const IconComponent = category.icon;
-
-        return (
-          <Button
-            key={category.key}
-            onClick={() => onFilter(filterKey, category.key)}
-            className={finalClass}
+      {/* Mobile & tablet: filter button + slide panel (visible until lg breakpoint) */}
+      <div className="lg:hidden px-4 mt-10">
+        <button
+          type="button"
+          className="w-full flex items-center justify-between px-4 py-3 bg-div-purple text-white rounded-lg shadow-sm"
+          onClick={() => setOpen(true)}
+          aria-expanded={open}
+        >
+          <span className="font-medium">تصفية</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
-            {category.label}
+            <path d="M3 5a1 1 0 011-1h12a1 1 0 01.8 1.6L12 11.5V16a1 1 0 01-1.447.894L7 15.118V11.5L2.2 5.6A1 1 0 013 5z" />
+          </svg>
+        </button>
 
-            {IconComponent && <IconComponent className="text-xl" />}
-          </Button>
-        );
-      })}
-    </div>
+        {/* slide panel */}
+        <div
+          className={`fixed inset-0 z-50 flex ${
+            open ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+          aria-hidden={!open}
+        >
+          {/* backdrop */}
+          <div
+            className={`absolute inset-0 bg-black/40 transition-opacity ${
+              open ? "opacity-100" : "opacity-0"
+            }`}
+            onClick={() => setOpen(false)}
+          />
+
+          {/* panel */}
+          <div
+            className={`relative ml-auto w-full max-w-xs h-full bg-white shadow-xl transform transition-transform
+              ${open ? "translate-x-0" : "translate-x-full"}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="p-4 flex items-center justify-between border-b">
+              <h3 className="font-semibold text-lg">تصفية</h3>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="text-gray-600 px-2 py-1 rounded hover:bg-gray-100"
+                aria-label="إغلاق الفلتر"
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="p-4 overflow-auto h-full">
+              <Filter
+                onFilter={onFilter}
+                searchParams={searchParams}
+                activeFilter={activeFilter}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
-
-// import Filter from "../../components/Filter/Filter";
-// import CarCard from "../../components/carCard/CarCard";
-// const [showFilterMobile, setShowFilterMobile] = useState(false);
-/*  fillter and cards
-<div className="md:hidden flex justify-center my-4 px-4">
-        <button
-          onClick={() => setShowFilterMobile((s) => !s)}
-          className="bg-div-purple text-white px-4 py-2 rounded-lg shadow"
-        >
-          تصفية
-        </button>
-      </div>
-      {showFilterMobile && (
-        <div className="md:hidden px-4 mb-4">
-          <Filter />
-        </div>
-      )}
-<div className="flex flex-col md:flex-row gap-6 m-5">
-        <aside className="hidden md:block md:shrink-0 md:w-72">
-          <Filter />
-        </aside>
-        <main className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-            {carsList.map((car) => (
-              <CarCard key={car.id} {...car} />
-            ))}
-          </div>
-        </main>
-      </div> 
-*/

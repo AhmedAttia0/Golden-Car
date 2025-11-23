@@ -20,7 +20,7 @@ export const router = createBrowserRouter([
       {
         path: "cars",
         element: <Cars />,
-        loader: getCars,
+
         children: [{ path: ":id", element: <CarDetails /> }],
       },
       { path: "about", element: <About /> },
