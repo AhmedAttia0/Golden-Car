@@ -15,18 +15,14 @@ const CarDetails = () => {
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["car", id],
-    queryFn: async () => {
-      const response = await getCarById(id);
-
-      return response;
-    },
+    queryFn: async () => await getCarById(id),
     keepPreviousData: true,
   });
   if (isLoading) return <div>Loading...</div>;
   if (isError) {
     throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
   }
-  const { price, brand, Transmission, hasAirConditioner } = data;
+  const { price, brand, transmission, hasAirConditioner } = data;
 
   const switchimage = (img) => {
     const newImages = carImages.map((image) =>
@@ -66,7 +62,7 @@ const CarDetails = () => {
           <div className="spec-box flex flex-col items-center">
             <TbManualGearbox className="spec-icon mx-auto" />
             <h1 className="font-bold">صندوق التروس</h1>
-            <h2>{Transmission}</h2>
+            <h2>{transmission}</h2>
           </div>
           <div className="spec-box flex flex-col items-center">
             <BsFillFuelPumpFill className="spec-icon mx-auto" />

@@ -23,13 +23,30 @@ class LocalCarService {
 }
 
 class RemoteCarService {
-  async getCars(pageParam = 1, filter) {
+  async getCars(pageParam = 1, filters = {}) {
     const limit = 10;
-    const filterParams = new URLSearchParams(filter).toString();
-    const pagingationParams = `_page=${pageParam}&_limit=${limit}`;
-    const queryString = `cars?${pagingationParams}${
-      filterParams ? `&${filterParams}` : ""
+
+    // Build filter params manually
+    const filterParamsArray = [];
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          filterParamsArray.push(`${key}=${encodeURIComponent(item)}`);
+        });
+      } else {
+        filterParamsArray.push(`${key}=${encodeURIComponent(value)}`);
+      }
+    });
+
+    const filterQuery = filterParamsArray.join("&");
+
+    const paginationParams = `_page=${pageParam}&_limit=${limit}`;
+
+    const queryString = `cars?${paginationParams}${
+      filterQuery ? `&${filterQuery}` : ""
     }`;
+
     const { data, total } = await httpGet(queryString);
 
     return {

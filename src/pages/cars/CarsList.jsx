@@ -1,11 +1,17 @@
 import CarCard from "../../components/carCard/CarCard";
 import { useEffect, useRef } from "react";
 import useInfiniteCar from "../../hooks/useInfiniteCar";
-export default function CarsList({ activeCarId, initialData, filters }) {
-  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteCar(filters, initialData);
+export default function CarsList({ activeCarId, filters }) {
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteCar(filters);
   const loaderRef = useRef(null);
-  if (error) return <div>Error: {error.message}</div>;
   const cars = data?.pages.flatMap((page) => page.data) ?? [];
 
   // handle infinite scrolling
@@ -25,10 +31,21 @@ export default function CarsList({ activeCarId, initialData, filters }) {
       if (loaderRef.current) observer.unobserve(loaderRef.current);
     };
   }, [hasNextPage, fetchNextPage]);
+
+  if (isLoading)
+    return (
+      <h2 className="font-bold text-2xl text-center mt-20">
+        جاري تحميل البيانات...
+      </h2>
+    );
+  if (isError)
+    return (
+      <h2 className="font-bold text-2xl text-center mt-20">{error.message}</h2>
+    );
   return (
     <>
       {cars?.length === 0 && (
-        <h2 className="font-bold text-2xl text-center">
+        <h2 className="font-bold text-2xl text-center mt-20">
           لا توجد سيارات لعرضها.
         </h2>
       )}
