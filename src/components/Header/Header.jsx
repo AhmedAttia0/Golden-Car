@@ -107,7 +107,7 @@ const Header = () => {
                 <span>تسجيل الدخول</span>
               </Button>
             </NavLink>
-            <NavLink to="/register">
+            <NavLink to="/signup">
               <Button
                 size="sm"
                 className="hidden lg:inline-block bg-[#5937E0] hover:bg-[#5937e0ec] "
@@ -163,7 +163,7 @@ const Header = () => {
               <span>تسجيل الدخول</span>
             </Button>
           </NavLink>
-          <NavLink to="/register" className="w-full">
+          <NavLink to="/signup" className="w-full">
             <Button
               fullWidth
               className="bg-[#5937E0] hover:bg-[#5937e0ec]"
