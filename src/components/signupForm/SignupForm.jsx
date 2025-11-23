@@ -78,7 +78,7 @@ const SignupForm = () => {
   return (
     <section
       id="signup-form"
-      className="bg-white rounded-xl shadow-2xl overflow-hidden text-black p-6 sm:p-10 w-100 lg:w-2/5 min-w-lg self-center"
+      className="bg-white rounded-xl shadow-2xl overflow-hidden text-black p-6 sm:p-10 w-full max-w-[90%] md:max-w-[70%] lg:max-w-[40%] lg:w-2/5 self-center"
     >
       <header
         id="branding"
