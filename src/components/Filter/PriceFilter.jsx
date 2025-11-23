@@ -12,7 +12,7 @@ const reducer = (state, action) => {
   }
 };
 const initialState = { minPrice: "", maxPrice: "" };
-export default function PriceInputFilter({ onFilter, searchParams }) {
+export default function PriceInputFilter({ onFilter, searchParams, setOpen }) {
   const [{ minPrice, maxPrice }, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     if (!searchParams) return;
@@ -32,6 +32,7 @@ export default function PriceInputFilter({ onFilter, searchParams }) {
     }
 
     onFilter("price", { min: minPrice, max: maxPrice });
+    setOpen(false);
   };
 
   const handleMinChange = (e) => {
