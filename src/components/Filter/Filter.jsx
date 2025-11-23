@@ -42,7 +42,7 @@ const transmissionOptions = {
   ],
 };
 
-export function Filter({ onFilter, searchParams }) {
+export function Filter({ onFilter, searchParams, setOpen }) {
   return (
     <div className="w-full md:w-72  shadow-md border border-gray-300">
       <div className="bg-white rounded-lg shadow p-5 ">
@@ -90,6 +90,7 @@ export function Filter({ onFilter, searchParams }) {
           <div>
             <div className="flex flex-col !justify-between items-center">
               <PriceInputFilter
+                setOpen={setOpen}
                 onFilter={onFilter}
                 searchParams={searchParams}
               />

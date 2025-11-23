@@ -125,6 +125,7 @@ export default function Filteration({ onFilter, activeFilter, searchParams }) {
             <div className="p-4 overflow-auto h-full">
               <Filter
                 onFilter={onFilter}
+                setOpen={setOpen}
                 searchParams={searchParams}
                 activeFilter={activeFilter}
               />
