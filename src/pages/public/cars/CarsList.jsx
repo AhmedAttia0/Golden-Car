@@ -1,6 +1,6 @@
-import CarCard from "../../components/carCard/CarCard";
+import CarCard from "../../../components/carCard/CarCard";
 import { useEffect, useRef } from "react";
-import useInfiniteCar from "../../hooks/useInfiniteCar";
+import useInfiniteCar from "../../../hooks/useInfiniteCar";
 export default function CarsList({ activeCarId, filters }) {
   const {
     data,
