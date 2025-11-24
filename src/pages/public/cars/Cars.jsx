@@ -1,12 +1,7 @@
-import {
-  Outlet,
-  useLoaderData,
-  useMatch,
-  useSearchParams,
-} from "react-router-dom";
+import { Outlet, useMatch, useSearchParams } from "react-router-dom";
 import Filteration from "./Filtertion";
 import CarsList from "./CarsList";
-import ScrollToTopBtn from "../../components/ScrollToTopBtn/ScrollToTopBtn";
+import ScrollToTopBtn from "../../../components/ScrollToTopBtn/ScrollToTopBtn";
 
 const Cars = () => {
   const [searchParams, setSearchParams] = useSearchParams();

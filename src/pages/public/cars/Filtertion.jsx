@@ -2,8 +2,8 @@ import { Button } from "@material-tailwind/react";
 import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import { TbCarSuv } from "react-icons/tb";
-import Filter from "../../components/Filter/Filter";
-import CarCard from "../../components/carCard/CarCard";
+import Filter from "../../../components/Filter/Filter";
+
 import { useEffect, useState } from "react";
 const carCategories = [
   {
@@ -125,6 +125,7 @@ export default function Filteration({ onFilter, activeFilter, searchParams }) {
             <div className="p-4 overflow-auto h-full">
               <Filter
                 onFilter={onFilter}
+                setOpen={setOpen}
                 searchParams={searchParams}
                 activeFilter={activeFilter}
               />

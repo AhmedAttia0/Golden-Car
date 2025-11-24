@@ -1,9 +1,15 @@
 import { Outlet } from "react-router-dom";
-import ScrollToTop from "../components/ScrollToTop/ScrollToTop";
-import React from "react";
+import SidebarDark from "../components/Sidebar/Sidebar";
 
 const AdminLayout = () => {
-  return <div>AdminLayout</div>;
+  return (
+    <div className="flex w-full min-h-screen bg-[#14151a]">
+      <SidebarDark />
+      <div className="flex-1 p-4">
+        <Outlet />
+      </div>
+    </div>
+  );
 };
 
 export default AdminLayout;

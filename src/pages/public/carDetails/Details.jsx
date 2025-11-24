@@ -6,7 +6,7 @@ import { RiPinDistanceLine } from "react-icons/ri";
 import { FaCheckCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
-import { getCarById } from "../../Services/dataService";
+import { getCarById } from "../../../Services/dataService";
 import { useQuery } from "@tanstack/react-query";
 const CarDetails = () => {
   const [mainImage, setMainImage] = useState("/defaultcar.png");
