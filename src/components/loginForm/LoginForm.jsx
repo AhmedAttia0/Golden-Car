@@ -28,12 +28,7 @@ const LoginForm = () => {
               type="checkbox"
               className="h-4 w-4 text-primary-blue border-gray-300 rounded focus:ring-primary-blue"
             />
-            <label
-              for="remember-me"
-              className="mr-2 block text-sm text-gray-900"
-            >
-              تذكرني
-            </label>
+            <label className="mr-2 block text-sm text-gray-900">تذكرني</label>
           </div>
           <Link
             to={location.pathname}
