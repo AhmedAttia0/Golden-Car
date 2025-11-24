@@ -2,8 +2,8 @@ import { Button } from "@material-tailwind/react";
 import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
 import { TbCarSuv } from "react-icons/tb";
-import Filter from "../../components/Filter/Filter";
-import CarCard from "../../components/carCard/CarCard";
+import Filter from "../../../components/Filter/Filter";
+
 import { useEffect, useState } from "react";
 const carCategories = [
   {

@@ -1,5 +1,5 @@
-import { useState, useEffect, use } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
 
 import {
