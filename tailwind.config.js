@@ -9,13 +9,18 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
-       colors: {
+      backgroundImage: {
+        hero: "url('/hero.png')",
+        hero2: "url('/hero2.png')",
+        nombers: "url('/nombers.png')"
+      },
+      colors: {
         div: {
           lightgray: "#FAFAFA",
-          purple:"#5937E0"
+          purple: "#5937E0",
+        },
+      },
     },
-  },
-},
   },
   plugins: [],
 });
