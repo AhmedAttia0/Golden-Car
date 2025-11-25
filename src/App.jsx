@@ -12,8 +12,6 @@ import Header from "./components/Header/Header";
 import Footer from "./components/footer/Footer";
 import { router } from "./router.jsx";
 const App = () => {
-  console.log("hello");
-
   return (
     <RouterProvider router={router} />
     // <div className="min-h-screen flex flex-col">
