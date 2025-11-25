@@ -1,4 +1,3 @@
-
 import { Typography } from "@material-tailwind/react";
 import { Logo } from "../../components/Header/Header.jsx";
 import { CiLocationOn } from "react-icons/ci";
@@ -31,7 +30,7 @@ const currentYear = new Date().getFullYear();
 export default function Footer() {
   return (
     <footer className="relative w-full bottom-0 mt-20">
-      <div className=" w-full px-16 ">
+      <div className=" w-full px-8 md:px-16 ">
         <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-4 mb-12">
           <Logo />
           <div className="location flex items-center gap-4  ">

@@ -18,7 +18,7 @@ const HeroSection = () => {
           </Button>
         </div>
       </div>
-      <div className="lg:w-[35%] w-[60%]">
+      <div className="lg:w-[35%] sm:w-[60%] w-[90%]">
         <HomeForm />
       </div>
     </div>
