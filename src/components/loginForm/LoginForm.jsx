@@ -1,5 +1,5 @@
 import React from "react";
-import { FaCar } from "react-icons/fa";
+import { IoCarSportSharp } from "react-icons/io5";
 import InputField from "../inputField/InputField";
 import { Link, useLocation } from "react-router-dom";
 import Button from "../button/Button";
@@ -8,29 +8,27 @@ const LoginForm = () => {
   return (
     <section
       id="login-form"
-      className="bg-white rounded-xl shadow-2xl overflow-hidden text-black p-6 sm:p-10 w-100 lg:w-2/5 min-w-lg self-center"
+      className="bg-white rounded-xl shadow-2xl overflow-hidden text-black p-6 sm:p-10 w-full md:max-w-[70%] lg:max-w-[40%] lg:w-2/5 self-center"
     >
       <header
         id="branding"
         className="text-center mb-8 flex flex-col justify-center space-y-4"
       >
-        <FaCar className="text-[#5937E0] text-3xl self-center" />
+        <IoCarSportSharp className="text-[#5937E0] text-3xl self-center" />
         <h1 className="text-2xl">Golden Car</h1>
       </header>
       <form className="space-y-6">
-        <h1 className="text-center text-2xl">أهلا بعودتك!</h1>
+        <h2 className="text-center text-2xl">أهلا بعودتك!</h2>
         <InputField type={"email"} id={"email"} label={"البريد الإلكتروني"} />
         <InputField type={"password"} id={"password"} label={"كلمة السر"} />
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center">
             <input
               id="remember-me"
               type="checkbox"
               className="h-4 w-4 text-primary-blue border-gray-300 rounded focus:ring-primary-blue"
             />
-            <label for="remember-me" class="mr-2 block text-sm text-gray-900">
-              تذكرني
-            </label>
+            <label className="mr-2 block text-sm text-gray-900">تذكرني</label>
           </div>
           <Link
             to={location.pathname}
@@ -49,7 +47,7 @@ const LoginForm = () => {
         <p className="text-sm text-slate-700 text-center">
           ليس لديك حساب ؟ قم ب
           <Link
-            to={"/register"}
+            to={"/signup"}
             className="text-sm text-orange-300 hover:text-orange-500"
           >
             إنشاء حساب

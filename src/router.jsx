@@ -1,82 +1,54 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "./layouts/MainLayout";
-import EmptyLayout from "./layouts/EmptyLayout";
-import App from "./App";
-import Home from "./pages/home/Home";
-import Cars from "./pages/cars/Cars";
-import Details from "./pages/carDetails/Details";
-import About from "./pages/about/About";
-import Contact from "./pages/contact/Contact";
-import Login from "./pages/login/Login";
-import SignUp from "./pages/signUp/SignUp";
-import NotFound from "./pages/notFound/NotFound";
-
-const carsList = [
-  {
-    id: 1,
-    price: 50,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "اوتوماتيكي",
-    hasAirConditioner: true,
-  },
-  {
-    id: 2,
-    price: 20,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "يدوي",
-    hasAirConditioner: true,
-  },
-  {
-    id: 3,
-    price: 100,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "اوتوماتيكي",
-    hasAirConditioner: true,
-  },
-  {
-    id: 4,
-    price: 15,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "اوتوماتيكي",
-    hasAirConditioner: false,
-  },
-  {
-    id: 5,
-    price: 20,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "اوتوماتيكي",
-    hasAirConditioner: true,
-  },
-  {
-    id: 6,
-    price: 15,
-    name: "Toyota Camry",
-    Category: "Sedan",
-    Transmission: "اوتوماتيكي",
-    hasAirConditioner: false,
-  },
-];
+import Home from "./pages/public/home/Home";
+import Cars from "./pages/public/cars/Cars";
+import CarDetails from "./pages/public/carDetails/Details";
+import About from "./pages/public/about/About";
+import Contact from "./pages/public/contact/Contact";
+import Login from "./pages/public/login/Login";
+import SignUp from "./pages/public/signUp/SignUp";
+import NotFound from "./pages/public/notFound/NotFound";
+import AdminLayout from "./layouts/AdminLayout";
+import Overview from "./pages/admin/Overview/Overview";
+import CarsManagement from "./pages/admin/CarsManagement/Cars";
+import Users from "./pages/admin/Users/Users";
+import Settings from "./pages/admin/Settings/Settings";
+import Bookings from "./pages/admin/Bookings/Bookings";
 
 export const router = createBrowserRouter([
   {
-    element: <MainLayout />,
+    Component: MainLayout,
+    ErrorBoundary: NotFound,
     children: [
       { index: true, element: <Home /> },
-      { path: "cars", element: <Cars carsList={carsList} /> },
-      { path: "CarDetails", element: <Details /> },
+      {
+        path: "cars",
+        element: <Cars />,
+
+        children: [{ path: ":id", element: <CarDetails /> }],
+      },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "login", element: <Login /> },
-      { path: "signUp", element: <SignUp /> },
+      { path: "signup", element: <SignUp /> },
     ],
   },
   {
-    element: <EmptyLayout />,
-    children: [{ path: "*", element: <NotFound /> }],
+    path: "admin",
+    Component: AdminLayout,
+    ErrorBoundary: NotFound,
+    children: [
+      {
+        index: true,
+        element: <Overview />,
+      },
+      {
+        path: "cars",
+        element: <CarsManagement />,
+      },
+      { path: "users", element: <Users /> },
+      { path: "settings", element: <Settings /> },
+      { path: "bookings", element: <Bookings /> },
+    ],
   },
 ]);
