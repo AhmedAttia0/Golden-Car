@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Button } from "@material-tailwind/react";
 import { LiaTruckPickupSolid } from "react-icons/lia";
 import { IoCarSportOutline } from "react-icons/io5";
@@ -6,7 +5,6 @@ import CarCard from "../../components/carCard/CarCard";
 import { TbCarSuv } from "react-icons/tb";
 
 const Cars = ({ carsList }) => {
-  
   return (
     <div>
       <h2 className="font-bold text-4xl text-center mt-[3.5rem]">
