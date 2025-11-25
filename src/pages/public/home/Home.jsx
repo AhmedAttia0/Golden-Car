@@ -1,9 +1,9 @@
-import React from "react";
-import HeroSection from "../../components/heroSection/HeroSection";
-import InfoHome from "../../components/infoHome/InfoHome";
-import SecondInfoHome from "../../components/secondInfoHome/SecondInfoHome";
-import CarsHome from "../../components/carsHome/CarsHome";
-import NombersHome from "../../components/nombersHome/NombersHome";
+
+import HeroSection from './../../../components/heroSection/HeroSection';
+import InfoHome from './../../../components/infoHome/InfoHome';
+import SecondInfoHome from './../../../components/secondInfoHome/SecondInfoHome';
+import CarsHome from './../../../components/carsHome/CarsHome';
+import NombersHome from './../../../components/nombersHome/NombersHome';
 
 const Home = () => {
   return (
