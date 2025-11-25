@@ -19,7 +19,7 @@ const CarCard = ({
     category = "رياضية",
     transmission = "اوتوماتيكي",
     hasAirConditioner = false,
-  },
+  }={},
 }) => {
   const navigate = useNavigate();
 

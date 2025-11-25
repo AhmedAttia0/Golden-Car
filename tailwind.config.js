@@ -12,7 +12,6 @@ module.exports = withMT({
         hero2: "url('/hero2.png')",
         nombers: "url('/nombers.png')"
       },
-    },
       colors: {
         lightgray: "#FAFAFA",
         purple: "#5937E0",
