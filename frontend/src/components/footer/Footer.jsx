@@ -1,5 +1,5 @@
 import { Typography } from "@material-tailwind/react";
-import { Logo } from "../../components/Header/Header.jsx";
+import { Logo } from "../Header/Header.jsx";
 import { CiLocationOn } from "react-icons/ci";
 import { MdOutlineEmail } from "react-icons/md";
 import { FiPhone } from "react-icons/fi";

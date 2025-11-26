@@ -1,17 +1,19 @@
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
-
-const statusOptions = ["الكل", "محجوز", "غير محجوز"];
+import CreateNewCarModal from "./CreateOrEditCarModal";
+const statusOptions = [
+  "كل السيارات",
+  "السيارات المحجوزة",
+  "السيارات غير المحجوزة ",
+];
 const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
 
-export default function TableHeader() {
+export default function Filterations() {
   return (
-    <div className="flex gap-4 flex-wrap  w-full overflow-visible">
-      <button className="bg-[#5937e0] text-white px-4 py-2 rounded-lg hover:bg-[#6a4ae9] transition-all">
-        + اضف سيارة جديدة
-      </button>
-      <div className="relative">
+    <div className="flex gap-4 flex-wrap w-full overflow-visible">
+      <CreateNewCarModal />
+      <div className="relative w-[98%] md:w-[48%] lg:w-[250px]">
         <input
           type="text"
           placeholder="بحث"
@@ -19,13 +21,17 @@ export default function TableHeader() {
         />
         <IoIosSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 h-5 w-5" />
       </div>
-      <CarDropdown options={statusOptions} />
-      <CarDropdown options={carTypeOptions} />
+      <div className="w-[98%] md:w-[48%] lg:w-[200px] relative">
+        <CarDropdown options={statusOptions} />
+      </div>
+      <div className="w-[98%] md:w-[48%] lg:w-[200px] relative">
+        <CarDropdown options={carTypeOptions} />
+      </div>
     </div>
   );
 }
 
-function CarDropdown({ options }) {
+export function CarDropdown({ options, borderColor = "#4e4e4e" }) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(options[0]);
 
@@ -36,11 +42,11 @@ function CarDropdown({ options }) {
   };
 
   return (
-    <div className="w-48 relative">
+    <>
       {/* Button */}
       <button
         onClick={toggleDropdown}
-        className="w-full border border-[#4e4e4e] rounded-lg px-3 py-2 flex justify-between items-center bg-transparent text-right focus:outline-none text-white "
+        className={`w-full border border-[${borderColor}] rounded-lg px-3 py-2 flex justify-between items-center bg-transparent text-right focus:outline-none text-white`}
       >
         {selected}
         <IoIosArrowDown
@@ -64,6 +70,6 @@ function CarDropdown({ options }) {
           ))}
         </ul>
       )}
-    </div>
+    </>
   );
 }
