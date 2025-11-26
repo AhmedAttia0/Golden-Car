@@ -19,9 +19,8 @@ import { HiOutlineUserGroup } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 import { IoPersonOutline } from "react-icons/io5";
 
-export default function SidebarDark() {
+export default function SidebarDark({ className }) {
   const [open, setOpen] = React.useState(0);
-  const [openAlert, setOpenAlert] = React.useState(true);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
@@ -31,7 +30,9 @@ export default function SidebarDark() {
     "text-gray-500 hover:text-white focus:text-white active:text-white hover:bg-opacity-20 focus:bg-opacity-20 active:bg-opacity-20";
 
   return (
-    <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] mx-auto p-6 shadow-md bg-[#23262f] min-h-screen">
+    <Card
+      className={`w-full max-w-[20rem] mx-auto p-6 shadow-md bg-[#23262f] min-h-screen border-l border-[#635858] ${className}`}
+    >
       <div className="mb-2 flex items-center gap-4 p-4">
         <IoCarSportSharp className="text-4xl text-white" />
         <Typography className="text-lg font-bold text-gray-300">

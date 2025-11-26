@@ -1,7 +1,12 @@
 import CarCard from "../../../components/carCard/CarCard";
 import { useEffect, useRef } from "react";
 import useInfiniteCar from "../../../hooks/useInfiniteCar";
-export default function CarsList({ activeCarId, filters }) {
+export default function CarsList({
+  activeCarId,
+  filters,
+  Editable = false,
+  dark = false,
+}) {
   const {
     data,
     isLoading,
@@ -52,7 +57,13 @@ export default function CarsList({ activeCarId, filters }) {
       {cars?.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {cars.map((car) => (
-            <CarCard key={car.id} active={activeCarId == car.id} car={car} />
+            <CarCard
+              key={car.id}
+              Editable={Editable}
+              dark={dark}
+              active={activeCarId == car.id}
+              car={car}
+            />
           ))}
         </div>
       )}
