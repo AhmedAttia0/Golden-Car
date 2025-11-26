@@ -1,0 +1,129 @@
+{
+  "cars": [
+    {
+      "id": "car_1001",
+      "brand": "Toyota",
+      "model": "Corolla",
+      "year": 2021,
+      "price": 420000,
+      "mileage": 35000,
+      "fuel_type": "Gasoline",
+      "transmission": "اوتوماتيكي",
+      "engine_capacity": "1.6L",
+      "color": "White",
+      "has_air_conditioner": true,
+      "category": "sedan",
+      "images": ["https://example.com/cars/1001/img1.jpg"],
+      "location": {
+        "city": "Cairo",
+        "area": "Nasr City"
+      },
+      "seller": {
+        "id": "seller_32",
+        "name": "Ahmed Khaled",
+        "type": "Dealer"
+      },
+      "created_at": "2025-01-18T10:15:00Z"
+    },
+    {
+      "id": "car_1002",
+      "brand": "Kia",
+      "model": "Sportage",
+      "year": 2023,
+      "price": 880000,
+      "mileage": 8000,
+      "fuel_type": "Gasoline",
+      "transmission": "اوتوماتيكي",
+      "engine_capacity": "1.6L Turbo",
+      "color": "Red",
+      "has_air_conditioner": true,
+      "category": "suv",
+      "images": ["https://example.com/cars/1002/img1.jpg"],
+      "location": {
+        "city": "Giza",
+        "area": "Sheikh Zayed"
+      },
+      "seller": {
+        "id": "seller_150",
+        "name": "Amr Hassan",
+        "type": "Individual"
+      },
+      "created_at": "2025-01-21T09:45:00Z"
+    },
+    {
+      "id": "car_1003",
+      "brand": "Mercedes-Benz",
+      "model": "C180",
+      "year": 2022,
+      "price": 1450000,
+      "mileage": 12000,
+      "fuel_type": "Gasoline",
+      "transmission": "اوتوماتيكي",
+      "engine_capacity": "1.5L Turbo",
+      "color": "Grey",
+      "has_air_conditioner": true,
+      "category": "sedan",
+      "images": ["https://example.com/cars/1003/img1.jpg"],
+      "location": {
+        "city": "Cairo",
+        "area": "Maadi"
+      },
+      "seller": {
+        "id": "seller_90",
+        "name": "Star Motors",
+        "type": "Showroom"
+      },
+      "created_at": "2025-01-20T14:30:00Z"
+    },
+    {
+      "id": "car_1004",
+      "brand": "Nissan",
+      "model": "Sunny",
+      "year": 2020,
+      "price": 250000,
+      "mileage": 70000,
+      "fuel_type": "Gasoline",
+      "transmission": "يدوي",
+      "engine_capacity": "1.5L",
+      "color": "Blue",
+      "has_air_conditioner": true,
+      "category": "sedan",
+      "images": ["https://example.com/cars/1004/img1.jpg"],
+      "location": {
+        "city": "Alexandria",
+        "area": "Smouha"
+      },
+      "seller": {
+        "id": "seller_22",
+        "name": "Ali Tarek",
+        "type": "Individual"
+      },
+      "created_at": "2025-01-22T11:00:00Z"
+    },
+    {
+      "id": "car_1005",
+      "brand": "Chevrolet",
+      "model": "Captiva",
+      "year": 2021,
+      "price": 620000,
+      "mileage": 25000,
+      "fuel_type": "Gasoline",
+      "transmission": "اوتوماتيكي",
+      "engine_capacity": "1.5L Turbo",
+      "color": "Brown",
+      "has_air_conditioner": true,
+      "category": "suv",
+      "images": ["https://example.com/cars/1005/img1.jpg"],
+      "location": {
+        "city": "Ismailia",
+        "area": "City Center"
+      },
+      "seller": {
+        "id": "seller_40",
+        "name": "Mega Auto",
+        "type": "Showroom"
+      },
+      "created_at": "2025-01-23T16:20:00Z"
+    }
+  ]
+}
