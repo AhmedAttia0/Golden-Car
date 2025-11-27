@@ -41,7 +41,7 @@ class RemoteCarService {
 
     const filterQuery = filterParamsArray.join("&");
 
-    const paginationParams = `_page=${pageParam}&_limit=${limit}`;
+    const paginationParams = `page=${pageParam}&limit=${limit}`;
 
     const queryString = `cars?${paginationParams}${
       filterQuery ? `&${filterQuery}` : ""
