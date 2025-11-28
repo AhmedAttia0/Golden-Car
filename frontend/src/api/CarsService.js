@@ -1,19 +1,45 @@
 import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
+import { useSearchParams } from "react-router-dom";
 
 class LocalCarService {
   constructor() {
     this.allCars = mockData.cars;
   }
-  async getCars(pageNumber, limit = 10) {
-    const start = (pageNumber - 1) * limit;
+  async getCars(pageParam = 1, searchParams) {
+    const params = Object.fromEntries(searchParams);
+
+    const categories = params.category ? params.category.split(",") : null;
+    const transmissions = params.transmission
+      ? params.transmission.split(",")
+      : null;
+    const priceGte = params.price_gte ? Number(params.price_gte) : null;
+    const priceLte = params.price_lte ? Number(params.price_lte) : null;
+
+    let filtered = this.allCars.filter((car) => {
+      if (categories && !categories.includes(car.category)) return false;
+
+      if (transmissions && !transmissions.includes(car.transmission))
+        return false;
+
+      if (priceGte !== null && car.price < priceGte) return false;
+
+      if (priceLte !== null && car.price > priceLte) return false;
+
+      return true;
+    });
+
+    const limit = 10;
+    const start = (pageParam - 1) * limit;
     const end = start + limit;
 
-    const paginatedData = this.allCars.slice(start, end);
+    const paginatedData = filtered.slice(start, end);
 
     return {
       data: paginatedData,
       totalCount: this.allCars.length,
+      page: pageParam,
+      hasMore: end < this.allCars.length,
     };
   }
 
@@ -23,29 +49,12 @@ class LocalCarService {
 }
 
 class RemoteCarService {
-  async getCars(pageParam = 1, filters = {}) {
+  async getCars(pageParam = 1, searchParams) {
     const limit = 10;
+    let queryString = `cars?page=${pageParam}&limit=${limit}`;
+    console.log(searchParams.toString());
 
-    // Build filter params manually
-    const filterParamsArray = [];
-
-    Object.entries(filters).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        value.forEach((item) => {
-          filterParamsArray.push(`${key}=${encodeURIComponent(item)}`);
-        });
-      } else {
-        filterParamsArray.push(`${key}=${encodeURIComponent(value)}`);
-      }
-    });
-
-    const filterQuery = filterParamsArray.join("&");
-
-    const paginationParams = `page=${pageParam}&limit=${limit}`;
-
-    const queryString = `cars?${paginationParams}${
-      filterQuery ? `&${filterQuery}` : ""
-    }`;
+    if (searchParams.toString()) queryString += `&${searchParams.toString()}`;
 
     const { data, total } = await httpGet(queryString);
 

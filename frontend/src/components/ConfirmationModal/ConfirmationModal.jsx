@@ -17,13 +17,11 @@ export default function ConfirmationModal({ itemName, onDelete }) {
     <>
       <Button
         size="sm"
+        onClick={handleOpen}
         className="bg-transparent border border-[#4e4e4e] hover:scale-[1.05] transition-all"
       >
         {" "}
-        <RiDeleteBin6Line
-          onClick={handleOpen}
-          className={`text-lg "text-white" `}
-        />
+        <RiDeleteBin6Line className={`text-lg "text-white" `} />
       </Button>
       <Dialog
         open={open}
