@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 import useInfiniteCar from "../../../hooks/useInfiniteCar";
 export default function CarsList({
   activeCarId,
-  filters,
+  searchParams,
   Editable = false,
   dark = false,
 }) {
@@ -15,7 +15,7 @@ export default function CarsList({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteCar(filters);
+  } = useInfiniteCar(searchParams);
   const loaderRef = useRef(null);
   const cars = data?.pages.flatMap((page) => page.data) ?? [];
 
