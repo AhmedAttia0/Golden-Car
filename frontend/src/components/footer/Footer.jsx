@@ -31,7 +31,7 @@ export default function Footer() {
   return (
     <footer className="relative w-full bottom-0 mt-20">
       <div className=" w-full px-8 md:px-16 ">
-        <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-4 mb-12">
+        <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-4 mb-6">
           <Logo />
           <div className="location flex items-center gap-4  ">
             <CiLocationOn className="rounded-full text-2xl p-1 w-[2.5rem] h-[2.5rem] font-bold bg-[#FF9E0C] text-white" />

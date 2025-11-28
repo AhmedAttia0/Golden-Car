@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Input,
   Button,
@@ -19,15 +19,15 @@ const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
 const featureOptions = [
   "ABS",
   "مكيف هواء",
-  "نظام التحكم في الجر",
+  "الفرامل المانعة للانغلاق",
   "وسائد هوائية",
-  "مثبت سرعة",
+  "التحكم في السرعة",
   "حساسات ركن",
 ];
 
 export default function CreateOrEditCarModal({ onSubmit, car }) {
   const [open, setOpen] = useState(false);
-
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -65,8 +65,10 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
   };
 
   const handleSubmit = () => {
-    onSubmit(formData);
-    handleOpen();
+    if (validateForm()) {
+      onSubmit(formData);
+      handleOpen();
+    }
   };
 
   const toggleFeature = (feature) => {
@@ -80,6 +82,65 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
           : [...prev.features, feature],
       };
     });
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!formData.brand.trim()) {
+      newErrors.brand = "اسم السيارة مطلوب";
+    } else if (formData.brand.length < 2) {
+      newErrors.brand = "اسم السيارة يجب أن يكون 2 حروف على الأقل";
+    }
+
+    if (!formData.model.trim()) {
+      newErrors.model = "الموديل مطلوب";
+    }
+
+    if (!formData.year) {
+      newErrors.year = "السنة مطلوبة";
+    } else if (
+      Number(formData.year) < 1990 ||
+      Number(formData.year) > new Date().getFullYear()
+    ) {
+      newErrors.year = "السنة غير صالحة";
+    }
+
+    if (!formData.price) {
+      newErrors.price = "السعر مطلوب";
+    } else if (Number(formData.price) <= 0) {
+      newErrors.price = "السعر يجب أن يكون أكبر من صفر";
+    }
+
+    if (!formData.transmission) {
+      newErrors.transmission = "نوع الفتيس مطلوب";
+    }
+
+    if (!formData.fuelType) {
+      newErrors.fuelType = "نوع الوقود مطلوب";
+    }
+
+    if (!formData.status) {
+      newErrors.status = "حالة السيارة مطلوبة";
+    }
+
+    if (!formData.type) {
+      newErrors.type = "نوع السيارة مطلوب";
+    }
+
+    if (!formData.imageUrl.trim()) {
+      newErrors.imageUrl = "رابط الصورة مطلوب";
+    } else {
+      try {
+        new URL(formData.imageUrl);
+      } catch {
+        newErrors.imageUrl = "رابط الصورة غير صالح";
+      }
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0;
   };
 
   return (
@@ -124,7 +185,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             <HiMiniXMark color="white" className="h-4 w-4 stroke-2" />
           </IconButton>
         </DialogHeader>
-        <DialogBody className="space-y-4 pb-6">
+        <DialogBody className="space-y-4 pb-6 h-[42rem] overflow-y-scroll">
           <div className="flex gap-4">
             <div className="w-[50%]">
               <Typography
@@ -132,7 +193,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 color="white"
                 className="mb-2 font-medium"
               >
-                اسم السيارة
+                اسم البرند
               </Typography>
               <Input
                 color="gray"
@@ -142,6 +203,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 onChange={(e) => handleChange("brand", e.target.value)}
                 className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
               />
+              {errors.brand && (
+                <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
+              )}
             </div>
             <div className="w-[50%]">
               <Typography
@@ -159,6 +223,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 onChange={(e) => handleChange("model", e.target.value)}
                 className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
               />
+              {errors.model && (
+                <p className="text-red-500 text-sm mt-1">{errors.model}</p>
+              )}
             </div>
           </div>
 
@@ -180,6 +247,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 onChange={(e) => handleChange("year", e.target.value)}
                 className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
               />
+              {errors.year && (
+                <p className="text-red-500 text-sm mt-1">{errors.year}</p>
+              )}
             </div>
             <div className="w-[50%]">
               <Typography
@@ -197,6 +267,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 onChange={(e) => handleChange("price", e.target.value)}
                 className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
               />
+              {errors.price && (
+                <p className="text-red-500 text-sm mt-1">{errors.price}</p>
+              )}
             </div>
           </div>
 
@@ -280,6 +353,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               value={formData.imageUrl}
               onChange={(e) => handleChange("imageUrl", e.target.value)}
             />
+            {errors.imageUrl && (
+              <p className="text-red-500 text-sm mt-1">{errors.imageUrl}</p>
+            )}
           </div>
           <div>
             <Typography

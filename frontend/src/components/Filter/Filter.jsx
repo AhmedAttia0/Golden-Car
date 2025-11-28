@@ -1,9 +1,9 @@
 import { Typography, Input } from "@material-tailwind/react";
 import FilterationCatogory from "./FilterationCatogory";
 import PriceInputFilter from "./PriceFilter";
-const Category = {
+const type = {
   title: "الفئة",
-  key: "category",
+  key: "type",
   options: [
     {
       optionValue: "sedan",
@@ -65,13 +65,13 @@ export function Filter({ onFilter, setOpen }) {
         </div>
 
         <div className="px-4 pb-3">
-          <FilterationCatogory onFilter={onFilter} filterCategory={Category} />
+          <FilterationCatogory onFilter={onFilter} filtertype={type} />
         </div>
 
         <div className="px-4 pb-3 border-t pt-3 border-t-blue-gray-50">
           <FilterationCatogory
             onFilter={onFilter}
-            filterCategory={transmissionOptions}
+            filtertype={transmissionOptions}
           />
         </div>
 
