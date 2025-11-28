@@ -6,12 +6,12 @@ function capitalize(str) {
 }
 export default function FilterationOption({
   option: { optionValue, optionCount },
-  filterCategoryKey,
+  filtertypeKey,
   onFilter,
 }) {
   const [searchParams] = useSearchParams();
 
-  const existingValues = searchParams.get(filterCategoryKey)?.split(",");
+  const existingValues = searchParams.get(filtertypeKey)?.split(",");
 
   const isChecked = existingValues?.includes(optionValue) || false;
 
@@ -21,7 +21,7 @@ export default function FilterationOption({
         ripple={false}
         color="deep-purple"
         checked={isChecked}
-        onChange={() => onFilter(filterCategoryKey, optionValue)}
+        onChange={() => onFilter(filtertypeKey, optionValue)}
         label={
           <Typography
             variant="small"
