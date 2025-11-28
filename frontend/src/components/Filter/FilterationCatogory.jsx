@@ -2,11 +2,7 @@ import { useState } from "react";
 import { Typography } from "@material-tailwind/react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import FilterationOption from "./FilterationOption";
-export default function FilterationCatogory({
-  filterCategory,
-  onFilter,
-  searchParams,
-}) {
+export default function FilterationCatogory({ filterCategory, onFilter }) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -25,7 +21,6 @@ export default function FilterationCatogory({
           {filterCategory.options.map((option, idx) => (
             <FilterationOption
               filterCategoryKey={filterCategory.key}
-              searchParams={searchParams}
               onFilter={onFilter}
               key={idx}
               option={option}

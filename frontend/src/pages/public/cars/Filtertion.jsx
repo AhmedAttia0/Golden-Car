@@ -50,7 +50,7 @@ const carCategories = [
   },
 ];
 
-export default function Filteration({ onFilter, activeFilter, searchParams }) {
+export default function Filteration({ onFilter, activeFilter }) {
   const [open, setOpen] = useState(false);
   useEffect(() => {
     const onKey = (e) => e.key === "Escape" && setOpen(false);
@@ -62,11 +62,7 @@ export default function Filteration({ onFilter, activeFilter, searchParams }) {
       {/* Desktop sidebar (right side) — show only on large screens and up (tablet uses mobile UI) */}
       <aside className="hidden lg:block lg:shrink-0 lg:w-72 xl:w-80">
         <div className="sticky top-24 p-4 bg-white rounded-md shadow-sm">
-          <Filter
-            searchParams={searchParams}
-            onFilter={onFilter}
-            activeFilter={activeFilter}
-          />
+          <Filter onFilter={onFilter} activeFilter={activeFilter} />
         </div>
       </aside>
 
@@ -126,7 +122,6 @@ export default function Filteration({ onFilter, activeFilter, searchParams }) {
               <Filter
                 onFilter={onFilter}
                 setOpen={setOpen}
-                searchParams={searchParams}
                 activeFilter={activeFilter}
               />
             </div>
