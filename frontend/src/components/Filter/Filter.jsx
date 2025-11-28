@@ -42,7 +42,7 @@ const transmissionOptions = {
   ],
 };
 
-export function Filter({ onFilter, searchParams, setOpen }) {
+export function Filter({ onFilter, setOpen }) {
   return (
     <div className="w-full md:w-72  shadow-md border border-gray-300">
       <div className="bg-white rounded-lg shadow p-5 ">
@@ -65,16 +65,11 @@ export function Filter({ onFilter, searchParams, setOpen }) {
         </div>
 
         <div className="px-4 pb-3">
-          <FilterationCatogory
-            searchParams={searchParams}
-            onFilter={onFilter}
-            filterCategory={Category}
-          />
+          <FilterationCatogory onFilter={onFilter} filterCategory={Category} />
         </div>
 
         <div className="px-4 pb-3 border-t pt-3 border-t-blue-gray-50">
           <FilterationCatogory
-            searchParams={searchParams}
             onFilter={onFilter}
             filterCategory={transmissionOptions}
           />
@@ -89,11 +84,7 @@ export function Filter({ onFilter, searchParams, setOpen }) {
           </Typography>
           <div>
             <div className="flex flex-col !justify-between items-center">
-              <PriceInputFilter
-                setOpen={setOpen}
-                onFilter={onFilter}
-                searchParams={searchParams}
-              />
+              <PriceInputFilter setOpen={setOpen} onFilter={onFilter} />
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 import { Input } from "@material-tailwind/react";
+import { useSearchParams } from "react-router-dom";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -12,7 +13,8 @@ const reducer = (state, action) => {
   }
 };
 const initialState = { minPrice: "", maxPrice: "" };
-export default function PriceInputFilter({ onFilter, searchParams, setOpen }) {
+export default function PriceInputFilter({ onFilter, setOpen }) {
+  const [searchParams] = useSearchParams();
   const [{ minPrice, maxPrice }, dispatch] = useReducer(reducer, initialState);
   useEffect(() => {
     if (!searchParams) return;

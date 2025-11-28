@@ -7,20 +7,22 @@ const Cars = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // To make filters dynamic
-  const allowedFilters = ["category", "transmission", "price_gte", "price_lte"];
-  const filters = {};
+  // const allowedFilters = ["category", "transmission", "price_gte", "price_lte"];
+  // const filters = {};
 
-  allowedFilters.forEach((key) => {
-    const values = searchParams.getAll(key);
-    if (values.length > 0) {
-      filters[key] = values; // array of selected values
-    }
-  });
+  // allowedFilters.forEach((key) => {
+  //   const values = searchParams.get(key);
+
+  //   if (values) {
+  //     filters[key] = values; // array of selected values
+  //   }
+  // });
+
   // To highlight active car in the list
   const match = useMatch("/cars/:carId");
   const activeCarId = match ? match.params.carId : null;
 
-  function handleFilterChange(key, value, { multiple = true } = {}) {
+  function handleFilterChange(key, value) {
     if (key === "Reset") return setSearchParams({});
 
     setSearchParams((prevParams) => {
@@ -36,18 +38,20 @@ const Cars = () => {
         return newParams;
       }
 
-      if (multiple) {
-        const existing = newParams.getAll(key);
-        if (existing.includes(value)) {
-          const filtered = existing.filter((v) => v !== value);
-          newParams.delete(key);
-          filtered.forEach((v) => newParams.append(key, v));
+      const existing = newParams.get(key); // ex: "suv,sedan"
+      const valuesArray = existing ? existing.split(",") : [];
+
+      if (valuesArray.includes(value)) {
+        const filtered = valuesArray.filter((v) => v !== value);
+
+        if (filtered.length > 0) {
+          newParams.set(key, filtered.join(","));
         } else {
-          newParams.append(key, value);
+          newParams.delete(key);
         }
       } else {
-        newParams.delete(key);
-        if (value !== "") newParams.set(key, value);
+        valuesArray.push(value);
+        newParams.set(key, valuesArray.join(","));
       }
 
       return newParams;
@@ -71,7 +75,7 @@ const Cars = () => {
 
           {/* content area */}
           <div className="flex-1">
-            <CarsList activeCarId={activeCarId} filters={filters} />
+            <CarsList activeCarId={activeCarId} searchParams={searchParams} />
           </div>
         </div>
       </main>

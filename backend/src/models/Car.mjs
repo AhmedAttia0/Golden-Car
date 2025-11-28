@@ -59,8 +59,8 @@ const carSchema = new Schema({
 
   fuelType: {
     type: String,
-    enum: ["petrol", "diesel", "electric", "hybrid"],
-    default: "petrol",
+    enum: ["بنزين", "ديزل", "كهرباء", "هجين"],
+    default: "بنزين",
   },
 
   features: {
