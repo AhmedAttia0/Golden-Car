@@ -126,7 +126,7 @@ const FinishDateHomeForm = ({ onDateSelect }) => {
             }
           />
         </PopoverHandler>
-        <PopoverContent className="z-50">
+        <PopoverContent className="!z-[9999]">
           <DayPicker
             classNames={{ day_today: "my-day-today" }}
             dir="rtl"

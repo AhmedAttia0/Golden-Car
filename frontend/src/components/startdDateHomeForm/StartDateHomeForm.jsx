@@ -105,7 +105,7 @@ const StartDateHomeForm = ({ onDateSelect }) => {
 
   return (
     <div className="bg-[#FAFAFA]">
-      <Popover placement="bottom">
+      <Popover placement="bottom" className="z-50">
         <PopoverHandler>
           <Input
             containerProps={{
@@ -126,7 +126,7 @@ const StartDateHomeForm = ({ onDateSelect }) => {
             }
           />
         </PopoverHandler>
-        <PopoverContent className="z-50">
+        <PopoverContent className="!z-[9999]">
           <DayPicker
             classNames={{ day_today: "my-day-today" }}
             dir="rtl"
