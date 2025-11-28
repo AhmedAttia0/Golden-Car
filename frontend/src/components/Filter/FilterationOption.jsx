@@ -1,4 +1,5 @@
 import { Typography, Checkbox } from "@material-tailwind/react";
+import { useSearchParams } from "react-router-dom";
 function capitalize(str) {
   if (!str) return "";
   return str[0].toUpperCase() + str.slice(1);
@@ -7,11 +8,12 @@ export default function FilterationOption({
   option: { optionValue, optionCount },
   filterCategoryKey,
   onFilter,
-  searchParams,
 }) {
-  const existingValues = searchParams.getAll(filterCategoryKey); // array
+  const [searchParams] = useSearchParams();
 
-  const isChecked = existingValues.includes(optionValue);
+  const existingValues = searchParams.get(filterCategoryKey)?.split(",");
+
+  const isChecked = existingValues?.includes(optionValue) || false;
 
   return (
     <div className="flex !justify-between items-center">

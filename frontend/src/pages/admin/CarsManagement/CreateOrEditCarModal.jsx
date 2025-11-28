@@ -16,6 +16,14 @@ const TransmisionOptions = ["اوتوماتيكي", "يدوي"];
 const fuelTypeOptions = ["بنزين", "ديزل", "كهرباء", "هجين"];
 const carStatusOptions = ["متاحة", "محجوزة", "صيانة"];
 const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
+const featureOptions = [
+  "ABS",
+  "مكيف هواء",
+  "نظام التحكم في الجر",
+  "وسائد هوائية",
+  "مثبت سرعة",
+  "حساسات ركن",
+];
 
 export default function CreateOrEditCarModal({ onSubmit, car }) {
   const [open, setOpen] = useState(false);
@@ -30,6 +38,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
     status: "",
     type: "",
     imageUrl: "",
+    features: [],
   });
 
   useEffect(() => {
@@ -44,6 +53,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
         status: car.status || "",
         type: car.type || "",
         imageUrl: car.imageUrl || "",
+        features: car?.features || [],
       });
     }
   }, [car]);
@@ -57,6 +67,19 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
   const handleSubmit = () => {
     onSubmit(formData);
     handleOpen();
+  };
+
+  const toggleFeature = (feature) => {
+    setFormData((prev) => {
+      const exists = prev.features.includes(feature);
+
+      return {
+        ...prev,
+        features: exists
+          ? prev.features.filter((f) => f !== feature)
+          : [...prev.features, feature],
+      };
+    });
   };
 
   return (
@@ -257,6 +280,32 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               value={formData.imageUrl}
               onChange={(e) => handleChange("imageUrl", e.target.value)}
             />
+          </div>
+          <div>
+            <Typography
+              variant="small"
+              color="white"
+              className="mb-2 font-medium"
+            >
+              Features
+            </Typography>
+
+            <div className="grid grid-cols-2 gap-2">
+              {featureOptions.map((feature) => (
+                <label
+                  key={feature}
+                  className="flex items-center gap-2 text-white cursor-pointer"
+                >
+                  <input
+                    type="checkbox"
+                    className="w-4 h-4 accent-[#5937E0]"
+                    checked={formData.features.includes(feature)}
+                    onChange={() => toggleFeature(feature)}
+                  />
+                  <span>{feature}</span>
+                </label>
+              ))}
+            </div>
           </div>
         </DialogBody>
 
