@@ -1,6 +1,6 @@
 import { Typography, Checkbox } from "@material-tailwind/react";
 import { useSearchParams } from "react-router-dom";
-function capitalize(str) {
+export function capitalize(str) {
   if (!str) return "";
   return str[0].toUpperCase() + str.slice(1);
 }

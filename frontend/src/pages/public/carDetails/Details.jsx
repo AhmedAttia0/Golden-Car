@@ -11,6 +11,7 @@ import { useQuery } from "@tanstack/react-query";
 import { FaCircleXmark } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import CarsList from "../cars/CarsList";
+import BookingForm from "../../../components/bookingForm/BookingForm";
 
 const mainFeatures = [
   "ABS",
@@ -35,7 +36,17 @@ const CarDetails = () => {
   if (isError) {
     throw new Response("لم يتم ايجاد هذه السيارة", { status: 404 });
   }
-  const { price, brand, transmission, hasAirConditioner, features } = data;
+  const {
+    price,
+    model,
+    brand,
+    transmission,
+    hasAirConditioner,
+    features,
+    status,
+    year,
+    type,
+  } = data;
 
   const switchimage = (img) => {
     const newImages = carImages.map((image) =>
@@ -121,9 +132,15 @@ const CarDetails = () => {
           </div>
 
           <div className="flex justify-center  lg:justify-start  w-full mt-2">
-            <button className="bg-[#5937E0] text-white rounded-md w-[80%] lg:w-[50%] h-10 hover:bg-[#452cb8] transition-all">
-              احجز سيارة
-            </button>
+            <BookingForm
+              carId={id}
+              price={price}
+              brand={brand}
+              type={type}
+              year={year}
+              model={model}
+              status={status}
+            />
           </div>
 
           <h1 className="font-bold text-2xl mt-8">معدات السيارة</h1>

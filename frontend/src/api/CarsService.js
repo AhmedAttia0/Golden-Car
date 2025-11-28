@@ -7,8 +7,6 @@ class LocalCarService {
     this.allCars = mockData.cars;
   }
   async getCars(pageParam = 1, searchParams, limit) {
-    console.log(limit);
-
     const params = Object.fromEntries(searchParams);
 
     const categories = params.type ? params.type.split(",") : null;
@@ -35,7 +33,6 @@ class LocalCarService {
     const end = start + limit;
 
     const paginatedData = filtered.slice(start, end);
-    console.log(paginatedData);
 
     return {
       data: paginatedData,
