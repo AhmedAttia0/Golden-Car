@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Typography } from "@material-tailwind/react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import FilterationOption from "./FilterationOption";
-export default function FilterationCatogory({ filterCategory, onFilter }) {
+export default function FilterationCatogory({ filtertype, onFilter }) {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -12,15 +12,15 @@ export default function FilterationCatogory({ filterCategory, onFilter }) {
         onClick={() => setIsOpen(!isOpen)}
       >
         <Typography variant="small" className="font-medium text-gray-600 mb-2">
-          {filterCategory.title}{" "}
+          {filtertype.title}{" "}
         </Typography>
         {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
       </div>
       {isOpen && (
         <div className="space-y-1">
-          {filterCategory.options.map((option, idx) => (
+          {filtertype.options.map((option, idx) => (
             <FilterationOption
-              filterCategoryKey={filterCategory.key}
+              filtertypeKey={filtertype.key}
               onFilter={onFilter}
               key={idx}
               option={option}

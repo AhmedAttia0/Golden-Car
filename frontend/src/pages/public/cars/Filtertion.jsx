@@ -70,7 +70,7 @@ export default function Filteration({ onFilter, activeFilter }) {
       <div className="lg:hidden px-4 mt-10">
         <button
           type="button"
-          className="w-full flex items-center justify-between px-4 py-3 bg-div-purple text-white rounded-lg shadow-sm"
+          className="w-full flex items-center justify-between bg-[#5937E0] px-4 py-3 bg-div-purple text-white rounded-lg shadow-sm"
           onClick={() => setOpen(true)}
           aria-expanded={open}
         >

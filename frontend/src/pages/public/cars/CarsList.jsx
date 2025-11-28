@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 import useInfiniteCar from "../../../hooks/useInfiniteCar";
 export default function CarsList({
   activeCarId,
-  searchParams,
   Editable = false,
   dark = false,
+  limit = 10,
 }) {
   const {
     data,
@@ -15,10 +15,10 @@ export default function CarsList({
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteCar(searchParams);
+  } = useInfiniteCar(limit);
   const loaderRef = useRef(null);
   const cars = data?.pages.flatMap((page) => page.data) ?? [];
-
+  let limitedCars = cars.slice(0, limit);
   // handle infinite scrolling
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -66,7 +66,7 @@ export default function CarsList({
       )}
       {cars?.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {cars.map((car) => (
+          {limitedCars.map((car) => (
             <CarCard
               key={car.id}
               Editable={Editable}

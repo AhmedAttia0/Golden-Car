@@ -7,7 +7,7 @@ const Cars = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   // To make filters dynamic
-  // const allowedFilters = ["category", "transmission", "price_gte", "price_lte"];
+  // const allowedFilters = ["type", "transmission", "price_gte", "price_lte"];
   // const filters = {};
 
   // allowedFilters.forEach((key) => {
