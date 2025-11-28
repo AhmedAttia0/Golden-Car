@@ -9,7 +9,12 @@ import { useNavigate } from "react-router-dom";
 import { BsFillFuelPumpFill } from "react-icons/bs";
 import { TbManualGearbox } from "react-icons/tb";
 import { FaSnowflake } from "react-icons/fa";
-
+import { Chip } from "@material-tailwind/react";
+const statusColor = {
+  متاحة: "green",
+  "غير متاحة": "red",
+  "تحت الصيانة": "amber",
+};
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import EditCarModal from "../../pages/admin/CarsManagement/CreateOrEditCarModal";
 const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
@@ -18,14 +23,15 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
     id,
     price = 25,
     brand = "Mercedes",
-    category = "رياضية",
+    type = "رياضية",
     transmission = "اوتوماتيكي",
     hasAirConditioner = false,
+    status = "متاحة",
   } = car;
   return (
     <div className="flex justify-center">
       <Card
-        className={`group ${
+        className={`group relative ${
           dark ? "bg-[#14151a] text-white" : "bg-white text-black"
         } shadow-lg rounded-xl my-10 w-full max-w-sm transition-all  hover:shadow-[0_8px_30px_rgba(89,55,224,0.22),0_2px_8px_rgba(89,55,224,0.06)] hover:ring-1 hover:ring-[#5937E0]/20 ${
           active
@@ -33,6 +39,12 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
             : ""
         }`}
       >
+        <Chip
+          className={`absolute top-6 right-6 z-10`}
+          color={statusColor[status]}
+          value={status}
+          size="md"
+        ></Chip>
         <CardHeader
           shadow={false}
           floated={false}
@@ -58,7 +70,7 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
               >
                 {brand}
               </h1>
-              <h3 className={`justify-end`}>{category}</h3>
+              <h3 className={`justify-end`}>{type}</h3>
             </div>
           </div>
 

@@ -1,6 +1,6 @@
 {
+  "type": "module",
   "dependencies": {
-    "type": "module",
     "express": "^5.1.0",
     "joi": "^18.0.2",
     "mongoose": "^9.0.0"

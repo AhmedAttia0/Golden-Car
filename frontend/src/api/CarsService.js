@@ -6,10 +6,12 @@ class LocalCarService {
   constructor() {
     this.allCars = mockData.cars;
   }
-  async getCars(pageParam = 1, searchParams) {
+  async getCars(pageParam = 1, searchParams, limit) {
+    console.log(limit);
+
     const params = Object.fromEntries(searchParams);
 
-    const categories = params.category ? params.category.split(",") : null;
+    const categories = params.type ? params.type.split(",") : null;
     const transmissions = params.transmission
       ? params.transmission.split(",")
       : null;
@@ -17,7 +19,7 @@ class LocalCarService {
     const priceLte = params.price_lte ? Number(params.price_lte) : null;
 
     let filtered = this.allCars.filter((car) => {
-      if (categories && !categories.includes(car.category)) return false;
+      if (categories && !categories.includes(car.type)) return false;
 
       if (transmissions && !transmissions.includes(car.transmission))
         return false;
@@ -29,11 +31,11 @@ class LocalCarService {
       return true;
     });
 
-    const limit = 10;
     const start = (pageParam - 1) * limit;
     const end = start + limit;
 
     const paginatedData = filtered.slice(start, end);
+    console.log(paginatedData);
 
     return {
       data: paginatedData,
@@ -49,10 +51,8 @@ class LocalCarService {
 }
 
 class RemoteCarService {
-  async getCars(pageParam = 1, searchParams) {
-    const limit = 10;
+  async getCars(pageParam = 1, searchParams, limit) {
     let queryString = `cars?page=${pageParam}&limit=${limit}`;
-    console.log(searchParams.toString());
 
     if (searchParams.toString()) queryString += `&${searchParams.toString()}`;
 
