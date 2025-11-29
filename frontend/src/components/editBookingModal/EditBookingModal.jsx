@@ -111,10 +111,19 @@
 
 import React, { useState } from "react";
 import { Select, Option } from "@material-tailwind/react";
-import { Card, Input, Typography, Button, Dialog, DialogHeader, DialogBody, DialogFooter } from "@material-tailwind/react";
+import {
+  Card,
+  Input,
+  Typography,
+  Button,
+  Dialog,
+  DialogHeader,
+  DialogBody,
+  DialogFooter,
+} from "@material-tailwind/react";
 import { FaPen } from "react-icons/fa";
 
-import EditBookingStartDate from "../EditBookingStartDate/EditBookingStartDate";
+import EditBookingStartDate from "../editBookingStartDate/EditBookingStartDate";
 import EditBookingEndDate from "../editBookingEndDate/EditBookingEndDate";
 
 const EditBookingModal = ({ book }) => {
@@ -128,7 +137,9 @@ const EditBookingModal = ({ book }) => {
   const [selectedPrice, setSelectedPrice] = useState(price);
 
   // Dates to receive new values
-  const [newStart, setNewStart] = useState(startDate ? new Date(startDate) : null);
+  const [newStart, setNewStart] = useState(
+    startDate ? new Date(startDate) : null
+  );
   const [newEnd, setNewEnd] = useState(endDate ? new Date(endDate) : null);
 
   // Errors
@@ -171,9 +182,12 @@ const EditBookingModal = ({ book }) => {
 
               <form className="mt-8 mb-2 w-full">
                 <div className="mb-1 flex flex-col gap-6">
-
                   {/* Select Car */}
-                  <Typography variant="h6" color="blue-gray" className="-mb-3 w-[45%]">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="-mb-3 w-[45%]"
+                  >
                     <Select
                       onChange={(value) => setSelectedCar(value)}
                       value={selectedCar}
@@ -182,29 +196,52 @@ const EditBookingModal = ({ book }) => {
                       <Option value="old">{Car}</Option>
                       <Option value="1">Material Tailwind HTML</Option>
                     </Select>
-                    {errors.car && <p className="text-red-500 text-sm">{errors.car}</p>}
+                    {errors.car && (
+                      <p className="text-red-500 text-sm">{errors.car}</p>
+                    )}
                   </Typography>
 
                   {/* Price */}
-                  <Typography variant="h6" color="blue-gray" className="-mb-3 w-[45%]">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="-mb-3 w-[45%]"
+                  >
                     <Input
                       label="السعر"
                       onChange={(e) => setSelectedPrice(e.target.value)}
                       value={selectedPrice}
                     />
-                    {errors.price && <p className="text-red-500 text-sm">{errors.price}</p>}
+                    {errors.price && (
+                      <p className="text-red-500 text-sm">{errors.price}</p>
+                    )}
                   </Typography>
 
                   {/* Start Date */}
-                  <Typography variant="h6" color="blue-gray" className="-mb-3 w-[45%]">
-                    <EditBookingStartDate startDate={newStart} onChange={setNewStart} />
-                    {errors.start && <p className="text-red-500 text-sm">{errors.start}</p>}
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="-mb-3 w-[45%]"
+                  >
+                    <EditBookingStartDate
+                      startDate={newStart}
+                      onChange={setNewStart}
+                    />
+                    {errors.start && (
+                      <p className="text-red-500 text-sm">{errors.start}</p>
+                    )}
                   </Typography>
 
                   {/* End Date */}
-                  <Typography variant="h6" color="blue-gray" className="-mb-3 w-[45%]">
+                  <Typography
+                    variant="h6"
+                    color="blue-gray"
+                    className="-mb-3 w-[45%]"
+                  >
                     <EditBookingEndDate endDate={newEnd} onChange={setNewEnd} />
-                    {errors.end && <p className="text-red-500 text-sm">{errors.end}</p>}
+                    {errors.end && (
+                      <p className="text-red-500 text-sm">{errors.end}</p>
+                    )}
                   </Typography>
 
                   {/* Date Compare Error */}
@@ -214,11 +251,20 @@ const EditBookingModal = ({ book }) => {
                 </div>
 
                 <div className="mt-8 w-full text-end">
-                  <Button variant="gradient" color="green" onClick={handleSubmit}>
+                  <Button
+                    variant="gradient"
+                    color="green"
+                    onClick={handleSubmit}
+                  >
                     <span>تأكيد</span>
                   </Button>
 
-                  <Button variant="text" color="red" onClick={handleOpen} className="mr-1">
+                  <Button
+                    variant="text"
+                    color="red"
+                    onClick={handleOpen}
+                    className="mr-1"
+                  >
                     <span>الغاء</span>
                   </Button>
                 </div>
