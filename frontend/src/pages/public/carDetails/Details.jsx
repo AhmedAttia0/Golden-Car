@@ -176,7 +176,9 @@ const CarDetails = () => {
       <h3 className="text-2xl font-bold text-center mt-10">
         تصفح سيارات مشابه
       </h3>
-      <CarsList activeCarId={id} limit={3} />
+      <div className="px-4">
+        <CarsList activeCarId={id} limit={3} />
+      </div>
     </>
   );
 };
