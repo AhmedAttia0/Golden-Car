@@ -164,7 +164,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
       )}
 
       <Dialog
-        size="sm"
+        size="md"
         open={open}
         handler={handleOpen}
         className="p-4 bg-[#0f1729]"
@@ -186,8 +186,8 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
           </IconButton>
         </DialogHeader>
         <DialogBody className="space-y-4 pb-6 h-[42rem] overflow-y-scroll">
-          <div className="flex gap-4">
-            <div className="w-[50%]">
+          <div className="flex md:flex-row flex-col gap-4">
+            <div className="w-full md:w-[50%]">
               <Typography
                 variant="small"
                 color="white"
@@ -207,7 +207,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
               )}
             </div>
-            <div className="w-[50%]">
+            <div className="w-full md:w-[50%]">
               <Typography
                 variant="small"
                 color="white"
@@ -229,8 +229,8 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             </div>
           </div>
 
-          <div className="flex gap-4">
-            <div className="w-[50%]">
+          <div className="flex md:flex-row flex-col gap-4">
+            <div className="w-full md:w-[50%]">
               <Typography
                 variant="small"
                 color="white"
@@ -251,7 +251,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 <p className="text-red-500 text-sm mt-1">{errors.year}</p>
               )}
             </div>
-            <div className="w-[50%]">
+            <div className="w-full md:w-[50%]">
               <Typography
                 variant="small"
                 color="white"
@@ -273,8 +273,8 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             </div>
           </div>
 
-          <div className="flex gap-4">
-            <div className="w-[50%] relative">
+          <div className="flex md:flex-row flex-col gap-4">
+            <div className="w-full md:w-[50%] relative">
               <Typography
                 variant="small"
                 color="white"
@@ -289,7 +289,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
                 onChange={(value) => handleChange("transmission", value)}
               />
             </div>
-            <div className="w-[50%] relative">
+            <div className="w-full md:w-[50%] relative">
               <Typography
                 variant="small"
                 color="white"
@@ -385,7 +385,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
           </div>
         </DialogBody>
 
-        <DialogFooter>
+        <div className="mb-4 md:my-3 flex justify-end">
           <Button
             onClick={handleOpen}
             className="bg-transparent border border-[#5937E0] ml-2"
@@ -395,7 +395,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
           <Button onClick={handleSubmit} className="bg-[#5937E0]">
             {car ? "تحديث السيارة" : "اضف السيارة"}
           </Button>
-        </DialogFooter>
+        </div>
       </Dialog>
     </>
   );
