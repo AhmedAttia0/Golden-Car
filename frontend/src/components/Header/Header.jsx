@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
-
+import { useUser } from "../../contexts/UserContext";
 import {
   Navbar,
   Collapse,
@@ -11,6 +11,7 @@ import {
 } from "@material-tailwind/react";
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
+  const { user, setUser } = useUser();
 
   useEffect(() => {
     window.addEventListener(
@@ -98,23 +99,39 @@ const Header = () => {
         <div className="mr-4 hidden lg:block">{navList}</div>
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-x-1">
-            <NavLink to="/login">
-              <Button
-                variant="text"
-                size="sm"
-                className="hidden lg:inline-block"
-              >
-                <span>تسجيل الدخول</span>
-              </Button>
-            </NavLink>
-            <NavLink to="/signup">
-              <Button
-                size="sm"
-                className="hidden lg:inline-block bg-[#5937E0] hover:bg-[#5937e0ec] "
-              >
-                <span>إنشاء حساب</span>
-              </Button>
-            </NavLink>
+            {user ? (
+              <>
+                <NavLink to="/profile" className="flex items-center gap-1 ml-2">
+                  <span>{user.first_name}</span>
+
+                  <img src="/profile.jpg" alt="profile" className="w-8 h-8" />
+                </NavLink>
+                <Button
+                  className="bg-[#ff0000]  hover:bg-[#e92323e1]"
+                  size="sm"
+                  onClick={() => setUser(null)}
+                >
+                  <span>تسجيل الخروج</span>
+                </Button>
+              </>
+            ) : (
+              <>
+                <NavLink to="/login" className="w-full">
+                  <Button fullWidth variant="text" size="sm">
+                    <span>تسجيل الدخول</span>
+                  </Button>
+                </NavLink>
+                <NavLink to="/signup" className="w-full">
+                  <Button
+                    fullWidth
+                    className="bg-[#5937E0] hover:bg-[#5937e0ec]"
+                    size="sm"
+                  >
+                    <span>إنشاء حساب</span>
+                  </Button>
+                </NavLink>
+              </>
+            )}
           </div>
           <IconButton
             variant="text"
@@ -158,20 +175,40 @@ const Header = () => {
       <Collapse open={openNav}>
         {navList}
         <div className="flex items-center gap-x-1">
-          <NavLink to="/login" className="w-full">
-            <Button fullWidth variant="text" size="sm">
-              <span>تسجيل الدخول</span>
-            </Button>
-          </NavLink>
-          <NavLink to="/signup" className="w-full">
-            <Button
-              fullWidth
-              className="bg-[#5937E0] hover:bg-[#5937e0ec]"
-              size="sm"
-            >
-              <span>إنشاء حساب</span>
-            </Button>
-          </NavLink>
+          {user ? (
+            <>
+              <NavLink to="/profile">
+                <Button variant="text" size="sm">
+                  <span>{user.first_name}</span>
+                </Button>
+                <img src="profile.png" alt="profile" className="w-8 h-8" />
+              </NavLink>
+              <Button
+                className="bg-[#5937E0]  hover:bg-[#5937e0ec]"
+                size="sm"
+                onClick={() => setUser(null)}
+              >
+                <span>تسجيل الخروج</span>
+              </Button>
+            </>
+          ) : (
+            <>
+              <NavLink to="/login" className="w-full">
+                <Button fullWidth variant="text" size="sm">
+                  <span>تسجيل الدخول</span>
+                </Button>
+              </NavLink>
+              <NavLink to="/signup" className="w-full">
+                <Button
+                  fullWidth
+                  className="bg-[#5937E0] hover:bg-[#5937e0ec]"
+                  size="sm"
+                >
+                  <span>إنشاء حساب</span>
+                </Button>
+              </NavLink>
+            </>
+          )}
         </div>
       </Collapse>
     </Navbar>

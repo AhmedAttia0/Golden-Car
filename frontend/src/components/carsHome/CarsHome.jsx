@@ -1,6 +1,6 @@
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import CarCard from "../carCard/CarCard";
+import CarsList from "../../pages/public/cars/CarsList";
 
 const CarsHome = () => {
   return (
@@ -14,16 +14,8 @@ const CarsHome = () => {
           </div>
         </Link>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="">
-          <CarCard />
-        </div>
-        <div className="">
-          <CarCard />
-        </div>
-        <div className="">
-          <CarCard />
-        </div>
+      <div className="px-4">
+        <CarsList limit={3} disableInfinite={true} />
       </div>
     </div>
   );

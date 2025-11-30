@@ -1,54 +1,6 @@
-import { Button } from "@material-tailwind/react";
-import { LiaTruckPickupSolid } from "react-icons/lia";
-import { IoCarSportOutline } from "react-icons/io5";
-import { TbCarSuv } from "react-icons/tb";
 import Filter from "../../../components/Filter/Filter";
 
 import { useEffect, useState } from "react";
-const carCategories = [
-  {
-    key: "all",
-    label: "كل السيارات",
-    icon: null,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-  {
-    key: "sedan",
-    label: "Sedan",
-    icon: IoCarSportOutline,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-  {
-    key: "cabriolet",
-    label: "Cabriolet",
-    icon: IoCarSportOutline,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-  {
-    key: "pickup",
-    label: "Pickup",
-    icon: LiaTruckPickupSolid,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-  {
-    key: "suv",
-    label: "Suv",
-    icon: TbCarSuv,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-  {
-    key: "minivan",
-    label: "Minivan",
-    icon: IoCarSportOutline,
-    activeStyle: "bg-[#5937E0] text-white",
-    defaultStyle: "bg-white text-black",
-  },
-];
 
 export default function Filteration({ onFilter, activeFilter }) {
   const [open, setOpen] = useState(false);
@@ -61,7 +13,7 @@ export default function Filteration({ onFilter, activeFilter }) {
     <>
       {/* Desktop sidebar (right side) — show only on large screens and up (tablet uses mobile UI) */}
       <aside className="hidden lg:block lg:shrink-0 lg:w-72 xl:w-80">
-        <div className="sticky top-24 p-4 bg-white rounded-md shadow-sm">
+        <div className="  bg-white rounded-md shadow-sm  p-4">
           <Filter onFilter={onFilter} activeFilter={activeFilter} />
         </div>
       </aside>
