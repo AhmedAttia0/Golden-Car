@@ -9,6 +9,7 @@ module.exports = withMT({
         hero: "url('/hero.png')",
         hero2: "url('/hero2.png')",
         nombers: "url('/nombers.png')",
+        hero3: "url('/heroGemR.png')",
       },
       colors: {
         lightgray: "#FAFAFA",
