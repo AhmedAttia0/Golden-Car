@@ -15,7 +15,7 @@ export default function ProfileSidebar() {
       {/* Profile Image */}
       <div className="relative">
         <img
-          src={`${user?.image || "profile.jpg"}`}
+          src={`${user?.image || "/profile.jpg"}`}
           alt="user"
           className="w-28 h-28 rounded-full border-4 border-purple-500 object-cover"
         />
