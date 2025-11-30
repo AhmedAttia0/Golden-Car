@@ -14,7 +14,7 @@ import CarsManagement from "./pages/admin/CarsManagement/Cars";
 import Users from "./pages/admin/Users/Users";
 import Settings from "./pages/admin/Settings/Settings";
 import Bookings from "./pages/admin/Bookings/Bookings";
-import Profile from "./pages/public/profile/profile";
+import Profile from "./pages/public/profile/Profile";
 
 export const router = createBrowserRouter([
   {
