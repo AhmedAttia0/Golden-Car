@@ -12,6 +12,7 @@ import { FaCircleXmark } from "react-icons/fa6";
 import { FaArrowRight } from "react-icons/fa";
 import CarsList from "../cars/CarsList";
 import BookingForm from "../../../components/bookingForm/BookingForm";
+import CarsHome from "../../../components/carsHome/CarsHome";
 
 const mainFeatures = [
   "ABS",
@@ -172,12 +173,8 @@ const CarDetails = () => {
           </div>
         </div>
       </div>
-
-      <h3 className="text-2xl font-bold text-center mt-10">
-        تصفح سيارات مشابه
-      </h3>
-      <div className="px-4">
-        <CarsList activeCarId={id} limit={3} />
+      <div className="lg:container lg:mx-auto mx-3">
+        <CarsHome />
       </div>
     </>
   );

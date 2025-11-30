@@ -4,7 +4,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 export default function useInfiniteCar(limit) {
   const [searchParams] = useSearchParams();
   return useInfiniteQuery({
-    queryKey: ["cars", searchParams.toString()],
+    queryKey: ["cars", searchParams.toString(), limit],
     queryFn: async ({ pageParam = 1 }) =>
       getCars({ pageParam }, searchParams, limit),
     getNextPageParam: (lastPage) => {

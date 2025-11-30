@@ -6,6 +6,7 @@ export default function CarsList({
   Editable = false,
   dark = false,
   limit = 10,
+  disableInfinite = false,
 }) {
   const {
     data,
@@ -18,9 +19,10 @@ export default function CarsList({
   } = useInfiniteCar(limit);
   const loaderRef = useRef(null);
   const cars = data?.pages.flatMap((page) => page.data) ?? [];
-  let limitedCars = cars.slice(0, limit);
+  // let limitedCars = cars.slice( limit);
   // handle infinite scrolling
   useEffect(() => {
+    if (disableInfinite) return;
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries[0].isIntersecting && hasNextPage) {
@@ -66,7 +68,7 @@ export default function CarsList({
       )}
       {cars?.length > 0 && (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {limitedCars.map((car) => (
+          {cars.map((car) => (
             <CarCard
               key={car.id}
               Editable={Editable}

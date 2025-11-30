@@ -73,7 +73,7 @@ export default function PriceInputFilter({ onFilter, setOpen }) {
               className="w-full"
             />
           </div>
-          <div className="w-full sm:w-auto flex justify-center">
+          <div className="w-full sm:w-auto mb-4 md:mb-0 flex justify-center">
             <button
               className="my-3 w-full bg-[#5937E0] text-white px-4 py-2 rounded"
               type="submit"
