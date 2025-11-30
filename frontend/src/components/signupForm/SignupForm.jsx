@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import InputField from "../inputField/InputField";
 import Button from "../button/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
+import { useUser } from "../../contexts/UserContext";
 const SignupForm = () => {
+  const { setUser } = useUser();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -72,7 +75,12 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      console.log("Form submission successful:", formData);
+      const data = { ...formData };
+      console.log(data);
+
+      setUser(data);
+      localStorage.setItem("user", JSON.stringify(data));
+      navigate("/");
     }
   };
   return (

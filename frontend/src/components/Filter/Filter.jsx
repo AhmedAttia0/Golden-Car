@@ -1,46 +1,66 @@
 import { Typography, Input } from "@material-tailwind/react";
 import FilterationCatogory from "./FilterationCatogory";
 import PriceInputFilter from "./PriceFilter";
-const type = {
-  title: "الفئة",
-  key: "type",
-  options: [
-    {
-      optionValue: "sedan",
-      optionCount: "23",
-    },
-    {
-      optionValue: "cabriolet",
-      optionCount: "15",
-    },
-    {
-      optionValue: "pickup",
-      optionCount: "8",
-    },
-    {
-      optionValue: "suv",
-      optionCount: "19",
-    },
-    {
-      optionValue: "minivan",
-      optionCount: "19",
-    },
-  ],
-};
-const transmissionOptions = {
-  title: "ناقل الحركة",
-  key: "transmission",
-  options: [
-    {
-      optionValue: "اوتوماتيكي",
-      optionCount: "12",
-    },
-    {
-      optionValue: "يدوي",
-      optionCount: "8",
-    },
-  ],
-};
+const filtersOptions = [
+  {
+    title: "الفئة",
+    key: "type",
+    options: [
+      {
+        optionValue: "sedan",
+        optionCount: "23",
+      },
+      {
+        optionValue: "cabriolet",
+        optionCount: "15",
+      },
+      {
+        optionValue: "pickup",
+        optionCount: "8",
+      },
+      {
+        optionValue: "suv",
+        optionCount: "19",
+      },
+      {
+        optionValue: "minivan",
+        optionCount: "19",
+      },
+    ],
+  },
+  {
+    title: "ناقل الحركة",
+    key: "transmission",
+    options: [
+      {
+        optionValue: "اوتوماتيكي",
+        optionCount: "12",
+      },
+      {
+        optionValue: "يدوي",
+        optionCount: "8",
+      },
+    ],
+  },
+  {
+    title: "الحالة",
+    key: "status",
+    options: [
+      {
+        optionValue: "متاحة",
+        optionCount: "12",
+      },
+      {
+        optionValue: "غير متاحة",
+        optionCount: "8",
+      },
+      {
+        optionValue: "تحت الصيانة",
+        optionCount: "8",
+      },
+    ],
+  },
+];
 
 export function Filter({ onFilter, setOpen }) {
   return (
@@ -63,17 +83,19 @@ export function Filter({ onFilter, setOpen }) {
             onFocus={(e) => e.stopPropagation()}
           />
         </div>
-
-        <div className="px-4 pb-3">
-          <FilterationCatogory onFilter={onFilter} filtertype={type} />
-        </div>
-
-        <div className="px-4 pb-3 border-t pt-3 border-t-blue-gray-50">
-          <FilterationCatogory
-            onFilter={onFilter}
-            filtertype={transmissionOptions}
-          />
-        </div>
+        {filtersOptions.map((filterOption, i) => (
+          <div
+            key={filterOption.key}
+            className={`px-4 pb-3 ${
+              i !== 0 && "border-t pt-3 border-t-blue-gray-50"
+            } `}
+          >
+            <FilterationCatogory
+              onFilter={onFilter}
+              filtertype={filterOption}
+            />
+          </div>
+        ))}
 
         <div className="px-4 pb-3 border-t pt-3 border-t-blue-gray-50">
           <Typography

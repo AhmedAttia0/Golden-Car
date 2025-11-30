@@ -1,10 +1,12 @@
 import React from "react";
 import { IoCarSportSharp } from "react-icons/io5";
 import InputField from "../inputField/InputField";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
+
 const LoginForm = () => {
   const location = useLocation();
+
   return (
     <section
       id="login-form"

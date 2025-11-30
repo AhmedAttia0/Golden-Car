@@ -8,7 +8,7 @@ class LocalCarService {
   }
   async getCars(pageParam = 1, searchParams, limit) {
     const params = Object.fromEntries(searchParams);
-
+    const status = params.status ? params.status.split(",") : null;
     const categories = params.type ? params.type.split(",") : null;
     const transmissions = params.transmission
       ? params.transmission.split(",")
@@ -18,6 +18,8 @@ class LocalCarService {
 
     let filtered = this.allCars.filter((car) => {
       if (categories && !categories.includes(car.type)) return false;
+
+      if (status && !status.includes(car.status)) return false;
 
       if (transmissions && !transmissions.includes(car.transmission))
         return false;
