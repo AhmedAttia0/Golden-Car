@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Settings from "../models/Settings.mjs";
-import validateSettingsForm from "../validation/settingsform.js";
+import validateSettingsForm from "../validations/settingsvalidation.mjs";
 
 const router = Router();
 

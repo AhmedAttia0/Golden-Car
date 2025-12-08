@@ -7,10 +7,9 @@ import {
   Typography,
   DialogBody,
   DialogHeader,
-  DialogFooter,
 } from "@material-tailwind/react";
+import Dropdown from "../../../components/Dropdown";
 import { HiMiniXMark } from "react-icons/hi2";
-import { CarDropdown } from "./Filterations";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 const TransmisionOptions = ["اوتوماتيكي", "يدوي"];
 const fuelTypeOptions = ["بنزين", "ديزل", "كهرباء", "هجين"];
@@ -66,7 +65,8 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      onSubmit(formData);
+      console.log("Form data:", formData);
+
       handleOpen();
     }
   };
@@ -128,13 +128,20 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
       newErrors.type = "نوع السيارة مطلوب";
     }
 
-    if (!formData.imageUrl.trim()) {
-      newErrors.imageUrl = "رابط الصورة مطلوب";
+    // تعديل للتحقق من رفع الصور
+    if (
+      !formData.images ||
+      formData.images.length < 1 ||
+      formData.images.length > 4
+    ) {
+      newErrors.images = "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور";
     } else {
-      try {
-        new URL(formData.imageUrl);
-      } catch {
-        newErrors.imageUrl = "رابط الصورة غير صالح";
+      // تحقق إن كل الملفات صور
+      const invalidFiles = formData.images.filter(
+        (file) => !file.type.startsWith("image/")
+      );
+      if (invalidFiles.length > 0) {
+        newErrors.images = "جميع الملفات يجب أن تكون صور";
       }
     }
 
@@ -185,7 +192,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             <HiMiniXMark color="white" className="h-4 w-4 stroke-2" />
           </IconButton>
         </DialogHeader>
-        <DialogBody className="space-y-4 pb-6 h-[42rem] overflow-y-scroll">
+        <DialogBody className="space-y-4 pb-6 h-[38rem] md:h-[42rem] overflow-y-scroll">
           <div className="flex md:flex-row flex-col gap-4">
             <div className="w-full md:w-[50%]">
               <Typography
@@ -282,7 +289,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               >
                 نوع الفتيس
               </Typography>
-              <CarDropdown
+              <Dropdown
                 options={TransmisionOptions}
                 borderColor="white"
                 value={formData.transmission}
@@ -297,7 +304,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               >
                 نوع الوقود
               </Typography>
-              <CarDropdown
+              <Dropdown
                 options={fuelTypeOptions}
                 borderColor="white"
                 value={formData.fuelType}
@@ -314,7 +321,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             >
               حالة السيارة
             </Typography>
-            <CarDropdown
+            <Dropdown
               options={carStatusOptions}
               borderColor="white"
               value={formData.status}
@@ -330,7 +337,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             >
               نوع السيارة
             </Typography>
-            <CarDropdown
+            <Dropdown
               options={carTypeOptions}
               borderColor="white"
               value={formData.type}
@@ -344,19 +351,35 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               color="white"
               className="mb-2 font-medium"
             >
-              URL الصور
+              صور المنتج
             </Typography>
-            <Input
-              color="gray"
-              size="lg"
-              placeholder="https://example.com/image.jpg"
-              value={formData.imageUrl}
-              onChange={(e) => handleChange("imageUrl", e.target.value)}
+
+            <input
+              type="file"
+              accept="image/*"
+              multiple
+              onChange={(e) => {
+                const files = Array.from(e.target.files);
+
+                // تحقق من العدد
+                if (files.length < 1 || files.length > 4) {
+                  setErrors((prev) => ({
+                    ...prev,
+                    images: "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور",
+                  }));
+                } else {
+                  setErrors((prev) => ({ ...prev, images: "" }));
+                  handleChange("images", files); // حفظ الملفات في formData
+                }
+              }}
+              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
             />
-            {errors.imageUrl && (
-              <p className="text-red-500 text-sm mt-1">{errors.imageUrl}</p>
+
+            {errors.images && (
+              <p className="text-red-500 text-sm mt-1">{errors.images}</p>
             )}
           </div>
+
           <div>
             <Typography
               variant="small"

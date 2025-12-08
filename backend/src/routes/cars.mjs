@@ -1,6 +1,7 @@
 import { Router } from "express";
 import Car from "../models/Car.mjs";
 import validateCar from "../validations/carValidation.mjs";
+import { upload } from "../middleware/uploadImages.js";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -68,10 +69,30 @@ router.get("/:id", async (req, res) => {
   res.send(car);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", upload.array("carImages", 4), async (req, res) => {
   try {
-    await validateCar.validateAsync(req.body);
-    const car = await Car.create(req.body);
+    const files = req.files;
+
+    if (!files || files.length < 1 || files.length > 4) {
+      return res
+        .status(400)
+        .send({ message: "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور" });
+    }
+
+    const host = req.protocol + "://" + req.get("host"); // http://localhost:5000
+    const imageUrls = files.map(
+      (file) => `${host}/uploads/cars/${file.filename}`
+    );
+
+    const carData = {
+      ...req.body,
+      images: imageUrls,
+    };
+
+    await validateCar.validateAsync(carData, { abortEarly: false });
+
+    const car = await Car.create(carData);
+
     res.status(201).send({ message: "تم اضافة السيارة بنجاح", car });
   } catch (error) {
     res.status(400).send({ message: error.message });

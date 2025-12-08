@@ -24,9 +24,7 @@ const validateCar = Joi.object({
     }),
   price: Joi.number().required(),
   year: Joi.number().min(1900).max(new Date().getFullYear()).required(),
-  status: Joi.string()
-    .valid("متاحة", "غير متاحة", "تحت الصيانة")
-    .default("متاحة"),
+  status: Joi.string().valid("متاحة", "تحت الصيانة").default("متاحة"),
   transmission: Joi.string().valid("اوتوماتيكي", "يدوي").required(),
   mileage: Joi.number().min(0).default(0),
   fuelType: Joi.string()

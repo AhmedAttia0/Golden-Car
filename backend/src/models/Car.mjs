@@ -28,7 +28,7 @@ const carSchema = new Schema({
 
   status: {
     type: String,
-    enum: ["متاحة", "غير متاحة", "تحت الصيانة"],
+    enum: ["متاحة", "تحت الصيانة"],
     default: "متاحة",
   },
 
