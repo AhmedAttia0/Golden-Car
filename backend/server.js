@@ -3,6 +3,10 @@ import { connect } from "mongoose";
 import carRotuer from "./src/routes/cars.mjs";
 import settingsRouter from "./src/routes/settings.mjs";
 import bookingRouter from "./src/routes/booking.mjs";
+import User from "./src/models/User.mjs";
+import validateToken from "./src/middleware/auth";
+import userRouter from "./src/routes/user.mjs";
+import cookieSession from "cookie-session";
 import path from "path";
 const port = 3000;
 
