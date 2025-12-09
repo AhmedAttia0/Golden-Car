@@ -98,7 +98,7 @@ const Header = () => {
         <Logo />
         <div className="mr-4 hidden lg:block">{navList}</div>
         <div className="flex items-center gap-4">
-          <div className="flex items-center gap-x-1">
+          <div className="items-center gap-x-1 hidden lg:flex">
             {user ? (
               <>
                 <NavLink to="/profile" className="flex items-center gap-1 ml-2">
@@ -174,17 +174,17 @@ const Header = () => {
       </div>
       <Collapse open={openNav}>
         {navList}
-        <div className="flex items-center gap-x-1">
+        <div className="items-center justify-between gap-x-1 flex">
           {user ? (
             <>
-              <NavLink to="/profile">
+              <NavLink to="/profile" className="flex items-center ">
                 <Button variant="text" size="sm">
                   <span>{user.first_name}</span>
                 </Button>
-                <img src="profile.png" alt="profile" className="w-8 h-8" />
+                <img src="/profile.jpg" alt="profile" className="w-8 h-8" />
               </NavLink>
               <Button
-                className="bg-[#5937E0]  hover:bg-[#5937e0ec]"
+                className="bg-[#ff0000]  hover:bg-[#e92323e1]"
                 size="sm"
                 onClick={() => setUser(null)}
               >

@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
 import { useUser } from "../../contexts/UserContext";
 const SignupForm = () => {
-  const { setUser } = useUser();
+  const { dispatch } = useUser();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -75,10 +75,9 @@ const SignupForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validate()) {
-      const data = { ...formData };
-      console.log(data);
+      const { confirm_password, ...data } = formData;
 
-      setUser(data);
+      dispatch({ type: "SET_USER", payload: data });
       localStorage.setItem("user", JSON.stringify(data));
       navigate("/");
     }
