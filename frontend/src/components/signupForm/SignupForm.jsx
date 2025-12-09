@@ -11,6 +11,7 @@ const SignupForm = () => {
     last_name: "",
     phone_number: "",
     confirm_password: "",
+    address: "",
   });
   const [errors, setErrors] = useState({});
   const validate = () => {
@@ -29,15 +30,21 @@ const SignupForm = () => {
     // First name
     if (!formData.first_name) {
       tempErrors.first_name = "يجب إدخال الاسم";
-    } else if (!/^[\p{Script=Arabic}a-zA-Z\s'-]+$/u.test(formData.first_name)) {
-      tempErrors.first_name = "يجب أن يتكون الاسم من حروف فقط";
+    } else if (
+      !/^[\p{Script=Arabic}a-zA-Z\s'-]{3,50}$/u.test(formData.first_name)
+    ) {
+      tempErrors.first_name =
+        "يجب أن يتكون الاسم من حروف فقط و يكون بين 3 ل50 حرفًا";
     }
 
     // Last name
     if (!formData.last_name) {
       tempErrors.last_name = "يجب إدخال لقب العائلة";
-    } else if (!/^[\p{Script=Arabic}a-zA-Z\s'-]+$/u.test(formData.last_name)) {
-      tempErrors.last_name = "يجب أن يتكون لقب العائلة من حروف فقط";
+    } else if (
+      !/^[\p{Script=Arabic}a-zA-Z\s'-]{3,50}$/u.test(formData.last_name)
+    ) {
+      tempErrors.last_name =
+        "يجب أن يتكون لقب العائلة من حروف فقط و يكون بين 3 ل50 حرفًا";
     }
 
     // Phone number
@@ -50,8 +57,9 @@ const SignupForm = () => {
     // Password
     if (!formData.password) {
       tempErrors.password = "يجب إدخال كلمة السر";
-    } else if (formData.password.length < 8) {
-      tempErrors.password = "كلمة السر يجب أن تكون 8 أحرف على الأقل";
+    } else if (formData.password.length < 8 || formData.password.length > 30) {
+      tempErrors.password =
+        "كلمة السر يجب أن تكون 8 أحرف على الأقل و 30 حرفا على الأكثر";
     } else if (
       !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
         formData.password
@@ -65,6 +73,10 @@ const SignupForm = () => {
       tempErrors.confirm_password = "يجب تأكيد كلمة السر";
     } else if (formData.password != formData.confirm_password) {
       tempErrors.confirm_password = "كلمتا السر غير متطابقتين";
+    }
+
+    if (!formData.address) {
+      tempErrors.address = "يجب إدخال العنوان";
     }
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -130,6 +142,16 @@ const SignupForm = () => {
           error={errors.email}
         />
         <InputField
+          type={"text"}
+          id={"address"}
+          label={"العنوان"}
+          value={formData.address}
+          onChange={(e) =>
+            setFormData({ ...formData, address: e.target.value.trim() })
+          }
+          error={errors.address}
+        />
+        <InputField
           type={"password"}
           id={"password"}
           label={"كلمة السر"}
@@ -140,8 +162,9 @@ const SignupForm = () => {
           error={errors.password}
         />
         <p className="text-gray-500 text-sm">
-          * يجب أن تحتوي كلمة السر علي 8 أحرف علي الأقل، و علي الأقل حرف كابيتال
-          واحد، حرف سمول واحد، رقم واحد، رمز من هذه الرموز @?!%&*$
+          * يجب أن تحتوي كلمة السر علي 8 أحرف علي الأقل و 30 حرفا علي الأكثر، و
+          علي الأقل حرف كابيتال واحد، حرف سمول واحد، رقم واحد، رمز من هذه الرموز
+          @?!%&*$
         </p>
         <InputField
           type={"password"}
