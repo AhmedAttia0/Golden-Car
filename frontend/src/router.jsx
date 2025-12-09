@@ -15,6 +15,10 @@ import Users from "./pages/admin/Users/Users";
 import Settings from "./pages/admin/Settings/Settings";
 import Bookings from "./pages/admin/Bookings/Bookings";
 import Profile from "./pages/public/profile/Profile";
+import ProfileLayout from "./layouts/ProfileLayout";
+import BookingsHistory from "./pages/public/profile/BookingsHistory";
+import ProfileSettings from "./pages/public/profile/ProfileSettings";
+import ProtectedRoute from "./pages/public/profile/ProtectedRoute";
 
 export const router = createBrowserRouter([
   {
@@ -22,16 +26,26 @@ export const router = createBrowserRouter([
     ErrorBoundary: NotFound,
     children: [
       { index: true, element: <Home /> },
-      {
-        path: "cars",
-        element: <Cars />,
-      },
+      { path: "cars", element: <Cars /> },
       { path: "cars/:id", element: <CarDetails /> },
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       { path: "login", element: <Login /> },
       { path: "signup", element: <SignUp /> },
-      { path: "profile", element: <Profile /> },
+      {
+        path: "profile",
+        element: <ProtectedRoute />,
+        children: [
+          {
+            Component: ProfileLayout,
+            children: [
+              { index: true, element: <Profile /> },
+              { path: "bookings", element: <BookingsHistory /> },
+              { path: "settings", element: <ProfileSettings /> },
+            ],
+          },
+        ],
+      },
     ],
   },
   {

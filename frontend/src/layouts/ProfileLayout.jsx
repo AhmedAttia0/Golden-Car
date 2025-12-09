@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import { IoMenu, IoClose } from "react-icons/io5";
-import SidebarDark from "../components/Sidebar/Sidebar";
 import ScrollToTopBtn from "../components/ScrollToTopBtn/ScrollToTopBtn";
-const AdminLayout = () => {
+import ProfileSidebar from "../pages/public/profile/ProfileSidebar";
+export default function ProfileLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="flex w-full min-h-screen bg-[#14151a] relative">
+    <div className="flex w-full min-h-screen  relative">
       <ScrollToTopBtn />
 
       {/* Mobile / Tablet Menu Button */}
@@ -23,7 +23,7 @@ const AdminLayout = () => {
       </button>
 
       {/* Sidebar */}
-      <SidebarDark
+      <ProfileSidebar
         className={`fixed top-0 left-0 h-full z-40 transform transition-transform duration-300
         ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -38,6 +38,4 @@ const AdminLayout = () => {
       </div>
     </div>
   );
-};
-
-export default AdminLayout;
+}

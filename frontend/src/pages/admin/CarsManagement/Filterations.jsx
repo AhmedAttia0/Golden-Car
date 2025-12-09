@@ -3,7 +3,7 @@ import { IoIosSearch } from "react-icons/io";
 import CreateNewCarModal from "./CreateOrEditCarModal";
 import { useSearchParams } from "react-router-dom";
 import Dropdown from "../../../components/Dropdown";
-const statusOptions = ["كل السيارات", "متاحة", "غير متاحة", "تحت الصيانة"];
+const statusOptions = ["كل السيارات", "متاحة", "تحت الصيانة"];
 const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
 
 export default function Filterations() {
