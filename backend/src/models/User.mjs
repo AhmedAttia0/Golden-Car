@@ -88,9 +88,13 @@ userSchema.statics.findByCredentials = async function (email, password) {
 };
 
 userSchema.methods.generateToken = function (authOptions) {
-  return jwt.sign({ id: this._id.toString() }, process.env.SECRET_KEY, {
-    expiresIn: authOptions,
-  });
+  return jwt.sign(
+    { id: this._id.toString(), role: this.role },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: authOptions,
+    }
+  );
 };
 const User = model("User", userSchema);
 

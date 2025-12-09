@@ -10,9 +10,7 @@ import cookieSession from "cookie-session";
 import path from "path";
 const port = 3000;
 
-connect(
-  "mongodb+srv://mostafamozakiii_db_user:i9hpIDVe5uSEzaPg@cluster0.tcmujto.mongodb.net/Golden_Car?appName=Golden_Car&retryWrites=true&w=majority"
-)
+connect(process.env.DB_LINK)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
@@ -31,7 +29,7 @@ app.use("/cars", carRotuer);
 app.use("/users", userRouter);
 app.get("/", validateToken, async (req, res) => {
   try {
-    const userDoc = await User.findById(req.userId).lean(); // plain JS object
+    const userDoc = await User.findById(req.id).lean(); // plain JS object
     if (!userDoc) {
       return res.status(404).json({ message: "User not found" });
     }

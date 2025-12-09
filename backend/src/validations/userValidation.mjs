@@ -39,6 +39,6 @@ const validateUser = Joi.object({
   phone: Joi.string()
     .pattern(/^\+?\d{7,15}$/)
     .required(),
-  role: Joi.number().valid(0, 1).required(),
+  role: Joi.string().valid("user", "admin").required(),
 });
 export default validateUser.with("password", "confirm_password");
