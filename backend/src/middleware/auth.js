@@ -7,7 +7,7 @@ const validateToken = (req, res, next) => {
   const token = req.session.token;
   try {
     // Verify the JWT
-    const decoded = jwt.verify(token, process.env.SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = decoded.id;
     next();
   } catch (err) {
