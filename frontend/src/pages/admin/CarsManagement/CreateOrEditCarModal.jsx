@@ -32,6 +32,9 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
     model: "",
     year: "",
     price: "",
+    mileage: "",
+    seats: "",
+    doors: "",
     transmission: "",
     fuelType: "",
     status: "",
@@ -111,7 +114,15 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
     } else if (Number(formData.price) <= 0) {
       newErrors.price = "السعر يجب أن يكون أكبر من صفر";
     }
-
+    if (!formData.mileage) {
+      newErrors.mileage = "المسافة مطلوبة";
+    }
+    if (!formData.seats) {
+      newErrors.seats = "عدد المقاعد مطلوب";
+    }
+    if (!formData.doors) {
+      newErrors.doors = "عدد الابواب مطلوب";
+    }
     if (!formData.transmission) {
       newErrors.transmission = "نوع الفتيس مطلوب";
     }
@@ -174,7 +185,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
         size="md"
         open={open}
         handler={handleOpen}
-        className="p-4 bg-[#0f1729]"
+        className="p-3 bg-[#0f1729] max-h-[95vh] overflow-y-auto"
       >
         <DialogHeader className="relative m-0 block">
           <Typography variant="h4" color="white">
@@ -192,7 +203,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
             <HiMiniXMark color="white" className="h-4 w-4 stroke-2" />
           </IconButton>
         </DialogHeader>
-        <DialogBody className="space-y-4 pb-6 h-[38rem] md:h-[42rem] overflow-y-scroll">
+        <DialogBody className="space-y-4 pb-6">
           <div className="flex md:flex-row flex-col gap-4">
             <div className="w-full md:w-[50%]">
               <Typography
@@ -344,14 +355,78 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               onChange={(value) => handleChange("type", value)}
             />
           </div>
-
+          <div className="flex lg:flex-row flex-col gap-4">
+            <div className="w-full  lg:w-[33%]">
+              <Typography
+                variant="small"
+                color="white"
+                className="mb-2 font-medium"
+              >
+                عدد المقاعد
+              </Typography>
+              <Input
+                color="gray"
+                type="number"
+                size="sm"
+                placeholder="4"
+                value={formData.seats}
+                onChange={(e) => handleChange("seats", e.target.value)}
+                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+              />
+              {errors.seats && (
+                <p className="text-red-500 text-sm mt-1">{errors.seats}</p>
+              )}
+            </div>
+            <div className="w-full  lg:w-[33%]">
+              <Typography
+                variant="small"
+                color="white"
+                className="mb-2 font-medium"
+              >
+                عدد الابواب
+              </Typography>
+              <Input
+                color="gray"
+                type="number"
+                size="sm"
+                placeholder="2"
+                value={formData.doors}
+                onChange={(e) => handleChange("doors", e.target.value)}
+                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+              />
+              {errors.doors && (
+                <p className="text-red-500 text-sm mt-1">{errors.doors}</p>
+              )}
+            </div>
+            <div className="w-full lg:w-[33%]">
+              <Typography
+                variant="small"
+                color="white"
+                className="mb-2 font-medium"
+              >
+                المسافة
+              </Typography>
+              <Input
+                color="gray"
+                type="number"
+                size="sm"
+                placeholder="2"
+                value={formData.mileage}
+                onChange={(e) => handleChange("mileage", e.target.value)}
+                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+              />
+              {errors.mileage && (
+                <p className="text-red-500 text-sm mt-1">{errors.mileage}</p>
+              )}
+            </div>
+          </div>
           <div>
             <Typography
               variant="small"
               color="white"
               className="mb-2 font-medium"
             >
-              صور المنتج
+              صور السيارة
             </Typography>
 
             <input
@@ -386,7 +461,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
               color="white"
               className="mb-2 font-medium"
             >
-              Features
+              مميزات
             </Typography>
 
             <div className="grid grid-cols-2 gap-2">

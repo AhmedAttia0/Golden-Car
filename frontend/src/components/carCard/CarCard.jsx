@@ -12,7 +12,6 @@ import { FaSnowflake } from "react-icons/fa";
 import { Chip } from "@material-tailwind/react";
 const statusColor = {
   متاحة: "green",
-  "غير متاحة": "red",
   "تحت الصيانة": "amber",
 };
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
