@@ -95,7 +95,14 @@ router.post("/", upload.array("carImages", 4), async (req, res) => {
 
     res.status(201).send({ message: "تم اضافة السيارة بنجاح", car });
   } catch (error) {
-    res.status(400).send({ message: error.message });
+    if (error.details) {
+      return res.status(400).send({
+        message: "خطأ في البيانات المرسلة",
+        details: error.details.map((d) => d.message),
+      });
+    }
+
+    res.status(500).send({ message: "خطأ في الخادم", error: error.message });
   }
 });
 
