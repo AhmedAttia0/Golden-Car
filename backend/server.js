@@ -26,7 +26,9 @@ app.use(
 );
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/cars", carRotuer);
-app.use("/users", userRouter);
+app.use("/user", userRouter);
+app.use("/settings", settingsRouter);
+app.use("/booking", bookingRouter);
 app.get("/", validateToken, async (req, res) => {
   try {
     const userDoc = await User.findById(req.id).lean(); // plain JS object
@@ -40,7 +42,5 @@ app.get("/", validateToken, async (req, res) => {
     return res.status(500).json({ message: "Server error" });
   }
 });
-app.use("/settings", settingsRouter);
-app.use("/booking", bookingRouter);
 
 app.listen(port, () => console.log("Server listening on port ", port));

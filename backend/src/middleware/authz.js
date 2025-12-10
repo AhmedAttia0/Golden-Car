@@ -1,6 +1,16 @@
-function validateRole(req, res, next) {
-  if (req.role != "admin") {
-    return res.status(403).json({ error: "This route doesn't exist!" });
+import User from "../models/User.mjs";
+async function validateRole(req, res, next) {
+  try {
+    const user = await User.findById(req.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    if (user.role !== req.role || req.role !== "admin") {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    next();
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
 }
 export default validateRole;

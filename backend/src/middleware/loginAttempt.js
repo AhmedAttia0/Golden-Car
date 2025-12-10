@@ -3,8 +3,6 @@ import loginValidation from "../validations/loginValidation.mjs";
 export default async function loginAttempt(req, res, next) {
   try {
     const { email, password, remember_me } = req.body;
-
-    // 2) Validate email/password with Joi
     const { error, value } = loginValidation.validate({ email, password });
     if (error) {
       return res.status(400).json({ error: error.details[0].message });
