@@ -1,8 +1,6 @@
-import { required } from "joi";
 import { Schema, model } from "mongoose";
 import jwt from "jsonwebtoken";
-
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
 const userSchema = new Schema({
   first_name: {
     type: String,
@@ -47,11 +45,6 @@ const userSchema = new Schema({
     match: [/^\+?\d{7,15}$/, "يجب إدخال رقم تليفون صالح"],
   },
 
-  address: {
-    type: String,
-    required: true,
-  },
-
   role: {
     type: String,
     enum: ["user", "admin"],
@@ -63,10 +56,9 @@ const userSchema = new Schema({
     default: Date.now,
   },
 });
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 userSchema.methods.comparePassword = async function (candidatePassword) {
@@ -74,7 +66,7 @@ userSchema.methods.comparePassword = async function (candidatePassword) {
 };
 
 userSchema.statics.findByCredentials = async function (email, password) {
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email: email }).lean();
 
   if (!user) {
     throw new Error("Invalid email or password");
@@ -88,13 +80,9 @@ userSchema.statics.findByCredentials = async function (email, password) {
 };
 
 userSchema.methods.generateToken = function (authOptions) {
-  return jwt.sign(
-    { id: this._id.toString(), role: this.role },
-    process.env.JWT_SECRET,
-    {
-      expiresIn: authOptions,
-    }
-  );
+  return jwt.sign({ id: this._id.toString() }, process.env.JWT_SECRET, {
+    expiresIn: authOptions,
+  });
 };
 const User = model("User", userSchema);
 

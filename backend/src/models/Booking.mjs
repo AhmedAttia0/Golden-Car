@@ -1,11 +1,11 @@
 import mongoose, { Schema, model } from "mongoose";
 
 const bookingSchema = new Schema({
-  // user: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: true,
-  // },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 
   car: {
     type: mongoose.Schema.Types.ObjectId,

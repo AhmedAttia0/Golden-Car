@@ -24,12 +24,7 @@ const validateUser = Joi.object({
     .max(30)
     .valid(Joi.ref("password"))
     .required()
-    .message({ error: "Confirm password must match the password" }),
-  address: Joi.string()
-    .min(5)
-    .max(100)
-    .pattern(/^[a-zA-Z0-9\s,'-]{5,100}$/)
-    .required(),
+    .messages({ "any.only": "Passwords do not match" }),
   phone: Joi.string()
     .pattern(/^\+?\d{7,15}$/)
     .required(),

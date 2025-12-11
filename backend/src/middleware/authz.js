@@ -1,11 +1,11 @@
 import User from "../models/User.mjs";
 async function validateRole(req, res, next) {
   try {
-    const user = await User.findById(req.id);
+    const user = await User.findById(req.id).lean();
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    if (user.role !== req.role || req.role !== "admin") {
+    if (user.role !== "admin") {
       return res.status(403).json({ error: "Forbidden" });
     }
     next();

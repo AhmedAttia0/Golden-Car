@@ -5,6 +5,6 @@ export default async function signupAttempt(req, res, next) {
   if (error) {
     return res.status(400).json({ error: error.details[0].message });
   }
-  req.user = value;
+  req.body = user;
   next();
 }
