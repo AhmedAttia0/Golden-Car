@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+html {
+  scroll-behavior: smooth;
+  font-family: "Cairo", sans-serif;
+}
 /* يحرك سهم Select لليسار في الاتجاه العربي */
 [dir="rtl"] .absolute.top-2\/4.right-2.pt-px.w-5.h-5 {
   right: auto !important;

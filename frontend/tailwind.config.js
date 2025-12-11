@@ -16,6 +16,9 @@ module.exports = withMT({
         purple: "#5937E0",
         navyblue: "#24272F",
       },
+      fontFamily: {
+        cairo: ["Cairo", "sans-serif"],
+      },
     },
   },
   plugins: [],

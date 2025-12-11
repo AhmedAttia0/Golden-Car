@@ -1,10 +1,10 @@
 import Joi from "joi";
 
 const validateBooking = Joi.object({
-  // user: Joi.string().hex().length(24).required().messages({
-  //   "string.length": "معرف المستخدم غير صالح",
-  //   "any.required": "معرف المستخدم مطلوب",
-  // }),
+  user: Joi.string().hex().length(24).required().messages({
+    "string.length": "معرف المستخدم غير صالح",
+    "any.required": "معرف المستخدم مطلوب",
+  }),
 
   car: Joi.string().hex().length(24).required().messages({
     "string.length": "معرف السيارة غير صالح",

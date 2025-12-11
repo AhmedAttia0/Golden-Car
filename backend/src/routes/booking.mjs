@@ -2,9 +2,12 @@ import { Router } from "express";
 import bookingSchema from "../models/Booking.mjs";
 import validateBooking from "../validations/bookingValidation.mjs";
 import Car from "../models/Car.mjs";
+import validateToken from "../middleware/auth.js";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.js";
+import validateRole from "./../middleware/authz.js";
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", validateToken, validateRole, async (req, res) => {
   const bookings = await bookingSchema.find().populate("car");
   res.json(bookings);
 });
@@ -16,7 +19,7 @@ router.get("/:id", async (req, res) => {
   res.send(booking);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", csrfDoubleSubmit, async (req, res) => {
   try {
     await validateBooking.validateAsync(req.body);
 
@@ -63,7 +66,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", csrfDoubleSubmit, async (req, res) => {
   try {
     await validateBooking.validateAsync(req.body);
     const booking = await bookingSchema.findByIdAndUpdate(

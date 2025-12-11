@@ -8,7 +8,6 @@ const validateToken = (req, res, next) => {
     // Verify the JWT
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.id = decoded.id;
-    req.role = decoded.role;
     next();
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired session" });
