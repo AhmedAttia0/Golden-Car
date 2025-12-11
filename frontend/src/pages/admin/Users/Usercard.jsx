@@ -4,7 +4,6 @@ import { FiEye, FiEdit2, FiMoreVertical } from "react-icons/fi";
 export default function UserCard({ user }) {
   return (
     <div className="bg-[#1a2332] rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition">
-
       <div className="flex justify-center mb-4">
         <div className="w-24 h-24 rounded-full bg-purple-600 flex items-center justify-center text-2xl font-bold">
           {user.initials}
@@ -19,26 +18,10 @@ export default function UserCard({ user }) {
       <div className="flex justify-center gap-2 mb-6">
         <span
           className={`px-3 py-1 rounded-full text-sm font-medium ${
-            user.role === "Admin"
-              ? "bg-purple-600"
-              : user.role === "Manager"
-              ? "bg-blue-600"
-              : "bg-gray-700"
+            user.role === "admin" ? "bg-purple-600" : "bg-gray-700"
           }`}
         >
-          {user.role === "Admin"
-            ? "مشرف"
-            : user.role === "Manager"
-            ? "مدير"
-            : "مستخدم"}
-        </span>
-
-        <span
-          className={`px-3 py-1 rounded-full text-sm font-medium ${
-            user.status === "Active" ? "bg-green-600" : "bg-gray-600"
-          }`}
-        >
-          {user.status === "Active" ? "نشط" : "غير نشط"}
+          {user.role === "admin" ? "مشرف" : "مستخدم"}
         </span>
       </div>
 
@@ -65,7 +48,6 @@ export default function UserCard({ user }) {
           <FiMoreVertical className="text-xl" />
         </button>
       </div>
-
     </div>
   );
 }

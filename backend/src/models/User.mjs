@@ -42,7 +42,7 @@ const userSchema = new Schema({
   phone: {
     type: String,
     required: true,
-    match: [/^\+?\d{7,15}$/, "يجب إدخال رقم تليفون صالح"],
+    match: [/^01[0125][0-9]{8}$/, "يجب إدخال رقم تليفون صالح"],
   },
 
   role: {

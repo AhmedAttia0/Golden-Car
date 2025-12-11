@@ -2,6 +2,7 @@ import express from "express";
 import { connect } from "mongoose";
 import carRotuer from "./src/routes/cars.mjs";
 import settingsRouter from "./src/routes/settings.mjs";
+import adminRouter from "./src/routes/admin.mjs";
 import bookingRouter from "./src/routes/booking.mjs";
 import User from "./src/models/User.mjs";
 import validateToken from "./src/middleware/auth.js";
@@ -75,6 +76,7 @@ app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/cars", carRotuer);
 app.use("/user", userRouter);
 app.use("/settings", settingsRouter);
+app.use("/admin", adminRouter);
 app.use("/booking", bookingRouter);
 app.get("/", validateToken, async (req, res) => {
   try {
@@ -82,7 +84,7 @@ app.get("/", validateToken, async (req, res) => {
     if (!userDoc) {
       return res.status(404).json({ message: "User not found" });
     }
-    const { password, createdAt, __v, ...rest } = userDoc;
+    const { password, createdAt, __v, role, ...rest } = userDoc;
     return res.status(200).json({ message: "Authenticated", user: rest });
   } catch (err) {
     return res.status(500).json({ message: "Server error" });

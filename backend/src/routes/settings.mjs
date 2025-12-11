@@ -1,6 +1,9 @@
 import { Router } from "express";
 import Settings from "../models/Settings.mjs";
 import validateSettingsForm from "../validations/settingsvalidation.mjs";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit";
+import validateToken from "../middleware/auth";
+import validateRole from "../middleware/authz";
 
 const router = Router();
 
@@ -25,22 +28,28 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.put("/", async (req, res) => {
-  try {
-    await validateSettingsForm.validateAsync(req.body, { abortEarly: false });
+router.put(
+  "/",
+  csrfDoubleSubmit,
+  validateToken,
+  validateRole,
+  async (req, res) => {
+    try {
+      await validateSettingsForm.validateAsync(req.body, { abortEarly: false });
 
-    let settings = await Settings.findOne();
-    if (!settings) {
-      settings = await Settings.create(req.body);
-    } else {
-      Object.assign(settings, req.body);
-      await settings.save();
+      let settings = await Settings.findOne();
+      if (!settings) {
+        settings = await Settings.create(req.body);
+      } else {
+        Object.assign(settings, req.body);
+        await settings.save();
+      }
+
+      res.send({ message: "تم تحديث الإعدادات بنجاح", settings });
+    } catch (error) {
+      res.status(400).send({ message: error.message });
     }
-
-    res.send({ message: "تم تحديث الإعدادات بنجاح", settings });
-  } catch (error) {
-    res.status(400).send({ message: error.message });
   }
-});
+);
 
 export default router;

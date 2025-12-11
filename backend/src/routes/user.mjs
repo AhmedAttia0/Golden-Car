@@ -4,6 +4,9 @@ import signupAttempt from "../middleware/signupAttempt.js";
 import User from "../models/User.mjs";
 import crypto from "crypto";
 import { rateLimit } from "express-rate-limit";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.js";
+import validateToken from "../middleware/auth.js";
+import validateUserUpdate from "../validations/userUpdateValidation.mjs";
 
 const userRouter = Router();
 const limiter = rateLimit({
@@ -23,7 +26,7 @@ userRouter.post("/login", limiter, loginAttempt, (req, res) => {
     delete user.__v;
     delete user.createdAt;
     delete user.role;
-    user._id = user._id.toString();
+    user.id = user._id.toString();
     const csrfToken = crypto.randomBytes(32).toString("hex");
     res.cookie("XSRF-TOKEN", csrfToken, {
       maxAge: cookieMaxAgeMs,
@@ -55,10 +58,15 @@ userRouter.post("/signup", signupAttempt, async (req, res) => {
     req.session.token = token;
     req.sessionOptions.maxAge = 2 * 60 * 60 * 1000;
     delete user.password;
-    delete user.__v;
-    delete user.createdAt;
     delete user.confirm_password;
-    user._id = newUser._id.toString();
+    user.id = newUser._id.toString();
+    const csrfToken = crypto.randomBytes(32).toString("hex");
+    res.cookie("XSRF-TOKEN", csrfToken, {
+      maxAge: 2 * 60 * 60 * 1000,
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+    });
     res.status(201).json({ message: "User created successfully", user: user });
   } catch (err) {
     console.log(err);
@@ -70,6 +78,51 @@ userRouter.post("/logout", (req, res) => {
   req.session = null;
   res.clearCookie("XSRF-TOKEN");
   res.status(200).json({ message: "Logged out successfully" });
+});
+
+userRouter.delete("/:id", csrfDoubleSubmit, validateToken, async (req, res) => {
+  try {
+    const userId = req.id;
+    const deletedUser = await User.findByIdAndDelete(userId);
+    if (!deletedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.status(200).json({ message: "User deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+userRouter.put("/:id", csrfDoubleSubmit, validateToken, async (req, res) => {
+  try {
+    const userId = req.id;
+    const updates = req.body;
+    const { error } = validateUserUpdate.validate(updates);
+    if (error) {
+      return res.status(400).json({ error: error.details[0].message });
+    }
+    if (updates.id !== userId) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    delete updates.confirm_password;
+    const updatedUser = await User.findByIdAndUpdate(userId, updates, {
+      new: true,
+    }).lean();
+    if (!updatedUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    delete updatedUser.password;
+    delete updatedUser.__v;
+    delete updatedUser.createdAt;
+    delete updatedUser.role;
+    res
+      .status(200)
+      .json({ message: "User updated successfully", user: updatedUser });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
 export default userRouter;

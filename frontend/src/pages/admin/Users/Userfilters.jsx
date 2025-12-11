@@ -11,7 +11,6 @@ export default function UserFilters({
 }) {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mb-8">
-
       <div className="flex-1 relative">
         <FiSearch className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 text-xl" />
         <input
@@ -30,20 +29,8 @@ export default function UserFilters({
       >
         <option value="all">جميع الأدوار</option>
         <option value="Admin">مشرف</option>
-        <option value="Manager">مدير</option>
         <option value="User">مستخدم</option>
       </select>
-
-      <select
-        value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-        className="bg-[#1a2332] text-white px-6 py-3 rounded-lg border border-gray-700 cursor-pointer"
-      >
-        <option value="all">جميع الحالات</option>
-        <option value="Active">نشط</option>
-        <option value="Inactive">غير نشط</option>
-      </select>
-
     </div>
   );
 }

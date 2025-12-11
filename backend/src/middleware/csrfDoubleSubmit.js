@@ -6,10 +6,10 @@ export default function csrfDoubleSubmit(req, res, next) {
   const cookieToken = req.cookies && req.cookies["XSRF-TOKEN"];
 
   if (!headerToken || !cookieToken) {
-    return res.status(403).json({ message: "CSRF token missing" });
+    return res.status(403).json({ error: "CSRF token missing" });
   }
   if (headerToken !== cookieToken) {
-    return res.status(403).json({ message: "CSRF token mismatch" });
+    return res.status(403).json({ error: "CSRF token mismatch" });
   }
   next();
 }

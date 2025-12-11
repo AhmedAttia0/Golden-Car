@@ -16,7 +16,8 @@ export default function Users() {
     phone: "",
     email: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
+    role: "user",
   });
 
   const [errors, setErrors] = useState({});
@@ -88,12 +89,12 @@ export default function Users() {
     const newErrors = {};
 
     if (!formData.firstName.trim()) newErrors.firstName = "الاسم الأول مطلوب";
-    else if (formData.firstName.trim().length < 2)
-      newErrors.firstName = "الاسم يجب أن يكون حرفين على الأقل";
+    else if (formData.firstName.trim().length < 3)
+      newErrors.firstName = "الاسم يجب أن يكون 3 أحرف على الأقل";
 
     if (!formData.lastName.trim()) newErrors.lastName = "اللقب مطلوب";
-    else if (formData.lastName.trim().length < 2)
-      newErrors.lastName = "اللقب يجب أن يكون حرفين على الأقل";
+    else if (formData.lastName.trim().length < 3)
+      newErrors.lastName = "اللقب يجب أن يكون 3 أحرف على الأقل";
 
     if (!formData.phone.trim()) newErrors.phone = "رقم الهاتف مطلوب";
     else if (!/^01[0125][0-9]{8}$/.test(formData.phone))
@@ -113,11 +114,12 @@ export default function Users() {
     else if (!/(?=.*[!@#$%^&*?])/.test(formData.password))
       newErrors.password = "يجب أن تحتوي على رمز";
 
-    if (!formData.confirmPassword)
-      newErrors.confirmPassword = "تأكيد كلمة السر مطلوب";
-    else if (formData.password !== formData.confirmPassword)
-      newErrors.confirmPassword = "كلمتا السر غير متطابقتين";
-
+    if (!formData.confirm_password)
+      newErrors.confirm_password = "تأكيد كلمة السر مطلوب";
+    else if (formData.password !== formData.confirm_password)
+      newErrors.confirm_password = "كلمتا السر غير متطابقتين";
+    if (formData.role !== "user" && formData.role !== "admin")
+      newErrors.role = "الدور غير صالح";
     return newErrors;
   };
 

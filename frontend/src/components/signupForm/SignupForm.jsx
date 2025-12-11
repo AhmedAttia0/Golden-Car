@@ -53,7 +53,7 @@ const SignupForm = () => {
     // Phone number
     if (!formData.phone_number) {
       tempErrors.phone_number = "يجب إدخال رقم الهاتف";
-    } else if (!/^\+?\d{7,15}$/.test(formData.phone_number)) {
+    } else if (!/^01[0125][0-9]{8}$/.test(formData.phone_number)) {
       tempErrors.phone_number = "رقم الهاتف غير صالح";
     }
 
@@ -76,10 +76,6 @@ const SignupForm = () => {
       tempErrors.confirm_password = "يجب تأكيد كلمة السر";
     } else if (formData.password != formData.confirm_password) {
       tempErrors.confirm_password = "كلمتا السر غير متطابقتين";
-    }
-
-    if (!formData.address) {
-      tempErrors.address = "يجب إدخال العنوان";
     }
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -147,16 +143,6 @@ const SignupForm = () => {
             setFormData({ ...formData, email: e.target.value.trim() })
           }
           error={errors.email}
-        />
-        <InputField
-          type={"text"}
-          id={"address"}
-          label={"العنوان"}
-          value={formData.address}
-          onChange={(e) =>
-            setFormData({ ...formData, address: e.target.value.trim() })
-          }
-          error={errors.address}
         />
         <InputField
           type={"password"}

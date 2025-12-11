@@ -14,9 +14,7 @@ export default function CreateUserModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-
       <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-
         <div className="sticky top-0 bg-white px-6 py-4 border-b flex justify-between items-center">
           <h2 className="text-2xl font-bold text-black">إنشاء حساب جديد</h2>
 
@@ -32,23 +30,22 @@ export default function CreateUserModal({
         </div>
 
         <div className="p-6 space-y-6">
-
           {/* الاسم */}
           <div>
             <label className="block text-right font-semibold mb-2">الاسم</label>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleInputChange}
               placeholder="أدخل الاسم الأول"
               className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
                 errors.firstName ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.firstName && (
+            {errors.first_name && (
               <p className="text-red-500 text-sm text-right mt-1">
-                {errors.firstName}
+                {errors.first_name}
               </p>
             )}
           </div>
@@ -58,24 +55,26 @@ export default function CreateUserModal({
             <label className="block text-right font-semibold mb-2">اللقب</label>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleInputChange}
               placeholder="لقب العائلة"
               className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
-                errors.lastName ? "border-red-500" : "border-gray-300"
+                errors.last_name ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.lastName && (
+            {errors.last_name && (
               <p className="text-red-500 text-sm text-right mt-1">
-                {errors.lastName}
+                {errors.last_name}
               </p>
             )}
           </div>
 
           {/* الهاتف */}
           <div>
-            <label className="block text-right font-semibold mb-2">الهاتف</label>
+            <label className="block text-right font-semibold mb-2">
+              الهاتف
+            </label>
             <input
               type="tel"
               name="phone"
@@ -95,7 +94,9 @@ export default function CreateUserModal({
 
           {/* البريد الإلكتروني */}
           <div>
-            <label className="block text-right font-semibold mb-2">البريد الإلكتروني</label>
+            <label className="block text-right font-semibold mb-2">
+              البريد الإلكتروني
+            </label>
             <input
               type="email"
               name="email"
@@ -115,7 +116,9 @@ export default function CreateUserModal({
 
           {/* كلمة السر */}
           <div>
-            <label className="block text-right font-semibold mb-2">كلمة السر</label>
+            <label className="block text-right font-semibold mb-2">
+              كلمة السر
+            </label>
             <input
               type="password"
               name="password"
@@ -135,22 +138,40 @@ export default function CreateUserModal({
 
           {/* تأكيد كلمة السر */}
           <div>
-            <label className="block text-right font-semibold mb-2">تأكيد كلمة السر</label>
+            <label className="block text-right font-semibold mb-2">
+              تأكيد كلمة السر
+            </label>
             <input
               type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
+              name="confirm_password"
+              value={formData.confirm_password}
               onChange={handleInputChange}
               placeholder="أعد إدخال كلمة السر"
               className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
-                errors.confirmPassword ? "border-red-500" : "border-gray-300"
+                errors.confirm_password ? "border-red-500" : "border-gray-300"
               }`}
             />
-            {errors.confirmPassword && (
+            {errors.confirm_password && (
               <p className="text-red-500 text-sm text-right mt-1">
-                {errors.confirmPassword}
+                {errors.confirm_password}
               </p>
             )}
+          </div>
+
+          {/*دور المستخدم*/}
+          <div>
+            <label className="block text-right font-semibold mb-2">
+              دور المستخدم
+            </label>
+            <select
+              name="role"
+              value={formData.role}
+              onChange={handleInputChange}
+              className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-right"
+            >
+              <option value="user">مستخدم عادي</option>
+              <option value="admin">مشرف</option>
+            </select>
           </div>
 
           <button
@@ -159,7 +180,6 @@ export default function CreateUserModal({
           >
             إنشاء حساب
           </button>
-
         </div>
       </div>
     </div>
