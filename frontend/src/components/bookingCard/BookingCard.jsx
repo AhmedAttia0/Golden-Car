@@ -26,17 +26,21 @@ const styleStatus = {
 };
 const BookingCard = ({ book }) => {
   const {
-    bookNO,
-    customerName,
-    Car,
+    id,
+    car: { brand, model },
     startDate,
-    duration,
     endDate,
-    price,
+    totalPrice,
     status,
+    user: { first_name, last_name },
   } = book;
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(!open);
+  const startDateObj = new Date(startDate);
+  const endDateObj = new Date(endDate);
+  const formatedStartDate = startDateObj.toISOString().split("T")[0];
+  const formatedEndDate = endDateObj.toISOString().split("T")[0];
+  const duration = (endDateObj - startDateObj) / (1000 * 60 * 60 * 24);
   return (
     <div className="">
       <Card className="mt-6 w-[100%] bg-[#23262f] ">
@@ -45,7 +49,7 @@ const BookingCard = ({ book }) => {
             <div className="topSection flex flex-row justify-between">
               <div>
                 <h2 className="text-xl"> رقم الحجز</h2>
-                <p className="text-3xl font-bold text-white">{bookNO}</p>
+                <p className="text-3xl font-bold text-white">{id}</p>
               </div>
               <div>
                 <Button
@@ -58,11 +62,15 @@ const BookingCard = ({ book }) => {
             </div>
             <div>
               <h2 className="text-xl"> إسم العميل</h2>
-              <p className="text-2xl font-bold text-white">{customerName}</p>
+              <p className="text-2xl font-bold text-white">
+                {first_name + " " + last_name}
+              </p>
             </div>
             <div>
               <h2 className="text-xl"> السيارة</h2>
-              <p className="text-2xl font-bold text-white">{Car}</p>
+              <p className="text-2xl font-bold text-white">
+                {brand + " " + model}
+              </p>
             </div>
           </div>
           <hr className="border-[0.1] border-gray-700" />
@@ -71,14 +79,18 @@ const BookingCard = ({ book }) => {
               <MdCalendarToday className="self-center text-lg text-[#6133BE]" />
               <div>
                 <h2 className="text-xs"> تاريخ البداية</h2>
-                <p className="text-sm font-bold text-white">{startDate}</p>
+                <p className="text-sm font-bold text-white">
+                  {formatedStartDate}
+                </p>
               </div>
             </div>
             <div className="flex flex-row">
               <MdCalendarToday className="self-center text-lg text-[#6133BE]" />
               <div>
                 <h2 className="text-xs"> تاريخ النهاية</h2>
-                <p className="text-sm font-bold text-white">{endDate}</p>
+                <p className="text-sm font-bold text-white">
+                  {formatedEndDate}
+                </p>
               </div>
             </div>
           </div>
@@ -93,7 +105,7 @@ const BookingCard = ({ book }) => {
               <FaDollarSign className="text-[#6133BE] text-lg " />
               <div className="flex flex-row items-center gap-1 text-white font-bold ">
                 <h2> سعر الحجز</h2>
-                <p>{price}</p>
+                <p>{totalPrice}</p>
               </div>
             </div>
           </div>
@@ -102,7 +114,7 @@ const BookingCard = ({ book }) => {
         <CardFooter className="pt-0">
           <div className="text-[#6133BE] mb-3 text-3xl flex justify-center">
             {/* <FaPen className="cursor-pointer"/> */}
-            <EditBookingModal book={book}/>
+            <EditBookingModal book={book} />
           </div>
 
           {status == "قيد الانتظار" && (
@@ -110,9 +122,8 @@ const BookingCard = ({ book }) => {
               {/* <IconButton onClick={handleOpen} color="red" className="rounded-full">
                 <FaXmark className="text-xl" />
               </IconButton> */}
-              <DeclineBookingModal book={book}/>
+              <DeclineBookingModal book={book} />
               <ConfirmBookingModal book={book} />
-              
             </div>
           )}
         </CardFooter>

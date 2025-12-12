@@ -14,6 +14,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HiOutlinePencilAlt } from "react-icons/hi";
 import { AddCar, UpdateCar } from "../../../Services/dataService";
+import CustomSpinner from "../../../components/LoadingSpinner";
 const TransmisionOptions = ["اوتوماتيكي", "يدوي"];
 const fuelTypeOptions = ["بنزين", "ديزل", "كهرباء", "هجين"];
 const carStatusOptions = ["متاحة", "محجوزة", "صيانة"];
@@ -22,6 +23,7 @@ const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
 export default function CreateOrEditCarModal({ car }) {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -39,13 +41,23 @@ export default function CreateOrEditCarModal({ car }) {
 
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: ({ id, formData }) =>
-      car ? UpdateCar({ id, formData }) : AddCar(formData),
-
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data) => {
+      if (car) {
+        return UpdateCar({ id: car.id, formData: data });
+      } else {
+        return AddCar(data);
+      }
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cars"] });
-      console.log("Done");
+      handleOpen();
+    },
+    onMutate: () => {
+      setSubmitting(true);
+    },
+    onSettled: () => {
+      setSubmitting(false);
     },
   });
 
@@ -78,13 +90,23 @@ export default function CreateOrEditCarModal({ car }) {
   const handleSubmit = () => {
     if (!validateForm()) return;
 
-    if (car) {
-      mutation.mutate({ id: car.id, formData }); // UPDATE
-    } else {
-      mutation.mutate(formData); // ADD
+    const form = new FormData();
+
+    // إضافة الحقول العادية
+    Object.keys(formData).forEach((key) => {
+      if (key !== "images") {
+        form.append(key, formData[key]);
+      }
+    });
+
+    // إضافة الصور
+    if (formData.images) {
+      formData.images.forEach((file) => {
+        form.append("carImages", file);
+      });
     }
 
-    handleOpen();
+    mutate(form);
   };
 
   const validateForm = () => {
@@ -167,7 +189,7 @@ export default function CreateOrEditCarModal({ car }) {
       {car ? (
         <Button
           size="sm"
-          className="bg-transparent border  border-[#4e4e4e] hover:scale-[1.05] transition-all"
+          className="bg-transparent border border-[#4e4e4e] hover:scale-[1.05] transition-all"
           onClick={handleOpen}
         >
           {" "}
@@ -181,13 +203,17 @@ export default function CreateOrEditCarModal({ car }) {
           + اضف سيارة جديدة
         </button>
       )}
-
       <Dialog
         size="md"
         open={open}
         handler={handleOpen}
         className="p-3 bg-[#0f1729] max-h-[95vh] overflow-y-auto"
       >
+        {(isLoading || submitting) && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+            <CustomSpinner />
+          </div>
+        )}
         <DialogHeader className="relative m-0 block">
           <Typography variant="h4" color="white">
             {car ? "تعديل السيارة" : "اضف سيارة جديدة"}

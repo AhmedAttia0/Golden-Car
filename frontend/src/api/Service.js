@@ -86,6 +86,19 @@ class RemoteService {
     };
   }
 
+  async getBookings(pageParam = 1, limit) {
+    let queryString = `booking?page=${pageParam}&limit=${limit}`;
+
+    const { data, total } = await httpGet(queryString);
+
+    return {
+      data,
+      total,
+      page: pageParam,
+      hasMore: pageParam * limit < total,
+    };
+  }
+
   async getCarById(id) {
     const res = await fetch(`${BASE_URL}cars/${id}`);
 
@@ -97,14 +110,14 @@ class RemoteService {
     return res.json();
   }
 
-  async addCar(car) {
+  async addCar(formData) {
     const res = await fetch(`${BASE_URL}cars`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
         "X-CSRF-Token": getXsrfToken(),
+        // لا تكتب Content-Type هنا
       },
-      body: JSON.stringify(car),
+      body: formData, // مباشرة
     });
 
     if (!res.ok) {

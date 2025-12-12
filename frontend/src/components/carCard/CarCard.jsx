@@ -31,6 +31,7 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
     transmission = "اوتوماتيكي",
     hasAirConditioner = false,
     status = "متاحة",
+    images = [],
   } = car;
   return (
     <div className="flex justify-center">
@@ -55,7 +56,7 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
           className="h-56 overflow-hidden rounded-t-xl"
         >
           <img
-            src="/defaultcar.png"
+            src={` ${images.length > 0 ? images[0] : "/defaultcar.png"}`}
             alt="card-image"
             className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
           />
