@@ -6,6 +6,7 @@ import { FiPhone } from "react-icons/fi";
 import { FaFacebook } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { FaInstagram } from "react-icons/fa";
+import useSettings from "../../hooks/useSettings.jsx";
 
 const LINKS = [
   {
@@ -28,6 +29,9 @@ const LINKS = [
 const currentYear = new Date().getFullYear();
 
 export default function Footer() {
+  const { data, isLoading, isError, error } = useSettings();
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error: {error.message}</div>;
   return (
     <footer className="relative w-full bottom-0 mt-20">
       <div className=" w-full px-8 md:px-16 ">
@@ -37,21 +41,21 @@ export default function Footer() {
             <CiLocationOn className="rounded-full text-2xl p-1 w-[2.5rem] h-[2.5rem] font-bold bg-[#FF9E0C] text-white" />
             <div>
               <span>العنوان</span>
-              <p className="font-bold">القاهرة, المرج , ش سليمان غزال</p>
+              <p className="font-bold">{data?.address}</p>
             </div>
           </div>
           <div className="email flex items-center gap-4  ">
             <MdOutlineEmail className="rounded-full text-2xl p-1 w-[2.5rem] h-[2.5rem] font-bold bg-[#FF9E0C] text-white" />
             <div>
               <span>البريد الالكتروني</span>
-              <p className="font-bold">test@test.com</p>
+              <p className="font-bold">{data?.companyName}</p>
             </div>
           </div>
           <div className="phone flex items-center gap-4  ">
             <FiPhone className="rounded-full text-2xl p-2 w-[2.5rem] h-[2.5rem] font-bold bg-[#FF9E0C] text-white" />
             <div>
               <span>رقم الهاتف</span>
-              <p className="font-bold">+20 111-222-3334</p>
+              <p className="font-bold">{data?.phone}</p>
             </div>
           </div>
         </div>

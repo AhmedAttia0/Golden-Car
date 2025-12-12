@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import express from "express";
 import { connect } from "mongoose";
 import carRotuer from "./src/routes/cars.mjs";
@@ -5,24 +7,34 @@ import settingsRouter from "./src/routes/settings.mjs";
 import adminRouter from "./src/routes/admin.mjs";
 import bookingRouter from "./src/routes/booking.mjs";
 import User from "./src/models/User.mjs";
-import validateToken from "./src/middleware/auth.js";
+import validateToken from "./src/middleware/auth.mjs";
 import userRouter from "./src/routes/user.mjs";
 import cookieSession from "cookie-session";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
-import dotenv from "dotenv";
 import helmet from "helmet";
-dotenv.config();
+import "./src/config/cloudinary.js";
 
 const uri = process.env.MONGO_URI;
 const port = process.env.PORT || 5000;
-dotenv.config();
+console.log({
+  key: process.env.API_KEY,
+  secret: process.env.API_SECRET,
+  cloud: process.env.CLOUD_NAME,
+});
+
 connect(uri)
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const app = express();
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 // Helmet + Content Security Policy
 const isProd = process.env.NODE_ENV === "production";
 const frontendOrigin =

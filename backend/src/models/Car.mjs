@@ -13,6 +13,8 @@ const carSchema = new Schema({
 
   type: {
     type: String,
+    enum: ["sedan", "suv", "cabriolet", "pickup", "minivan"],
+    default: "sedan",
     required: true,
   },
 
@@ -44,12 +46,6 @@ const carSchema = new Schema({
 
   doors: {
     type: Number,
-  },
-
-  ac: {
-    // air conditioner
-    type: Boolean,
-    required: true,
   },
 
   mileage: {

@@ -1,30 +1,32 @@
 import { Router } from "express";
 import Settings from "../models/Settings.mjs";
 import validateSettingsForm from "../validations/settingsvalidation.mjs";
-import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit";
-import validateToken from "../middleware/auth";
-import validateRole from "../middleware/authz";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.mjs";
+import validateToken from "../middleware/auth.mjs";
+import validateRole from "../middleware/authz.mjs";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    let settings = await Settings.findOne();
+    let settings = await Settings.findOne().lean();
     if (!settings) {
-      settings = await Settings.create({
-        companyName: "",
-        supportEmail: "",
-        phone: "",
-        address: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        country: "",
-      });
+      const newSettings = await Settings.create({});
+      settings = newSettings.toObject();
     }
-    res.json(settings);
+    const sanitizedSettings = Object.fromEntries(
+      Object.entries(settings).filter(
+        ([key]) =>
+          key !== "_id" &&
+          key !== "__v" &&
+          key !== "createdAt" &&
+          key !== "updatedAt"
+      )
+    );
+    res.json(sanitizedSettings);
   } catch (error) {
-    res.status(500).send({ message: "حدث خطأ داخلي", error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "حدث خطأ داخلي", error: error.message });
   }
 });
 

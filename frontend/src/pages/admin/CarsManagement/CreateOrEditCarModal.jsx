@@ -8,23 +8,18 @@ import {
   DialogBody,
   DialogHeader,
 } from "@material-tailwind/react";
+import Features from "./Features";
 import Dropdown from "../../../components/Dropdown";
 import { HiMiniXMark } from "react-icons/hi2";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HiOutlinePencilAlt } from "react-icons/hi";
+import { AddCar } from "../../../Services/dataService";
 const TransmisionOptions = ["اوتوماتيكي", "يدوي"];
 const fuelTypeOptions = ["بنزين", "ديزل", "كهرباء", "هجين"];
 const carStatusOptions = ["متاحة", "محجوزة", "صيانة"];
 const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
-const featureOptions = [
-  "ABS",
-  "مكيف هواء",
-  "الفرامل المانعة للانغلاق",
-  "وسائد هوائية",
-  "التحكم في السرعة",
-  "حساسات ركن",
-];
 
-export default function CreateOrEditCarModal({ onSubmit, car }) {
+export default function CreateOrEditCarModal({ car }) {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -35,14 +30,23 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
     mileage: "",
     seats: "",
     doors: "",
-    transmission: "",
-    fuelType: "",
-    status: "",
-    type: "",
-    imageUrl: "",
+    transmission: "اوتوماتيكي",
+    fuelType: "بنزين",
+    status: "متاحة",
+    type: "suv",
     features: [],
   });
-
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: AddCar,
+    onSuccess: (data) => {
+      console.log("Car added:", data);
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+    },
+    onError: (error) => {
+      console.error("Failed to add car:", error.message);
+    },
+  });
   useEffect(() => {
     if (car) {
       setFormData({
@@ -54,7 +58,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
         fuelType: car.fuelType || "",
         status: car.status || "",
         type: car.type || "",
-        imageUrl: car.imageUrl || "",
+        images: car.images || "",
         features: car?.features || [],
       });
     }
@@ -67,24 +71,12 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
   };
 
   const handleSubmit = () => {
+    console.log("Form data:", formData);
     if (validateForm()) {
-      console.log("Form data:", formData);
+      mutation.mutate(formData);
 
       handleOpen();
     }
-  };
-
-  const toggleFeature = (feature) => {
-    setFormData((prev) => {
-      const exists = prev.features.includes(feature);
-
-      return {
-        ...prev,
-        features: exists
-          ? prev.features.filter((f) => f !== feature)
-          : [...prev.features, feature],
-      };
-    });
   };
 
   const validateForm = () => {
@@ -456,30 +448,7 @@ export default function CreateOrEditCarModal({ onSubmit, car }) {
           </div>
 
           <div>
-            <Typography
-              variant="small"
-              color="white"
-              className="mb-2 font-medium"
-            >
-              مميزات
-            </Typography>
-
-            <div className="grid grid-cols-2 gap-2">
-              {featureOptions.map((feature) => (
-                <label
-                  key={feature}
-                  className="flex items-center gap-2 text-white cursor-pointer"
-                >
-                  <input
-                    type="checkbox"
-                    className="w-4 h-4 accent-[#5937E0]"
-                    checked={formData.features.includes(feature)}
-                    onChange={() => toggleFeature(feature)}
-                  />
-                  <span>{feature}</span>
-                </label>
-              ))}
-            </div>
+            <Features formData={formData} setFormData={setFormData} />
           </div>
         </DialogBody>
 

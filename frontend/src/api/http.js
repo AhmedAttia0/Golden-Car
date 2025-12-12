@@ -1,19 +1,7 @@
-const DEFAULT_BASE = "http://localhost:3000";
-const BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE).replace(
-  /\/$/,
-  ""
-);
+const BASE_URL = import.meta.env.VITE_API_URL;
 
-function buildUrl(endpoint) {
-  return `${BASE_URL}/${endpoint.replace(/^\//, "")}`;
-}
-
-async function request(endpoint, opts = {}) {
-  const res = await fetch(buildUrl(endpoint), {
-    credentials: "include",
-    headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
-    ...opts,
-  });
+export async function httpGet(endpoint) {
+  const res = await fetch(`${BASE_URL}${endpoint}`);
 
   if (!res.ok) {
     let body = null;

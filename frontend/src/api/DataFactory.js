@@ -1,10 +1,10 @@
-import { LocalCarService, RemoteCarService } from "./CarsService";
+import { LocalService, RemoteService } from "./Service";
 class DataFactory {
-  static createCarService(isLocal) {
+  static createService(isLocal) {
     if (isLocal) {
-      return new LocalCarService();
+      return new LocalService();
     } else {
-      return new RemoteCarService();
+      return new RemoteService();
     }
   }
 }

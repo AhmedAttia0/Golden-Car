@@ -1,11 +1,11 @@
 import { Router } from "express";
-import loginAttempt from "../middleware/loginAttempt.js";
-import signupAttempt from "../middleware/signupAttempt.js";
+import loginAttempt from "../middleware/loginAttempt.mjs";
+import signupAttempt from "../middleware/signupAttempt.mjs";
 import User from "../models/User.mjs";
 import crypto from "crypto";
 import { rateLimit } from "express-rate-limit";
-import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.js";
-import validateToken from "../middleware/auth.js";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.mjs";
+import validateToken from "../middleware/auth.mjs";
 import validateUserUpdate from "../validations/userUpdateValidation.mjs";
 
 const userRouter = Router();
@@ -27,6 +27,7 @@ userRouter.post("/login", limiter, loginAttempt, (req, res) => {
     delete user.createdAt;
     delete user.role;
     user.id = user._id.toString();
+    delete user._id;
     const csrfToken = crypto.randomBytes(32).toString("hex");
     res.cookie("XSRF-TOKEN", csrfToken, {
       maxAge: cookieMaxAgeMs,

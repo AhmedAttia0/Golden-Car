@@ -1,8 +1,7 @@
 import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
-import { useSearchParams } from "react-router-dom";
-
-class LocalCarService {
+const BASE_URL = import.meta.env.VITE_API_URL;
+class LocalService {
   constructor() {
     this.allCars = mockData.cars;
   }
@@ -49,7 +48,7 @@ class LocalCarService {
   }
 }
 
-class RemoteCarService {
+class RemoteService {
   async getCars(pageParam = 1, searchParams, limit) {
     let queryString = `cars?page=${pageParam}&limit=${limit}`;
 
@@ -69,6 +68,69 @@ class RemoteCarService {
     const { data } = await httpGet(`cars/${id}`);
     return data;
   }
+
+  async addCar(car) {
+    const res = await fetch(`${BASE_URL}/cars`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(car),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
+  }
+
+  async updateCar(car) {
+    const res = await fetch(`${BASE_URL}cars/${car.id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(car),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
+  }
+
+  async deleteCar(id) {
+    const res = await fetch(`${BASE_URL}cars/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
+  }
+
+  async getSettings() {
+    const { data } = await httpGet("settings");
+    return data;
+  }
+
+  async updateSettings(settings) {
+    const res = await fetch(`${BASE_URL}settings`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(car),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
+  }
 }
 
-export { LocalCarService, RemoteCarService };
+export { LocalService, RemoteService };

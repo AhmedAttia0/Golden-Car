@@ -5,7 +5,7 @@ export function capitalize(str) {
   return str[0].toUpperCase() + str.slice(1);
 }
 export default function FilterationOption({
-  option: { optionValue, optionCount },
+  option: { optionValue },
   filtertypeKey,
   onFilter,
 }) {
@@ -33,9 +33,6 @@ export default function FilterationOption({
         }
         containerProps={{ className: "-ml-3 py-2" }}
       />
-      <Typography variant="small" color="blue-gray" className="font-medium">
-        {optionCount}
-      </Typography>
     </div>
   );
 }

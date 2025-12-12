@@ -1,7 +1,7 @@
 import User from "../models/User.mjs";
 async function validateRole(req, res, next) {
   try {
-    const user = await User.findById(req.body.token.id).lean();
+    const user = await User.findById(req.id).lean(); // الصح
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
@@ -10,7 +10,9 @@ async function validateRole(req, res, next) {
     }
     next();
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: "Server error" });
   }
 }
+
 export default validateRole;

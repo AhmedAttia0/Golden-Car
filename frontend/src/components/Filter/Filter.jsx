@@ -8,23 +8,18 @@ const filtersOptions = [
     options: [
       {
         optionValue: "sedan",
-        optionCount: "23",
       },
       {
         optionValue: "cabriolet",
-        optionCount: "15",
       },
       {
         optionValue: "pickup",
-        optionCount: "8",
       },
       {
         optionValue: "suv",
-        optionCount: "19",
       },
       {
         optionValue: "minivan",
-        optionCount: "19",
       },
     ],
   },
@@ -34,11 +29,9 @@ const filtersOptions = [
     options: [
       {
         optionValue: "اوتوماتيكي",
-        optionCount: "12",
       },
       {
         optionValue: "يدوي",
-        optionCount: "8",
       },
     ],
   },
@@ -48,15 +41,9 @@ const filtersOptions = [
     options: [
       {
         optionValue: "متاحة",
-        optionCount: "12",
-      },
-      {
-        optionValue: "غير متاحة",
-        optionCount: "8",
       },
       {
         optionValue: "تحت الصيانة",
-        optionCount: "8",
       },
     ],
   },
