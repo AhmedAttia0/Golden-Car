@@ -2,16 +2,19 @@ import React from "react";
 import { FiEye, FiEdit2, FiMoreVertical } from "react-icons/fi";
 
 export default function UserCard({ user }) {
+  let formatedDate = new Date(user.createdAt).toISOString().split("T")[0];
   return (
     <div className="bg-[#23262f] rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition">
       <div className="flex justify-center mb-4">
         <div className="w-24 h-24 rounded-full bg-purple-600 flex items-center justify-center text-2xl font-bold">
-          {user.initials}
+          {user.first_name.charAt(0) + user.last_name.charAt(0)}
         </div>
       </div>
 
       <div className="text-center mb-4">
-        <h3 className="text-xl font-semibold">{user.name}</h3>
+        <h3 className="text-xl font-semibold">
+          {user.first_name + " " + user.last_name}
+        </h3>
         <p className="text-gray-400 text-sm">{user.email}</p>
       </div>
 
@@ -28,12 +31,12 @@ export default function UserCard({ user }) {
       <div className="border-t border-gray-700 pt-4 mb-4">
         <div className="flex justify-between mb-2">
           <span className="text-gray-400">الحجوزات:</span>
-          <span className="font-semibold">{user.bookings}</span>
+          <span className="font-semibold">{user.bookingsCount}</span>
         </div>
 
         <div className="flex justify-between">
           <span className="text-gray-400">تاريخ الانضمام:</span>
-          <span className="font-semibold">{user.joined}</span>
+          <span className="font-semibold">{formatedDate}</span>
         </div>
       </div>
 

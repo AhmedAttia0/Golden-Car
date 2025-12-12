@@ -89,7 +89,24 @@ class RemoteService {
   async getBookings(pageParam = 1, limit) {
     let queryString = `booking?page=${pageParam}&limit=${limit}`;
 
-    const { data, total } = await httpGet(queryString);
+    const res = await fetch(`${BASE_URL}${queryString}`);
+    const data = await res.json();
+    const total = parseInt(res.headers.get("X-Total-Count")) || 0;
+
+    return {
+      data,
+      total,
+      page: pageParam,
+      hasMore: pageParam * limit < total,
+    };
+  }
+
+  async getUsers(pageParam = 1, searchParams, limit) {
+    let queryString = `admin/users?page=${pageParam}&limit=${limit}`;
+    if (searchParams.toString()) queryString += `&${searchParams.toString()}`;
+    const res = await fetch(`${BASE_URL}${queryString}`);
+    const data = await res.json();
+    const total = parseInt(res.headers.get("X-Total-Count")) || 0;
 
     return {
       data,
@@ -115,9 +132,8 @@ class RemoteService {
       method: "POST",
       headers: {
         "X-CSRF-Token": getXsrfToken(),
-        // لا تكتب Content-Type هنا
       },
-      body: formData, // مباشرة
+      body: formData,
     });
 
     if (!res.ok) {
@@ -191,16 +207,21 @@ class RemoteService {
     return res.json();
   }
 
-  async getUsers() {
-    const res = await fetch(`${BASE_URL}admin/users`, {
+  async addUser(user) {
+    const res = await fetch(`${BASE_URL}admin/users/add`, {
+      method: "POST",
       headers: {
+        "Content-Type": "application/json",
         "X-CSRF-Token": getXsrfToken(),
       },
+      body: JSON.stringify(user),
     });
+
     if (!res.ok) {
       const error = await res.json();
       throw new Error(error.message || "Failed to add car");
     }
+
     return res.json();
   }
 }
