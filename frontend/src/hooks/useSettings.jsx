@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSettings } from "../api/Settings";
+import { getSettings } from "../Services/dataService";
 
 export default function useSettings() {
   const res = useQuery({

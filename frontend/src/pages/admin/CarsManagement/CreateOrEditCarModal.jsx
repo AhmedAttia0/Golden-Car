@@ -37,7 +37,6 @@ export default function CreateOrEditCarModal({ car }) {
     features: [],
   });
   const queryClient = useQueryClient();
-  const method = car ? "PUT" : "POST";
   const mutation = useMutation({
     mutationFn: AddCar,
     onSuccess: (data) => {
