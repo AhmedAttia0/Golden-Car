@@ -8,10 +8,14 @@ import {
 } from "@material-tailwind/react";
 import { RiDeleteBin6Line } from "react-icons/ri";
 
-export default function ConfirmationModal({ itemName, onDelete }) {
+export default function ConfirmationModal({ itemName, onDelete, isPending }) {
   const [open, setOpen] = React.useState(false);
 
   const handleOpen = () => setOpen(!open);
+  const handleDelete = (carId) => {
+    handleOpen();
+    onDelete();
+  };
 
   return (
     <>
@@ -43,8 +47,13 @@ export default function ConfirmationModal({ itemName, onDelete }) {
           >
             <span>Cancel</span>
           </Button>
-          <Button variant="gradient" color="red" onClick={handleOpen}>
-            <span>DELETE</span>
+          <Button
+            disabled={isPending}
+            variant="gradient"
+            color="red"
+            onClick={handleDelete}
+          >
+            {isPending ? "Deleting..." : "Delete"}
           </Button>
         </DialogFooter>
       </Dialog>

@@ -1,6 +1,28 @@
 import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = "http://localhost:5000/";
+
+function getXsrfToken() {
+  // document.cookie returns a string like: "cookie1=value1; cookie2=value2; XSRF-TOKEN=the_token_here"
+
+  // 1. Split the string into an array of individual cookie strings: ["cookie1=value1", "cookie2=value2", "XSRF-TOKEN=the_token_here"]
+  // 2. Trim whitespace from each cookie string.
+  // 3. Find the string that starts with 'XSRF-TOKEN='.
+  const cookieString = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("XSRF-TOKEN="));
+
+  if (!cookieString) {
+    return null;
+  }
+
+  // 4. Split the found string by '=' and take the second part (the value).
+  const token = cookieString.split("=")[1];
+
+  // 5. Decode the value in case it contains URL-encoded characters.
+  return decodeURIComponent(token);
+}
+
 class LocalService {
   constructor() {
     this.allCars = mockData.cars;
@@ -65,14 +87,23 @@ class RemoteService {
   }
 
   async getCarById(id) {
-    const { data } = await httpGet(`cars/${id}`);
-    return data;
+    const res = await fetch(`${BASE_URL}cars/${id}`);
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
   }
 
   async addCar(car) {
-    const res = await fetch(`${BASE_URL}/cars`, {
+    const res = await fetch(`${BASE_URL}cars`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getXsrfToken(),
+      },
       body: JSON.stringify(car),
     });
 
@@ -85,9 +116,13 @@ class RemoteService {
   }
 
   async updateCar(car) {
+    console.log(car);
     const res = await fetch(`${BASE_URL}cars/${car.id}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getXsrfToken(),
+      },
       body: JSON.stringify(car),
     });
 
@@ -102,6 +137,10 @@ class RemoteService {
   async deleteCar(id) {
     const res = await fetch(`${BASE_URL}cars/${id}`, {
       method: "DELETE",
+      headers: {
+        "X-CSRF-Token": getXsrfToken(),
+        "Content-Type": "application/json",
+      },
     });
 
     if (!res.ok) {
@@ -113,14 +152,21 @@ class RemoteService {
   }
 
   async getSettings() {
-    const { data } = await httpGet("settings");
-    return data;
+    const res = await fetch(`${BASE_URL}settings`);
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+    return res.json();
   }
 
   async updateSettings(settings) {
     const res = await fetch(`${BASE_URL}settings`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getXsrfToken(),
+      },
       body: JSON.stringify(car),
     });
 
@@ -129,6 +175,19 @@ class RemoteService {
       throw new Error(error.message || "Failed to add car");
     }
 
+    return res.json();
+  }
+
+  async getUsers() {
+    const res = await fetch(`${BASE_URL}admin/users`, {
+      headers: {
+        "X-CSRF-Token": getXsrfToken(),
+      },
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
     return res.json();
   }
 }

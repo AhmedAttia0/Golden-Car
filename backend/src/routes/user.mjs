@@ -9,11 +9,13 @@ import validateToken from "../middleware/auth.mjs";
 import validateUserUpdate from "../validations/userUpdateValidation.mjs";
 
 const userRouter = Router();
+
 const limiter = rateLimit({
   windowMs: 5 * 60 * 1000,
   max: 10,
   message: "Too many login attempts, try again later!",
 });
+
 userRouter.post("/login", limiter, loginAttempt, (req, res) => {
   try {
     let { user, authOptions } = req;
