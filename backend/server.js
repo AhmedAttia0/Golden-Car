@@ -13,7 +13,6 @@ import cors from "cors";
 import path from "path";
 import dotenv from "dotenv";
 import helmet from "helmet";
-import dotenv from "dotenv";
 dotenv.config();
 
 const uri = process.env.MONGO_URI;

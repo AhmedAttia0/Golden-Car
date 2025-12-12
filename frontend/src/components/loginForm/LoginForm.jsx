@@ -1,12 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoCarSportSharp } from "react-icons/io5";
 import InputField from "../inputField/InputField";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
+import { httpPost } from "../../api/http";
+import { useUser } from "../../contexts/UserContext";
 
 const LoginForm = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    remember_me: false,
+  });
+  const [errors, setErrors] = useState({});
+  const { dispatch } = useUser();
+  const validate = () => {
+    let tempErrors = {};
+    if (!formData.email) {
+      tempErrors.email = "يجب إدخال البريد الإلكتروني";
+    } else if (
+      !/^(?:[a-zA-Z0-9_'^&/+-])+(?:\.(?:[a-zA-Z0-9_'^&/+-])+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/.test(
+        formData.email
+      )
+    ) {
+      tempErrors.email =
+        "البريد الإلكتروني يجب أن يطابق هذا النمط example@example.com";
+    }
+    if (!formData.password) {
+      tempErrors.password = "يجب إدخال كلمة السر";
+    } else if (formData.password.length < 8 || formData.password.length > 30) {
+      tempErrors.password =
+        "كلمة السر يجب أن تكون 8 أحرف على الأقل و 30 حرفا على الأكثر";
+    } else if (
+      !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(
+        formData.password
+      )
+    ) {
+      tempErrors.password = "كلمة السر غير مطابقة للمعايير المحددة";
+    }
+    setErrors(tempErrors);
+    return Object.keys(tempErrors).length === 0;
+  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!validate()) return;
+    try {
+      const data = await httpPost("user/login", formData);
+      // dispatch user to context
+      if (data && data.user) {
+        const payload = {
+          first_name: data.user.first_name,
+          last_name: data.user.last_name,
+          email: data.user.email,
+          phone: data.user.phone,
+          id: data.user.id,
+        };
+        dispatch({ type: "SET_USER", payload: { ...payload } });
+        try {
+          localStorage.setItem("user", JSON.stringify(data.user));
+        } catch (e) {
+          // ignore localStorage errors
+        }
+        navigate("/");
+      } else {
+        setErrors({ general: data?.message || "فشل تسجيل الدخول." });
+      }
+    } catch (err) {
+      setErrors({ general: "فشل تسجيل الدخول. يرجى التحقق من بياناتك." });
+    }
+  };
   return (
     <section
       id="login-form"
@@ -19,15 +83,40 @@ const LoginForm = () => {
         <IoCarSportSharp className="text-[#5937E0] text-3xl self-center" />
         <h1 className="text-2xl">Golden Car</h1>
       </header>
-      <form className="space-y-6">
+      <form className="space-y-6" onSubmit={handleSubmit}>
         <h2 className="text-center text-2xl">أهلا بعودتك!</h2>
-        <InputField type={"email"} id={"email"} label={"البريد الإلكتروني"} />
-        <InputField type={"password"} id={"password"} label={"كلمة السر"} />
+        {errors.general && (
+          <p className="text-2xl text-red-600">{errors.general}</p>
+        )}
+        <InputField
+          type={"text"}
+          id={"email"}
+          label={"البريد الإلكتروني"}
+          value={formData.email}
+          onChange={(e) =>
+            setFormData({ ...formData, email: e.target.value.trim() })
+          }
+          error={errors.email}
+        />
+        <InputField
+          type={"password"}
+          id={"password"}
+          label={"كلمة السر"}
+          value={formData.password}
+          onChange={(e) =>
+            setFormData({ ...formData, password: e.target.value.trim() })
+          }
+          error={errors.password}
+        />
         <div className="flex items-center justify-between">
           <div className="flex items-center">
             <input
               id="remember-me"
               type="checkbox"
+              checked={formData.remember_me}
+              onChange={(e) =>
+                setFormData({ ...formData, remember_me: e.target.checked })
+              }
               className="h-4 w-4 text-primary-blue border-gray-300 rounded focus:ring-primary-blue"
             />
             <label className="mr-2 block text-sm text-gray-900">تذكرني</label>
@@ -40,6 +129,7 @@ const LoginForm = () => {
           </Link>
         </div>
         <Button
+          type="submit"
           className={
             "w-full bg-[#5937E0] text-white py-3 px-4 text-center font-semibold border border-transparent hover:bg-purple-900"
           }
