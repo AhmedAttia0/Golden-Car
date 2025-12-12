@@ -1,9 +1,9 @@
 import { Router } from "express";
 import Settings from "../models/Settings.mjs";
 import validateSettingsForm from "../validations/settingsvalidation.mjs";
-import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit";
-import validateToken from "../middleware/auth";
-import validateRole from "../middleware/authz";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.mjs";
+import validateToken from "../middleware/auth.mjs";
+import validateRole from "../middleware/authz.mjs";
 
 const router = Router();
 

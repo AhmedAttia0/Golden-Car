@@ -1,7 +1,7 @@
 import { Router } from "express";
 import Car from "../models/Car.mjs";
 import validateCar from "../validations/carValidation.mjs";
-import { upload } from "../middleware/uploadImages.js";
+import { upload } from "../middleware/uploadImages.mjs";
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -45,20 +45,18 @@ router.get("/", async (req, res) => {
     filters.ac = ac;
   }
 
-  const cars = await Car.find(filters);
-  const total = cars.length;
+  const total = Car.countDocuments(filters);
   const total_pages = Math.ceil(total / limit);
   if (page > total_pages && total_pages > 0)
     return res.status(404).send({ message: "Page not found" });
-  const startIndex = (page - 1) * limit;
-  const endIndex = page * limit;
-  const paginatedCars = cars.slice(startIndex, endIndex);
+  const skip = (page - 1) * limit;
+  const cars = Car.find(filters).skip(skip).limit(limit);
   res.send({
     page,
     limit,
     totalCars: total,
     totalPages: total_pages,
-    cars: paginatedCars,
+    cars,
   });
 });
 
@@ -95,15 +93,15 @@ router.post("/", upload.array("carImages", 4), async (req, res) => {
 
     res.status(201).send({ message: "تم اضافة السيارة بنجاح", car });
   } catch (error) {
-  if (error.details) {
-    return res.status(400).send({
-      message: "خطأ في البيانات المرسلة",
-      details: error.details.map((d) => d.message),
-    });
-  }
+    if (error.details) {
+      return res.status(400).send({
+        message: "خطأ في البيانات المرسلة",
+        details: error.details.map((d) => d.message),
+      });
+    }
 
-  res.status(500).send({ message: "خطأ في الخادم", error: error.message });
-}
+    res.status(500).send({ message: "خطأ في الخادم", error: error.message });
+  }
 });
 
 router.put("/:id", async (req, res) => {
