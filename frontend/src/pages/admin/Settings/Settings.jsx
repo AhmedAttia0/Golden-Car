@@ -1,33 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Input, Typography, Button } from "@material-tailwind/react";
+import useSettings from "../../../hooks/useSettings";
 
 function Account1() {
+  const { data, isLoading, isError, error } = useSettings();
+
   const [form, setForm] = useState({
-    companyName: "",
-    supportEmail: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "",
+    companyName: data?.companyName || "",
+    supportEmail: data?.supportEmail || "",
+    phone: data?.phone || "",
+    address: data?.address || "",
   });
 
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/settings")
-      .then((res) => res.json())
-      .then((data) => {
-        setForm(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error(err);
-        setLoading(false);
-      });
-  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -81,10 +66,10 @@ function Account1() {
     }
   };
 
-  if (loading) return <p className="text-white">Loading...</p>;
-
+  if (isLoading) return <p className="text-white">Loading...</p>;
+  if (isError) return <p className="text-white">{error.message}</p>;
   return (
-    <section className="min-h-screen flex flex-col justify-center p-4">
+    <section className="min-h-screen flex flex-col  p-4">
       <div className="text-right">
         <Typography variant="h5" color="white" className="mb-6">
           إعدادات التطبيق
@@ -102,10 +87,6 @@ function Account1() {
             { label: "الدعم الفني", name: "supportEmail" },
             { label: "رقم التليفون", name: "phone" },
             { label: "العنوان", name: "address" },
-            { label: "المدينة", name: "city" },
-            { label: "الولاية", name: "state" },
-            { label: "الرمز البريدي", name: "zipCode" },
-            { label: "الدولة", name: "country" },
           ].map((field) => (
             <div key={field.name} className="w-full">
               <Typography

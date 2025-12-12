@@ -18,22 +18,6 @@ const validateSettings = Joi.object({
   address: Joi.string().min(5).max(200).required().messages({
     "string.empty": "العنوان مطلوب",
   }),
-  city: Joi.string().min(2).max(50).required().messages({
-    "string.empty": "المدينة مطلوبة",
-  }),
-  state: Joi.string().min(2).max(50).required().messages({
-    "string.empty": "الولاية مطلوبة",
-  }),
-  zipCode: Joi.string()
-    .pattern(/^[0-9]{4,10}$/)
-    .required()
-    .messages({
-      "string.empty": "الرمز البريدي مطلوب",
-      "string.pattern.base": "الرمز البريدي غير صالح",
-    }),
-  country: Joi.string().min(2).max(50).required().messages({
-    "string.empty": "الدولة مطلوبة",
-  }),
 });
 
 export default validateSettings;

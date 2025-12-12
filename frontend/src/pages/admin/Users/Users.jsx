@@ -146,7 +146,7 @@ export default function Users() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f1729] text-white p-4 md:p-8" dir="rtl">
+    <div className="min-h-screen text-white p-4 md:p-8" dir="rtl">
       <UserHeader onAddClick={() => setIsModalOpen(true)} />
 
       <UserFilters

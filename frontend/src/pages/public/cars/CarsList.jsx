@@ -18,8 +18,7 @@ export default function CarsList({
     isFetchingNextPage,
   } = useInfiniteCar(limit);
   const loaderRef = useRef(null);
-  const cars = data?.pages.flatMap((page) => page.data) ?? [];
-  // let limitedCars = cars.slice( limit);
+  const cars = data?.pages.flatMap((page) => page.data)[0].cars ?? [];
   // handle infinite scrolling
   useEffect(() => {
     if (disableInfinite) return;

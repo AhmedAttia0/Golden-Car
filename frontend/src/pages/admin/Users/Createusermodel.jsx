@@ -14,9 +14,9 @@ export default function CreateUserModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-      <div className="bg-white rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-white px-6 py-4 border-b flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-black">إنشاء حساب جديد</h2>
+      <div className="bg-[#0f1729] rounded-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="sticky top-0 bg-transparent px-6 py-4 border-b flex justify-between items-center">
+          <h2 className="text-2xl font-bold text-white">إنشاء حساب جديد</h2>
 
           <button
             onClick={() => {
@@ -39,7 +39,7 @@ export default function CreateUserModal({
               value={formData.first_name}
               onChange={handleInputChange}
               placeholder="أدخل الاسم الأول"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.firstName ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -59,7 +59,7 @@ export default function CreateUserModal({
               value={formData.last_name}
               onChange={handleInputChange}
               placeholder="لقب العائلة"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.last_name ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -81,7 +81,7 @@ export default function CreateUserModal({
               value={formData.phone}
               onChange={handleInputChange}
               placeholder="01012345678"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.phone ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -103,7 +103,7 @@ export default function CreateUserModal({
               value={formData.email}
               onChange={handleInputChange}
               placeholder="you@example.com"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.email ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -125,7 +125,7 @@ export default function CreateUserModal({
               value={formData.password}
               onChange={handleInputChange}
               placeholder="كلمة السر الخاصة بك"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.password ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -147,7 +147,7 @@ export default function CreateUserModal({
               value={formData.confirm_password}
               onChange={handleInputChange}
               placeholder="أعد إدخال كلمة السر"
-              className={`w-full px-4 py-3 bg-gray-50 border rounded-lg text-right ${
+              className={`w-full px-4 py-3 bg-transparent border rounded-lg text-right ${
                 errors.confirm_password ? "border-red-500" : "border-gray-300"
               }`}
             />
@@ -167,7 +167,7 @@ export default function CreateUserModal({
               name="role"
               value={formData.role}
               onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-300 rounded-lg text-right"
+              className="w-full px-4 py-3 bg-transparent border border-gray-300 rounded-lg text-right"
             >
               <option value="user">مستخدم عادي</option>
               <option value="admin">مشرف</option>

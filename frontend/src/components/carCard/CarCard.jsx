@@ -74,15 +74,15 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
           </div>
 
           <div className="flex justify-between gap-5 mt-6">
-            <div className="flex flex-col lg:flex-row  gap-1 items-center">
+            <div className="flex flex-col   gap-1 items-center">
               <TbManualGearbox className="text-[#5937E0] justify-center" />
               <h1 className="font-bold text-lg">{transmission}</h1>
             </div>
-            <div className="flex flex-col lg:flex-row self-center gap-1 items-center">
+            <div className="flex flex-col  self-center gap-1 items-center">
               <BsFillFuelPumpFill className="text-[#5937E0]" />
               <h1 className="font-bold text-lg">pb-95</h1>
             </div>
-            <div className="flex flex-col lg:flex-row gap-1 items-center">
+            <div className="flex flex-col  gap-1 items-center">
               <FaSnowflake className="text-[#5937E0]" />
               <h1
                 className={`font-bold text-lg  ${

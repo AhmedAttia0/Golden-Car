@@ -3,7 +3,7 @@ import { FiEye, FiEdit2, FiMoreVertical } from "react-icons/fi";
 
 export default function UserCard({ user }) {
   return (
-    <div className="bg-[#1a2332] rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition">
+    <div className="bg-[#23262f] rounded-xl p-6 border border-gray-800 hover:border-purple-500 transition">
       <div className="flex justify-center mb-4">
         <div className="w-24 h-24 rounded-full bg-purple-600 flex items-center justify-center text-2xl font-bold">
           {user.initials}

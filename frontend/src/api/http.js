@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000/";
+const BASE_URL = "http://localhost:5000/";
 
 export async function httpGet(endpoint) {
   const res = await fetch(`${BASE_URL}${endpoint}`);

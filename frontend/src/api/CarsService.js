@@ -69,6 +69,21 @@ class RemoteCarService {
     const { data } = await httpGet(`cars/${id}`);
     return data;
   }
+
+  async addCar(car) {
+    const res = await fetch("http://localhost:5000/cars", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(car),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to add car");
+    }
+
+    return res.json();
+  }
 }
 
 export { LocalCarService, RemoteCarService };

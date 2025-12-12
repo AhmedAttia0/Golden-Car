@@ -18,14 +18,14 @@ export default function UserFilters({
           placeholder="البحث عن المستخدمين بالاسم أو البريد الإلكتروني..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full bg-[#1a2332] text-white px-12 py-3 rounded-lg border border-gray-700 focus:border-purple-500 focus:outline-none"
+          className="w-full bg-transparent text-white px-12 py-3 rounded-lg border border-gray-700 focus:border-purple-500 focus:outline-none"
         />
       </div>
 
       <select
         value={roleFilter}
         onChange={(e) => setRoleFilter(e.target.value)}
-        className="bg-[#1a2332] text-white px-6 py-3 rounded-lg border border-gray-700 cursor-pointer"
+        className="bg-transparent text-white px-6 py-3 rounded-lg border border-gray-700 cursor-pointer"
       >
         <option value="all">جميع الأدوار</option>
         <option value="Admin">مشرف</option>

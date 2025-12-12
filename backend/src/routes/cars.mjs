@@ -2,62 +2,73 @@ import { Router } from "express";
 import Car from "../models/Car.mjs";
 import validateCar from "../validations/carValidation.mjs";
 import { upload } from "../middleware/uploadImages.mjs";
+import { features } from "process";
 const router = Router();
 
 router.get("/", async (req, res) => {
-  let {
-    type,
-    brand,
-    model,
-    min_price,
-    max_price,
-    ac,
-    page = 1,
-    limit = 10,
-  } = req.query;
+  try {
+    let {
+      type,
+      brand,
+      model,
+      price_gte: min_price,
+      price_lte: max_price,
+      features = "",
+      transmission,
+      status,
+      page = 1,
+      limit = 10,
+    } = req.query;
 
-  page = Number(page);
-  limit = Number(limit);
-  if (isNaN(page) || page < 1) page = 1;
-  if (isNaN(limit) || limit < 1) limit = 10;
-  if (limit > 100) limit = 100;
+    page = Number(page);
+    limit = Number(limit);
+    if (isNaN(page) || page < 1) page = 1;
+    if (isNaN(limit) || limit < 1) limit = 10;
+    if (limit > 100) limit = 100;
 
-  const filters = {};
-  if (type) {
-    const types = type.split(",");
-    filters.type = { $in: types };
-  }
-  if (brand) {
-    const brands = brand.split(",");
-    filters.brand = { $in: brands };
-  }
-  if (model) {
-    const models = model.split(",");
-    filters.model = { $in: models };
-  }
-  if (min_price) {
-    filters.price = { $gte: min_price };
-  }
-  if (max_price) {
-    filters.price = { $lte: max_price };
-  }
-  if (ac) {
-    filters.ac = ac;
-  }
+    const filters = {};
+    if (type) filters.type = { $in: type.split(",") };
+    if (brand) filters.brand = { $in: brand.split(",") };
+    if (model) filters.model = { $in: model.split(",") };
+    if (min_price || max_price) {
+      filters.price = {};
+      if (min_price) filters.price.$gte = Number(min_price);
+      if (max_price) filters.price.$lte = Number(max_price);
+    }
+    if (features) {
+      filters.features = { $all: features.split(",") };
+    }
+    if (transmission) filters.transmission = { $in: transmission.split(",") };
+    if (status) filters.status = { $in: status.split(",") };
 
-  const total = Car.countDocuments(filters);
-  const total_pages = Math.ceil(total / limit);
-  if (page > total_pages && total_pages > 0)
-    return res.status(404).send({ message: "Page not found" });
-  const skip = (page - 1) * limit;
-  const cars = Car.find(filters).skip(skip).limit(limit);
-  res.send({
-    page,
-    limit,
-    totalCars: total,
-    totalPages: total_pages,
-    cars,
-  });
+    // ✅ مهم: await لكل عمليات DB
+    const total = await Car.countDocuments(filters);
+    const total_pages = Math.ceil(total / limit);
+
+    if (page > total_pages && total_pages > 0) {
+      return res.status(404).send({ message: "Page not found" });
+    }
+
+    const skip = (page - 1) * limit;
+    const cars = await Car.find(filters).skip(skip).limit(limit).lean(); // مهم
+    const sanitizedCars = cars.map((car) => {
+      car.id = car._id.toString();
+      delete car._id;
+      delete car.__v;
+      delete car.createdAt;
+      return car;
+    });
+    res.send({
+      page,
+      limit,
+      totalCars: total,
+      totalPages: total_pages,
+      cars,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: "Server error" });
+  }
 });
 
 router.get("/:id", async (req, res) => {
