@@ -1,8 +1,8 @@
 import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
-const BASE_URL = "http://localhost:5000/";
+const BASE_URL = "http://localhost:3000/";
 
-function getXsrfToken() {
+export function getXsrfToken() {
   // document.cookie returns a string like: "cookie1=value1; cookie2=value2; XSRF-TOKEN=the_token_here"
 
   // 1. Split the string into an array of individual cookie strings: ["cookie1=value1", "cookie2=value2", "XSRF-TOKEN=the_token_here"]
@@ -23,7 +23,7 @@ function getXsrfToken() {
   return decodeURIComponent(token);
 }
 
-class LocalService {
+export class LocalService {
   constructor() {
     this.allCars = mockData.cars;
   }

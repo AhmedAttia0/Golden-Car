@@ -85,7 +85,7 @@ const SignupForm = () => {
     console.log(formData);
     if (!validate()) return;
     try {
-      const res = await fetch(`http://localhost:3000/user/login`, {
+      const res = await fetch(`http://localhost:3000/user/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

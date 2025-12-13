@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
 import { UserContext } from "../../contexts/UserContext";
+import { getXsrfToken } from "../../api/Service";
 import {
   Navbar,
   Collapse,
@@ -12,6 +13,21 @@ import {
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  function handleLogout() {
+    try {
+      const res = fetch(`http://localhost:3000/user/logout`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": getXsrfToken(),
+        },
+      });
+      setUser(null);
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  }
 
   useEffect(() => {
     window.addEventListener(
@@ -109,7 +125,7 @@ const Header = () => {
                 <Button
                   className="bg-[#ff0000]  hover:bg-[#e92323e1]"
                   size="sm"
-                  onClick={() => setUser(null)}
+                  onClick={() => handleLogout()}
                 >
                   <span>تسجيل الخروج</span>
                 </Button>
