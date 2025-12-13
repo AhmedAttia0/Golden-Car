@@ -83,11 +83,7 @@ export default function Bookings() {
     );
   if (isError)
     return (
-      <h2
-        className={`font-bold text-2xl  text-center ${
-          dark && "text-white"
-        } mt-20`}
-      >
+      <h2 className={`font-bold text-2xl  text-center  mt-20`}>
         {error.message}
       </h2>
     );
