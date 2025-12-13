@@ -3,18 +3,18 @@ import InputField from "../inputField/InputField";
 import Button from "../button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
-import { useUser } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
+import { httpPost } from "../../api/http";
 const SignupForm = () => {
-  const { dispatch } = useUser();
+  const { setUser } = React.useContext(UserContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     first_name: "",
     last_name: "",
-    phone_number: "",
+    phone: "",
     confirm_password: "",
-    address: "",
   });
   const [errors, setErrors] = useState({});
   const validate = () => {
@@ -51,10 +51,10 @@ const SignupForm = () => {
     }
 
     // Phone number
-    if (!formData.phone_number) {
-      tempErrors.phone_number = "يجب إدخال رقم الهاتف";
-    } else if (!/^01[0125][0-9]{8}$/.test(formData.phone_number)) {
-      tempErrors.phone_number = "رقم الهاتف غير صالح";
+    if (!formData.phone) {
+      tempErrors.phone = "يجب إدخال رقم الهاتف";
+    } else if (!/^01[0125][0-9]{8}$/.test(formData.phone)) {
+      tempErrors.phone = "رقم الهاتف غير صالح";
     }
 
     // Password
@@ -80,14 +80,45 @@ const SignupForm = () => {
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validate()) {
-      const { confirm_password, ...data } = formData;
+    console.log(formData);
+    if (!validate()) return;
+    try {
+      const res = await fetch(`http://localhost:3000/user/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          phone: formData.phone,
+          confirm_password: formData.confirm_password,
+        }),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "فشل إنشاء الحساب");
+      }
 
-      dispatch({ type: "SET_USER", payload: data });
-      localStorage.setItem("user", JSON.stringify(data));
-      navigate("/");
+      const data = await res.json();
+      // dispatch user to context
+      if (data.user) {
+        const payload = {
+          first_name: data.user.first_name,
+          last_name: data.user.last_name,
+          email: data.user.email,
+          phone: data.user.phone,
+          id: data.user.id,
+        };
+        setUser({ ...payload });
+        navigate("/");
+      } else {
+        setErrors({ general: data?.message || "فشل إنشاء الحساب" });
+      }
+    } catch (err) {
+      setErrors({ general: "فشل إنشاء الحساب، يرجي التحقق من بياناتك" });
     }
   };
   return (
@@ -104,6 +135,9 @@ const SignupForm = () => {
       </header>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <h2 className="text-center text-2xl">مرحبا بك!</h2>
+        {errors.general && (
+          <p className="text-red-500 text-center">{errors.general}</p>
+        )}
         <InputField
           type={"text"}
           id={"first_name"}
@@ -128,11 +162,11 @@ const SignupForm = () => {
           type={"text"}
           id={"phone_number"}
           label={"الهاتف"}
-          value={formData.phone_number}
+          value={formData.phone}
           onChange={(e) =>
-            setFormData({ ...formData, phone_number: e.target.value.trim() })
+            setFormData({ ...formData, phone: e.target.value.trim() })
           }
-          error={errors.phone_number}
+          error={errors.phone}
         />
         <InputField
           type={"text"}

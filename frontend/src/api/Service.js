@@ -2,7 +2,7 @@ import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
 const BASE_URL = "https://final-golden-car-back.vercel.app/";
 
-function getXsrfToken() {
+export function getXsrfToken() {
   // document.cookie returns a string like: "cookie1=value1; cookie2=value2; XSRF-TOKEN=the_token_here"
 
   // 1. Split the string into an array of individual cookie strings: ["cookie1=value1", "cookie2=value2", "XSRF-TOKEN=the_token_here"]
@@ -23,7 +23,7 @@ function getXsrfToken() {
   return decodeURIComponent(token);
 }
 
-class LocalService {
+export class LocalService {
   constructor() {
     this.allCars = mockData.cars;
   }
@@ -70,7 +70,7 @@ class LocalService {
   }
 }
 
-class RemoteService {
+export class RemoteService {
   async getCars(pageParam = 1, searchParams, limit) {
     let queryString = `cars?page=${pageParam}&limit=${limit}`;
 
@@ -224,6 +224,61 @@ class RemoteService {
 
     return res.json();
   }
+
+  async getUsers() {
+    const res = await fetch(`${BASE_URL}admin/users`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to get users");
+    }
+    const { data } = await res.json();
+    return data;
+  }
+
+  async login(credentials) {
+    const res = await fetch(`${BASE_URL}/user/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(credentials),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      console.log("Login error:", error);
+      throw new Error(error.message || "Failed to login");
+    }
+    const { data } = await res.json();
+    return data;
+  }
+
+  async signup(userInfo) {
+    const res = await fetch(`${BASE_URL}/user/signup`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userInfo),
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to signup");
+    }
+    const { data } = await res.json();
+    return data;
+  }
+
+  async logout() {
+    const res = await fetch(`${BASE_URL}/user/logout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    });
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to logout");
+    }
+    return true;
+  }
+}
   async updateBooking(bookingId, updatedData) {
     const res = await fetch(`${BASE_URL}booking/${bookingId}`, {
       method: "PUT",

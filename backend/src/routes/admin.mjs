@@ -73,6 +73,7 @@ adminRouter.get("/users", async (req, res) => {
 
 adminRouter.put(
   "/users/role",
+  csrfDoubleSubmit,
   validateToken,
   validateRole,
   async (req, res) => {

@@ -17,7 +17,7 @@ import helmet from "helmet";
 import "./src/config/cloudinary.js";
 
 const uri = process.env.MONGO_URI;
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 3000;
 console.log({
   key: process.env.API_KEY,
   secret: process.env.API_SECRET,
@@ -29,12 +29,7 @@ connect(uri)
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+
 // Helmet + Content Security Policy
 const isProd = process.env.NODE_ENV === "production";
 const frontendOrigin =
@@ -68,8 +63,6 @@ app.use(
     reportOnly: !isProd,
   })
 );
-
-app.use(express.json());
 app.use(cookieParser());
 app.use(
   cookieSession({
@@ -83,6 +76,7 @@ app.use(
     },
   })
 );
+app.use(express.json());
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 app.use("/cars", carRotuer);
 app.use("/user", userRouter);

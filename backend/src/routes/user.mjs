@@ -16,7 +16,7 @@ const limiter = rateLimit({
   message: "Too many login attempts, try again later!",
 });
 
-userRouter.post("/login", limiter, loginAttempt, (req, res) => {
+userRouter.post("/login", loginAttempt, (req, res) => {
   try {
     let { user, authOptions } = req;
     const mongooseUser = new User(user);
@@ -49,7 +49,8 @@ userRouter.post("/login", limiter, loginAttempt, (req, res) => {
 
 userRouter.post("/signup", signupAttempt, async (req, res) => {
   try {
-    const user = req.body;
+    console.log(req.body);
+    let user = req.user;
     // Check if email already exists
     const existingUser = await User.findOne({ email: user.email });
     if (existingUser) {
