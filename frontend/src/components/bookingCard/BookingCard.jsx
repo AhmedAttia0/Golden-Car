@@ -40,7 +40,9 @@ const BookingCard = ({ book }) => {
   const endDateObj = new Date(endDate);
   const formatedStartDate = startDateObj.toISOString().split("T")[0];
   const formatedEndDate = endDateObj.toISOString().split("T")[0];
-  const duration = (endDateObj - startDateObj) / (1000 * 60 * 60 * 24);
+  const duration = Math.ceil(
+    (endDateObj - startDateObj) / (1000 * 60 * 60 * 24)
+  );
   return (
     <div className="">
       <Card className="mt-6 w-[100%] bg-[#23262f] ">
@@ -49,7 +51,7 @@ const BookingCard = ({ book }) => {
             <div className="topSection flex flex-row justify-between">
               <div>
                 <h2 className="text-xl"> رقم الحجز</h2>
-                <p className="text-3xl font-bold text-white">{id}</p>
+                <p className="text-3xl font-bold text-white break-all">{id}</p>
               </div>
               <div>
                 <Button

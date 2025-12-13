@@ -1,6 +1,6 @@
 import { httpGet } from "./http";
 import mockData from "../data/local/mockData.json";
-const BASE_URL = "http://localhost:5000/";
+const BASE_URL = "https://final-golden-car-back.vercel.app/";
 
 function getXsrfToken() {
   // document.cookie returns a string like: "cookie1=value1; cookie2=value2; XSRF-TOKEN=the_token_here"
@@ -224,6 +224,41 @@ class RemoteService {
 
     return res.json();
   }
+  async updateBooking(bookingId, updatedData) {
+    const res = await fetch(`${BASE_URL}booking/${bookingId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getXsrfToken(),
+      },
+      body: JSON.stringify(updatedData),
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to update booking");
+    }
+
+    return res.json();
+  }
+async createBooking(data) {
+  const res = await fetch(`${BASE_URL}booking/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "X-CSRF-Token": getXsrfToken(), // لو انت مستخدم csrf
+    },
+    body: JSON.stringify(data),
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.message || "Failed to create booking");
+  }
+
+  return res.json();
+}
+
 }
 
 export { LocalService, RemoteService };

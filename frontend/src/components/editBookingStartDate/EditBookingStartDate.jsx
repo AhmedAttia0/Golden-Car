@@ -1,3 +1,4 @@
+
 // import React from "react";
 // import { format } from "date-fns";
 // import { ar } from "date-fns/locale";
@@ -17,16 +18,16 @@
 // };
 
 // const toArabicNumbers = (str) => str.replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
-// const EditBookingStartDate = ({ startDate }) => {
-//   const [date, setDate] = React.useState(
-//     startDate ? new Date(startDate) : null
-//   );
+
+// const EditBookingStartDate = ({ startDate, onChange }) => {
+//   const [date, setDate] = React.useState(startDate || null);
+
 //   React.useEffect(() => {
-//     if (startDate) setDate(new Date(startDate));
+//     setDate(startDate);
 //   }, [startDate]);
 
 //   return (
-//     <div className="">
+//     <div>
 //       <Popover placement="bottom">
 //         <PopoverHandler>
 //           <Input
@@ -40,13 +41,17 @@
 //             }
 //           />
 //         </PopoverHandler>
+
 //         <PopoverContent className="z-[99999999999999]">
 //           <DayPicker
 //             classNames={{ day_today: "my-day-today" }}
 //             dir="rtl"
 //             mode="single"
 //             selected={date}
-//             onSelect={(selectedDate) => setDate(selectedDate)}
+//             onSelect={(selectedDate) => {
+//               setDate(selectedDate);
+//               onChange(selectedDate); // ✔️ يرجع للـ Modal
+//             }}
 //             showOutsideDays
 //             locale={arabicLocale}
 //             components={{
@@ -70,6 +75,7 @@
 // };
 
 // export default EditBookingStartDate;
+
 
 import React from "react";
 import { format } from "date-fns";

@@ -1,3 +1,5 @@
+
+
 // import React from "react";
 // import { format } from "date-fns";
 // import { ar } from "date-fns/locale";
@@ -8,7 +10,6 @@
 //   PopoverHandler,
 //   PopoverContent,
 // } from "@material-tailwind/react";
-// import "react-day-picker/dist/style.css";
 // import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 // import "react-day-picker/dist/style.css";
 
@@ -19,15 +20,15 @@
 
 // const toArabicNumbers = (str) => str.replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
 
-// const EditBookingEndDate = ({endDate}) => {
-//   const [date, setDate] = React.useState(
-//     endDate ? new Date(endDate) : null
-//   );
+// const EditBookingEndDate = ({ endDate, onChange }) => {
+//   const [date, setDate] = React.useState(endDate || null);
+
 //   React.useEffect(() => {
-//     if (endDate) setDate(new Date(endDate));
+//     setDate(endDate);
 //   }, [endDate]);
+
 //   return (
-//     <div className="">
+//     <div>
 //       <Popover placement="bottom">
 //         <PopoverHandler>
 //           <Input
@@ -41,13 +42,17 @@
 //             }
 //           />
 //         </PopoverHandler>
+
 //         <PopoverContent className="z-[99999999999999]">
 //           <DayPicker
 //             classNames={{ day_today: "my-day-today" }}
 //             dir="rtl"
 //             mode="single"
 //             selected={date}
-//             onSelect={(selectedDate) => setDate(selectedDate)}
+//             onSelect={(selectedDate) => {
+//               setDate(selectedDate);
+//               onChange(selectedDate); // ✔️ يرجع للـ Modal
+//             }}
 //             showOutsideDays
 //             locale={arabicLocale}
 //             components={{
@@ -71,6 +76,8 @@
 // };
 
 // export default EditBookingEndDate;
+
+
 
 import React from "react";
 import { format } from "date-fns";
