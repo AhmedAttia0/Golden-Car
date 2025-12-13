@@ -314,4 +314,3 @@ export class RemoteService {
   }
 }
 
-export { LocalService, RemoteService };
