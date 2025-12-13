@@ -29,8 +29,8 @@ export const updateSettings = (settings) => {
   return Service.updateSettings(settings);
 };
 
-export const getBookings = () => {
-  return Service.getBookings();
+export const getBookings = ({ pageParam = 1 }, limit) => {
+  return Service.getBookings(pageParam, limit);
 };
 
 export const addBooking = (booking) => {
@@ -39,4 +39,12 @@ export const addBooking = (booking) => {
 
 export const updateBooking = (id, booking) => {
   return Service.updateBooking(id, booking);
+};
+
+export const getUsers = ({ pageParam = 1 }, searchParams, limit) => {
+  return Service.getUsers(pageParam, searchParams, limit);
+};
+
+export const addUser = (user) => {
+  return Service.addUser(user);
 };

@@ -1,4 +1,6 @@
 import BookingCard from "../../../components/bookingCard/BookingCard";
+import { useEffect, useRef } from "react";
+import useInfiniteBooking from "../../../hooks/useInfiniteBooking";
 const bookingsArr = [
   {
     bookNO: "0001",
@@ -43,18 +45,76 @@ const bookingsArr = [
 ];
 
 export default function Bookings() {
-  return (
-    <div className="text-white">
-      <div className="text-5xl font-bold">الحجوزات</div>
-      <div className="flex justify-center">
-        <div className="grid grid-cols-1 md:grid-cols-1  lg:grid-cols-2 gap-3 w-[75%] md:w-[75%]  lg:w-full">
-          {bookingsArr.map((book, index) => {
-            const keys = Object.keys(book);
+  const limit = 10;
+  const {
+    data,
+    isLoading,
+    isError,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteBooking(limit);
+  const loaderRef = useRef(null);
+  const bookings = data?.pages.flatMap((page) => page.data)[0].bookings ?? [];
+  console.log(bookings);
 
-            return <BookingCard key={index} book={book} />;
-          })}
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 1 }
+    );
+
+    if (loaderRef.current) observer.observe(loaderRef.current);
+
+    return () => {
+      if (loaderRef.current) observer.unobserve(loaderRef.current);
+    };
+  }, [hasNextPage, fetchNextPage]);
+  if (isLoading)
+    return (
+      <h2 className={`font-bold text-2xl  text-center mt-20`}>
+        جاري تحميل البيانات...
+      </h2>
+    );
+  if (isError)
+    return (
+      <h2
+        className={`font-bold text-2xl  text-center ${
+          dark && "text-white"
+        } mt-20`}
+      >
+        {error.message}
+      </h2>
+    );
+  return (
+    <>
+      <div className="text-white">
+        <div className="text-5xl font-bold">الحجوزات</div>
+        <div className="flex justify-center">
+          {bookings?.length === 0 && (
+            <h2 className="font-bold text-2xl text-center mt-20">
+              لا توجد حجوزات لعرضها.
+            </h2>
+          )}{" "}
+          {bookings?.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-1  lg:grid-cols-2 gap-3 w-[75%] md:w-[75%]  lg:w-full">
+              {bookings.map((book, index) => {
+                const keys = Object.keys(book);
+
+                return <BookingCard key={index} book={book} />;
+              })}
+            </div>
+          )}
+        </div>
+        <div ref={loaderRef} style={{ height: "40px" }}>
+          {isFetchingNextPage && <p>Loading…</p>}
         </div>
       </div>
-    </div>
+    </>
   );
 }

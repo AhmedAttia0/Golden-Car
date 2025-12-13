@@ -13,7 +13,8 @@ import Dropdown from "../../../components/Dropdown";
 import { HiMiniXMark } from "react-icons/hi2";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import { AddCar } from "../../../Services/dataService";
+import { AddCar, UpdateCar } from "../../../Services/dataService";
+import CustomSpinner from "../../../components/LoadingSpinner";
 const TransmisionOptions = ["اوتوماتيكي", "يدوي"];
 const fuelTypeOptions = ["بنزين", "ديزل", "كهرباء", "هجين"];
 const carStatusOptions = ["متاحة", "محجوزة", "صيانة"];
@@ -22,6 +23,7 @@ const carTypeOptions = ["suv", "sedan", "cabriolet", "pickup", "minivan"];
 export default function CreateOrEditCarModal({ car }) {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     brand: "",
     model: "",
@@ -36,17 +38,29 @@ export default function CreateOrEditCarModal({ car }) {
     type: "suv",
     features: [],
   });
+
   const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: AddCar,
-    onSuccess: (data) => {
-      console.log("Car added:", data);
-      queryClient.invalidateQueries({ queryKey: ["cars"] });
+
+  const { mutate, isLoading } = useMutation({
+    mutationFn: (data) => {
+      if (car) {
+        return UpdateCar({ id: car.id, formData: data });
+      } else {
+        return AddCar(data);
+      }
     },
-    onError: (error) => {
-      console.error("Failed to add car:", error.message);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cars"] });
+      handleOpen();
+    },
+    onMutate: () => {
+      setSubmitting(true);
+    },
+    onSettled: () => {
+      setSubmitting(false);
     },
   });
+
   useEffect(() => {
     if (car) {
       setFormData({
@@ -56,6 +70,9 @@ export default function CreateOrEditCarModal({ car }) {
         price: car.price || "",
         transmission: car.transmission || "",
         fuelType: car.fuelType || "",
+        seats: car.seats || "",
+        doors: car.doors || "",
+        mileage: car.mileage || "",
         status: car.status || "",
         type: car.type || "",
         images: car.images || "",
@@ -71,12 +88,25 @@ export default function CreateOrEditCarModal({ car }) {
   };
 
   const handleSubmit = () => {
-    console.log("Form data:", formData);
-    if (validateForm()) {
-      mutation.mutate(formData);
+    if (!validateForm()) return;
 
-      handleOpen();
+    const form = new FormData();
+
+    // إضافة الحقول العادية
+    Object.keys(formData).forEach((key) => {
+      if (key !== "images") {
+        form.append(key, formData[key]);
+      }
+    });
+
+    // إضافة الصور
+    if (formData.images) {
+      formData.images.forEach((file) => {
+        form.append("carImages", file);
+      });
     }
+
+    mutate(form);
   };
 
   const validateForm = () => {
@@ -131,20 +161,21 @@ export default function CreateOrEditCarModal({ car }) {
       newErrors.type = "نوع السيارة مطلوب";
     }
 
-    // تعديل للتحقق من رفع الصور
-    if (
-      !formData.images ||
-      formData.images.length < 1 ||
-      formData.images.length > 4
-    ) {
-      newErrors.images = "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور";
-    } else {
-      // تحقق إن كل الملفات صور
-      const invalidFiles = formData.images.filter(
-        (file) => !file.type.startsWith("image/")
-      );
-      if (invalidFiles.length > 0) {
-        newErrors.images = "جميع الملفات يجب أن تكون صور";
+    if (!car) {
+      // فقط في حالة إضافة سيارة جديدة
+      if (
+        !formData.images ||
+        formData.images.length < 1 ||
+        formData.images.length > 4
+      ) {
+        newErrors.images = "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور";
+      } else {
+        const invalidFiles = formData.images.filter(
+          (file) => !file?.type?.startsWith("image/")
+        );
+        if (invalidFiles.length > 0) {
+          newErrors.images = "جميع الملفات يجب أن تكون صور";
+        }
       }
     }
 
@@ -158,7 +189,7 @@ export default function CreateOrEditCarModal({ car }) {
       {car ? (
         <Button
           size="sm"
-          className="bg-transparent border  border-[#4e4e4e] hover:scale-[1.05] transition-all"
+          className="bg-transparent border border-[#4e4e4e] hover:scale-[1.05] transition-all"
           onClick={handleOpen}
         >
           {" "}
@@ -172,13 +203,17 @@ export default function CreateOrEditCarModal({ car }) {
           + اضف سيارة جديدة
         </button>
       )}
-
       <Dialog
         size="md"
         open={open}
         handler={handleOpen}
         className="p-3 bg-[#0f1729] max-h-[95vh] overflow-y-auto"
       >
+        {(isLoading || submitting) && (
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/50">
+            <CustomSpinner />
+          </div>
+        )}
         <DialogHeader className="relative m-0 block">
           <Typography variant="h4" color="white">
             {car ? "تعديل السيارة" : "اضف سيارة جديدة"}
@@ -211,7 +246,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="Toyota"
                 value={formData.brand}
                 onChange={(e) => handleChange("brand", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.brand && (
                 <p className="text-red-500 text-sm mt-1">{errors.brand}</p>
@@ -231,7 +266,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="Corolla"
                 value={formData.model}
                 onChange={(e) => handleChange("model", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.model && (
                 <p className="text-red-500 text-sm mt-1">{errors.model}</p>
@@ -255,7 +290,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="2021"
                 value={formData.year}
                 onChange={(e) => handleChange("year", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.year && (
                 <p className="text-red-500 text-sm mt-1">{errors.year}</p>
@@ -275,7 +310,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="120"
                 value={formData.price}
                 onChange={(e) => handleChange("price", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.price && (
                 <p className="text-red-500 text-sm mt-1">{errors.price}</p>
@@ -363,7 +398,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="4"
                 value={formData.seats}
                 onChange={(e) => handleChange("seats", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.seats && (
                 <p className="text-red-500 text-sm mt-1">{errors.seats}</p>
@@ -384,7 +419,7 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="2"
                 value={formData.doors}
                 onChange={(e) => handleChange("doors", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.doors && (
                 <p className="text-red-500 text-sm mt-1">{errors.doors}</p>
@@ -405,47 +440,49 @@ export default function CreateOrEditCarModal({ car }) {
                 placeholder="2"
                 value={formData.mileage}
                 onChange={(e) => handleChange("mileage", e.target.value)}
-                className="placeholder:opacity-100 focus:!border-t-gray-900 text-white"
+                className="placeholder:opacity-50 focus:!border-t-gray-900 text-white"
               />
               {errors.mileage && (
                 <p className="text-red-500 text-sm mt-1">{errors.mileage}</p>
               )}
             </div>
           </div>
-          <div>
-            <Typography
-              variant="small"
-              color="white"
-              className="mb-2 font-medium"
-            >
-              صور السيارة
-            </Typography>
+          {!car && (
+            <div>
+              <Typography
+                variant="small"
+                color="white"
+                className="mb-2 font-medium"
+              >
+                صور السيارة
+              </Typography>
 
-            <input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => {
-                const files = Array.from(e.target.files);
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={(e) => {
+                  const files = Array.from(e.target.files);
 
-                // تحقق من العدد
-                if (files.length < 1 || files.length > 4) {
-                  setErrors((prev) => ({
-                    ...prev,
-                    images: "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور",
-                  }));
-                } else {
-                  setErrors((prev) => ({ ...prev, images: "" }));
-                  handleChange("images", files); // حفظ الملفات في formData
-                }
-              }}
-              className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
-            />
+                  // تحقق من العدد
+                  if (files.length < 1 || files.length > 4) {
+                    setErrors((prev) => ({
+                      ...prev,
+                      images: "يجب رفع على الأقل صورة واحدة وبحد أقصى 4 صور",
+                    }));
+                  } else {
+                    setErrors((prev) => ({ ...prev, images: "" }));
+                    handleChange("images", files); // حفظ الملفات في formData
+                  }
+                }}
+                className="block w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 cursor-pointer focus:outline-none"
+              />
 
-            {errors.images && (
-              <p className="text-red-500 text-sm mt-1">{errors.images}</p>
-            )}
-          </div>
+              {errors.images && (
+                <p className="text-red-500 text-sm mt-1">{errors.images}</p>
+              )}
+            </div>
+          )}
 
           <div>
             <Features formData={formData} setFormData={setFormData} />

@@ -6,18 +6,6 @@ import ScrollToTopBtn from "../../../components/ScrollToTopBtn/ScrollToTopBtn";
 const Cars = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // To make filters dynamic
-  // const allowedFilters = ["type", "transmission", "price_gte", "price_lte"];
-  // const filters = {};
-
-  // allowedFilters.forEach((key) => {
-  //   const values = searchParams.get(key);
-
-  //   if (values) {
-  //     filters[key] = values; // array of selected values
-  //   }
-  // });
-
   // To highlight active car in the list
   const match = useMatch("/cars/:carId");
   const activeCarId = match ? match.params.carId : null;

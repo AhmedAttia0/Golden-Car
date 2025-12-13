@@ -132,6 +132,10 @@ import Car from "../models/Car.mjs";
 import validateCar from "../validations/carValidation.mjs";
 import { upload } from "../middleware/uploadImages.mjs";
 import { uploadToCloudinary } from "../utilts/uploadToCloudinary.mjs";
+import csrfDoubleSubmit from "../middleware/csrfDoubleSubmit.mjs";
+import validateToken from "../middleware/auth.mjs";
+import validateRole from "../middleware/authz.mjs";
+
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -142,6 +146,7 @@ router.get("/", async (req, res) => {
       model,
       price_gte: min_price,
       price_lte: max_price,
+      search,
       features = "",
       transmission,
       status,
@@ -170,6 +175,23 @@ router.get("/", async (req, res) => {
     if (transmission) filters.transmission = { $in: transmission.split(",") };
     if (status) filters.status = { $in: status.split(",") };
 
+    if (search) {
+      const searchRegex = new RegExp(search, "i");
+
+      filters.$or = [
+        { brand: searchRegex },
+        { model: searchRegex },
+        { type: searchRegex },
+        { fuelType: searchRegex },
+        { transmission: searchRegex },
+        { status: searchRegex },
+        { features: searchRegex },
+
+        !isNaN(search) ? { year: Number(search) } : null,
+        !isNaN(search) ? { price: Number(search) } : null,
+        !isNaN(search) ? { mileage: Number(search) } : null,
+      ].filter(Boolean);
+    }
     // ✅ مهم: await لكل عمليات DB
     const total = await Car.countDocuments(filters);
     const total_pages = Math.ceil(total / limit);
@@ -207,52 +229,73 @@ router.get("/:id", async (req, res) => {
   res.send(car);
 });
 
-router.post("/", upload.array("carImages", 4), async (req, res) => {
-  try {
-    const files = req.files;
+router.post(
+  "/",
+  csrfDoubleSubmit,
+  validateToken,
+  validateRole,
+  upload.array("carImages", 4),
+  async (req, res) => {
+    try {
+      const files = req.files;
 
-    if (!files || files.length === 0) {
-      return res.status(400).send({ message: "يجب رفع صورة واحدة على الأقل" });
+      if (!files || files.length === 0) {
+        return res
+          .status(400)
+          .send({ message: "يجب رفع صورة واحدة على الأقل" });
+      }
+
+      const imageUrls = [];
+      for (let file of files) {
+        const url = await uploadToCloudinary(file.buffer, "cars");
+        imageUrls.push(url);
+      }
+
+      const carData = {
+        ...req.body,
+        images: imageUrls,
+      };
+
+      const car = await Car.create(carData);
+
+      res.status(201).send({ message: "تم اضافة السيارة بنجاح", car });
+    } catch (error) {
+      res.status(500).send({ message: error.message });
     }
-
-    const imageUrls = [];
-    for (let file of files) {
-      const url = await uploadToCloudinary(file.buffer, "cars");
-      imageUrls.push(url);
-    }
-
-    const carData = {
-      ...req.body,
-      images: imageUrls,
-    };
-
-    const car = await Car.create(carData);
-
-    res.status(201).send({ message: "تم اضافة السيارة بنجاح", car });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
   }
-});
+);
 
-router.put("/:id", async (req, res) => {
-  try {
-    await validateCar.validateAsync(req.body);
-    const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
+router.put(
+  "/:id",
+  csrfDoubleSubmit,
+  validateToken,
+  validateRole,
+  async (req, res) => {
+    try {
+      await validateCar.validateAsync(req.body);
+      const car = await Car.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+      });
+      if (!car)
+        return res.status(404).send({ message: "لم يتم العثور على السيارة" });
+      res.send({ message: "تم تحديث السيارة بنجاح", car });
+    } catch (error) {
+      res.status(400).send({ message: error.message });
+    }
+  }
+);
+
+router.delete(
+  "/:id",
+  csrfDoubleSubmit,
+  validateToken,
+  validateRole,
+  async (req, res) => {
+    const car = await Car.findByIdAndDelete(req.params.id);
     if (!car)
       return res.status(404).send({ message: "لم يتم العثور على السيارة" });
-    res.send({ message: "تم تحديث السيارة بنجاح", car });
-  } catch (error) {
-    res.status(400).send({ message: error.message });
+    res.send({ message: "تم حذف السيارة بنجاح", car });
   }
-});
-
-router.delete("/:id", async (req, res) => {
-  const car = await Car.findByIdAndDelete(req.params.id);
-  if (!car)
-    return res.status(404).send({ message: "لم يتم العثور على السيارة" });
-  res.send({ message: "تم حذف السيارة بنجاح", car });
-});
+);
 
 export default router;

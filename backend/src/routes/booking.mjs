@@ -141,7 +141,7 @@ router.post(
   }
 );
 
-router.put("/:id", csrfDoubleSubmit, async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
     await validateBooking.validateAsync(req.body);
     const booking = await bookingSchema.findByIdAndUpdate(

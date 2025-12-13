@@ -16,8 +16,13 @@ const statusColor = {
 };
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import EditCarModal from "../../pages/admin/CarsManagement/CreateOrEditCarModal";
+import useDeleteCar from "../../hooks/useDeleteCar";
 const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
+  const { mutate: deleteCarMutation, isPending } = useDeleteCar();
   const navigate = useNavigate();
+  const handleDelete = (id) => {
+    deleteCarMutation(id);
+  };
   const {
     id,
     price = 25,
@@ -26,6 +31,7 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
     transmission = "اوتوماتيكي",
     hasAirConditioner = false,
     status = "متاحة",
+    images = [],
   } = car;
   return (
     <div className="flex justify-center">
@@ -50,7 +56,7 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
           className="h-56 overflow-hidden rounded-t-xl"
         >
           <img
-            src="/defaultcar.png"
+            src={` ${images.length > 0 ? images[0] : "/defaultcar.png"}`}
             alt="card-image"
             className="h-full w-full object-cover transform transition-transform duration-500 group-hover:scale-110"
           />
@@ -109,7 +115,11 @@ const CarCard = ({ active, Editable = false, dark = false, car = {} }) => {
           {Editable && (
             <div className="flex gap-3">
               <EditCarModal car={car} />
-              <ConfirmationModal itemName={`سيارة ${brand}`} />
+              <ConfirmationModal
+                isPending={isPending}
+                onDelete={() => handleDelete(id)}
+                itemName={`سيارة ${brand}`}
+              />
             </div>
           )}
         </CardFooter>

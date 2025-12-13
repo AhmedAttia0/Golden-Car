@@ -1,7 +1,5 @@
-import React from "react";
-import { FiPlus } from "react-icons/fi";
-
-export default function UserHeader({ onAddClick }) {
+import CreateUserModal from "./Createusermodel";
+export default function UserHeader() {
   return (
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
       <div>
@@ -9,13 +7,7 @@ export default function UserHeader({ onAddClick }) {
         <p className="text-gray-400">إدارة المستخدمين المسجلين وبياناتهم</p>
       </div>
 
-      <button
-        onClick={onAddClick}
-        className="bg-[#5937e0] hover:bg-purple-700 text-white px-6 py-3 rounded-lg flex items-center justify-center gap-2 transition-colors w-full md:w-auto"
-      >
-        <FiPlus className="text-xl" />
-        إضافة مستخدم جديد
-      </button>
+      <CreateUserModal />
     </div>
   );
 }
