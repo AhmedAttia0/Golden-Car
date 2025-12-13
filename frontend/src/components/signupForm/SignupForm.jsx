@@ -3,10 +3,10 @@ import InputField from "../inputField/InputField";
 import Button from "../button/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
-import { useUser } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 import { httpPost } from "../../api/http";
 const SignupForm = () => {
-  const { dispatch } = useUser();
+  const { setUser } = React.useContext(UserContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
@@ -82,11 +82,29 @@ const SignupForm = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formData);
     if (!validate()) return;
     try {
-      const data = await httpPost("user/signup", formData);
+      const res = await fetch(`http://localhost:3000/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          phone: formData.phone,
+          confirm_password: formData.confirm_password,
+        }),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "فشل إنشاء الحساب");
+      }
+
+      const data = await res.json();
       // dispatch user to context
-      if (data && data.user) {
+      if (data.user) {
         const payload = {
           first_name: data.user.first_name,
           last_name: data.user.last_name,
@@ -94,18 +112,13 @@ const SignupForm = () => {
           phone: data.user.phone,
           id: data.user.id,
         };
-        dispatch({ type: "SET_USER", payload: { ...payload } });
-        try {
-          localStorage.setItem("user", JSON.stringify(data.user));
-        } catch (e) {
-          // ignore localStorage errors
-        }
+        setUser({ ...payload });
         navigate("/");
       } else {
-        setErrors({ general: data?.message || "فشل إنشاء الحساب." });
+        setErrors({ general: data?.message || "فشل إنشاء الحساب" });
       }
     } catch (err) {
-      setErrors({ general: "فشل إنشاء الحساب. يرجى التحقق من بياناتك." });
+      setErrors({ general: "فشل إنشاء الحساب، يرجي التحقق من بياناتك" });
     }
   };
   return (
@@ -122,6 +135,9 @@ const SignupForm = () => {
       </header>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <h2 className="text-center text-2xl">مرحبا بك!</h2>
+        {errors.general && (
+          <p className="text-red-500 text-center">{errors.general}</p>
+        )}
         <InputField
           type={"text"}
           id={"first_name"}

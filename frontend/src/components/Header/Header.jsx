@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { IoCarSportSharp } from "react-icons/io5";
-import { useUser } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 import {
   Navbar,
   Collapse,
@@ -11,7 +11,7 @@ import {
 } from "@material-tailwind/react";
 const Header = () => {
   const [openNav, setOpenNav] = useState(false);
-  const { user, setUser } = useUser();
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     window.addEventListener(

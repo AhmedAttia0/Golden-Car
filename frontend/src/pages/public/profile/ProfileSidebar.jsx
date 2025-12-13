@@ -2,14 +2,32 @@ import { FaSignOutAlt } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
 import { MdAccountCircle } from "react-icons/md";
-import { useUser } from "../../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 import { useNavigate, useLocation } from "react-router-dom";
-
 export default function ProfileSidebar({ className }) {
-  const { user, dispatch } = useUser();
+  const { user, setUser } = React.useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
-
+  const handleLogout = async () => {
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/user/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      if (res.ok) {
+        setUser(null);
+        navigate("/login");
+      } else {
+        console.error("فشل تسجيل الخروج");
+      }
+    } catch (error) {
+      console.error("حدث خطأ أثناء تسجيل الخروج:", error);
+    }
+  };
   const isActive = (path) =>
     location.pathname === path ? "text-purple-600 font-bold" : "text-gray-700";
 
@@ -66,7 +84,7 @@ export default function ProfileSidebar({ className }) {
         </li>
 
         <li
-          onClick={() => dispatch({ type: "LOGOUT" })}
+          onClick={() => setUser(null)}
           className="flex items-center gap-3 cursor-pointer text-gray-700 hover:text-red-700 transition"
         >
           <FaSignOutAlt className="text-lg" />

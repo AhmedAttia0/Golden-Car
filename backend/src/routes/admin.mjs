@@ -52,6 +52,7 @@ adminRouter.get("/users", validateToken, validateRole, async (req, res) => {
 
 adminRouter.put(
   "/users/role",
+  csrfDoubleSubmit,
   validateToken,
   validateRole,
   async (req, res) => {
@@ -102,7 +103,7 @@ adminRouter.delete(
   }
 );
 adminRouter.post(
-  "users/add",
+  "/users/add",
   csrfDoubleSubmit,
   validateToken,
   validateRole,

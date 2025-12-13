@@ -1,16 +1,37 @@
-const BASE_URL = import.meta.env.VITE_API_URL;
+const DEFAULT_BASE = "http://localhost:3000";
+const BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE).replace(
+  /\/$/,
+  ""
+);
 
-export async function httpGet(endpoint) {
-  const res = await fetch(`${BASE_URL}${endpoint}`);
+function buildUrl(endpoint) {
+  return `${BASE_URL}/${endpoint.replace(/^\//, "")}`;
+}
+
+async function request(endpoint, opts = {}) {
+  const res = await fetch(buildUrl(endpoint), {
+    credentials: "include",
+    headers: { "Content-Type": "application/json", ...(opts.headers || {}) },
+    ...opts,
+  });
 
   if (!res.ok) {
     let body = null;
     try {
-      body = await res.text();
+      body = await res.json();
     } catch (e) {
-      /* ignore */
+      try {
+        body = await res.text();
+      } catch {}
     }
-    throw new Error(`HTTP ${res.status}: ${body || res.statusText}`);
+    const message =
+      body && (body.error || body.message)
+        ? body.error || body.message
+        : res.statusText;
+    const err = new Error(message);
+    err.status = res.status;
+    err.body = body;
+    throw err;
   }
 
   const contentType = res.headers.get("content-type") || "";
@@ -18,7 +39,6 @@ export async function httpGet(endpoint) {
     const json = await res.json();
     return { data: json, headers: res.headers };
   }
-
   const text = await res.text();
   return { data: text, headers: res.headers };
 }
@@ -51,3 +71,35 @@ export async function httpDelete(endpoint) {
   const { data } = await request(endpoint, { method: "DELETE" });
   return data;
 }
+
+export function getCSRFToken() {
+  const match = document.cookie.match(new RegExp(`(^| )XSRF-TOKEN=([^;]+)`));
+  if (match) return match[2];
+  return null;
+}
+
+export const resumeSession = async () => {
+  try {
+    const response = await fetch(`${BASE_URL}/`, {
+      method: "GET",
+      // THIS IS THE KEY PART: It tells the browser to include
+      // any session cookies associated with the backend domain.
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // Session resumed successfully
+      return { success: true, user: data.user };
+    } else {
+      // Session not found or expired (401 response)
+      return { success: false, user: null };
+    }
+  } catch (error) {
+    console.error("Error resuming session:", error);
+    return { success: false, user: null };
+  }
+};

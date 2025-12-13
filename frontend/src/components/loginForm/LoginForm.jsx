@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IoCarSportSharp } from "react-icons/io5";
 import InputField from "../inputField/InputField";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "../button/Button";
-import { httpPost } from "../../api/http";
-import { useUser } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 
 const LoginForm = () => {
   const location = useLocation();
@@ -15,7 +14,7 @@ const LoginForm = () => {
     remember_me: false,
   });
   const [errors, setErrors] = useState({});
-  const { dispatch } = useUser();
+  const { setUser } = useContext(UserContext);
   const validate = () => {
     let tempErrors = {};
     if (!formData.email) {
@@ -47,9 +46,23 @@ const LoginForm = () => {
     e.preventDefault();
     if (!validate()) return;
     try {
-      const data = await httpPost("user/login", formData);
+      const res = await fetch(`http://localhost:3000/user/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password,
+          remember_me: formData.remember_me,
+        }),
+      });
+      if (!res.ok) {
+        const error = await res.json();
+        throw new Error(error.message || "فشل تسجيل الدخول");
+      }
+
+      const data = await res.json();
       // dispatch user to context
-      if (data && data.user) {
+      if (data.user) {
         const payload = {
           first_name: data.user.first_name,
           last_name: data.user.last_name,
@@ -57,12 +70,7 @@ const LoginForm = () => {
           phone: data.user.phone,
           id: data.user.id,
         };
-        dispatch({ type: "SET_USER", payload: { ...payload } });
-        try {
-          localStorage.setItem("user", JSON.stringify(data.user));
-        } catch (e) {
-          // ignore localStorage errors
-        }
+        setUser({ ...payload });
         navigate("/");
       } else {
         setErrors({ general: data?.message || "فشل تسجيل الدخول." });

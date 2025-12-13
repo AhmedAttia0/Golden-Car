@@ -29,12 +29,7 @@ connect(uri)
   .catch((err) => console.error("Could not connect to MongoDB", err));
 
 const app = express();
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+app.use(express.json());
 // Helmet + Content Security Policy
 const isProd = process.env.NODE_ENV === "production";
 const frontendOrigin =
@@ -68,8 +63,6 @@ app.use(
     reportOnly: !isProd,
   })
 );
-
-app.use(express.json());
 app.use(cookieParser());
 app.use(
   cookieSession({

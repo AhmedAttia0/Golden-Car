@@ -1,8 +1,8 @@
 import { Input } from "@material-tailwind/react";
-import { useUser } from "../../../contexts/UserContext";
+import { UserContext } from "../../../contexts/UserContext";
 import ConfirmByPassword from "./ConfirmByPassword";
 export default function ProfileSettings() {
-  const { user } = useUser();
+  const { user } = React.useContext(UserContext);
 
   return (
     <div className="px-6">
@@ -21,7 +21,7 @@ export default function ProfileSettings() {
         </div>
         <div className="w-full flex flex-col lg:flex-row gap-3">
           <div className="w-full lg:w-1/2">
-            <Input value={user.phone_number} size="lg" label="رقم الجوال" />
+            <Input value={user.phone} size="lg" label="رقم الجوال" />
           </div>
           <div className="w-full lg:w-1/2">
             <Input value={user.email} size="lg" label="البريد الالكتروني" />
