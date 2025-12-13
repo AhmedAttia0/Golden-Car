@@ -32,14 +32,13 @@ const app = express();
 
 // Helmet + Content Security Policy
 const isProd = process.env.NODE_ENV === "production";
-const frontendOrigin =
-  process.env.FRONTEND_URL;
+const frontendOrigin = process.env.FRONTEND_URL;
 const connectSrc = ["'self'"];
 if (frontendOrigin) connectSrc.push(frontendOrigin);
 const corsOptions = {
-  sameSite:'none',
-  secure:true,
-  origin: frontendOrigin ? frontendOrigin.replace(/\/$/, '') : undefined,
+  sameSite: "none",
+  secure: true,
+  origin: frontendOrigin ? frontendOrigin.replace(/\/$/, "") : undefined,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "X-CSRF-Token", "X-XSRF-TOKEN"],
@@ -51,7 +50,10 @@ app.use(
     directives: {
       defaultSrc: ["'https://golden-car-one.vercel.app'"],
       scriptSrc: ["'https://golden-car-one.vercel.app'"],
-      styleSrc: ["'https://golden-car-one.vercel.app'", "https://fonts.googleapis.com"],
+      styleSrc: [
+        "'https://golden-car-one.vercel.app'",
+        "https://fonts.googleapis.com",
+      ],
       imgSrc: ["'https://golden-car-one.vercel.app'", "data:"],
       connectSrc: connectSrc,
       fontSrc: ["'https://golden-car-one.vercel.app'"],
