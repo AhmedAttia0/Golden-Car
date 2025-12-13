@@ -3,11 +3,11 @@ import { useState } from "react";
 import StartDateHomeForm from "../startdDateHomeForm/StartDateHomeForm";
 import FinishDateHomeForm from "../finishDateHomeForm/FinishDateHomeForm";
 import { capitalize } from "../Filter/FilterationOption";
-import { useUser } from "../../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
 import useCreateBooking from "../../hooks/useCreateBooking";
-
+import { useContext } from "react";
 export const HomeForm = ({ id, model, brand, year, price, type }) => {
-  const { user } = useUser();
+const {user}=useContext(UserContext); 
   const { mutate, isPending } = useCreateBooking();
 
   const [formValues, setFormValues] = useState({
