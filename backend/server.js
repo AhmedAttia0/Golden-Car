@@ -49,16 +49,16 @@ app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'https://golden-car-one.vercel.app/'"],
-      scriptSrc: ["'https://golden-car-one.vercel.app/'"],
-      styleSrc: ["'https://golden-car-one.vercel.app/'", "https://fonts.googleapis.com"],
-      imgSrc: ["'https://golden-car-one.vercel.app/'", "data:"],
+      defaultSrc: ["'https://golden-car-one.vercel.app'"],
+      scriptSrc: ["'https://golden-car-one.vercel.app'"],
+      styleSrc: ["'https://golden-car-one.vercel.app'", "https://fonts.googleapis.com"],
+      imgSrc: ["'https://golden-car-one.vercel.app'", "data:"],
       connectSrc: connectSrc,
-      fontSrc: ["'https://golden-car-one.vercel.app/'"],
+      fontSrc: ["'https://golden-car-one.vercel.app'"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
-      baseUri: ["'https://golden-car-one.vercel.app/'"],
-      formAction: ["'https://golden-car-one.vercel.app/'"],
+      baseUri: ["'https://golden-car-one.vercel.app'"],
+      formAction: ["'https://golden-car-one.vercel.app'"],
       upgradeInsecureRequests: [],
     },
     // during development we use reportOnly to avoid breaking the app while tuning
