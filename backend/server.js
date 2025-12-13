@@ -17,7 +17,7 @@ import helmet from "helmet";
 import "./src/config/cloudinary.js";
 
 const uri = process.env.MONGO_URI;
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 console.log({
   key: process.env.API_KEY,
   secret: process.env.API_SECRET,
@@ -33,10 +33,12 @@ const app = express();
 // Helmet + Content Security Policy
 const isProd = process.env.NODE_ENV === "production";
 const frontendOrigin =
-  process.env.FRONTEND_URL || (isProd ? null : "http://localhost:5173");
+  process.env.FRONTEND_URL;
 const connectSrc = ["'self'"];
 if (frontendOrigin) connectSrc.push(frontendOrigin);
 const corsOptions = {
+  sameSite:'none',
+  secure:true,
   origin: frontendOrigin,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true,
@@ -47,16 +49,16 @@ app.use(helmet());
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'"],
-      styleSrc: ["'self'", "https://fonts.googleapis.com"],
-      imgSrc: ["'self'", "data:"],
+      defaultSrc: ["'https://golden-car-one.vercel.app/'"],
+      scriptSrc: ["'https://golden-car-one.vercel.app/'"],
+      styleSrc: ["'https://golden-car-one.vercel.app/'", "https://fonts.googleapis.com"],
+      imgSrc: ["'https://golden-car-one.vercel.app/'", "data:"],
       connectSrc: connectSrc,
-      fontSrc: ["'self'"],
+      fontSrc: ["'https://golden-car-one.vercel.app/'"],
       objectSrc: ["'none'"],
       frameAncestors: ["'none'"],
-      baseUri: ["'self'"],
-      formAction: ["'self'"],
+      baseUri: ["'https://golden-car-one.vercel.app/'"],
+      formAction: ["'https://golden-car-one.vercel.app/'"],
       upgradeInsecureRequests: [],
     },
     // during development we use reportOnly to avoid breaking the app while tuning

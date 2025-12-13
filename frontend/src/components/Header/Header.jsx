@@ -15,7 +15,7 @@ const Header = () => {
   const { user, setUser } = useContext(UserContext);
   function handleLogout() {
     try {
-      const res = fetch(`http://localhost:3000/user/logout`, {
+      const res = fetch(`${import.meta.env.BASE_URL}logout`, {
         method: "POST",
         credentials: "include",
         headers: {

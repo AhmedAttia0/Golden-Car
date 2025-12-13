@@ -278,7 +278,6 @@ export class RemoteService {
     }
     return true;
   }
-}
   async updateBooking(bookingId, updatedData) {
     const res = await fetch(`${BASE_URL}booking/${bookingId}`, {
       method: "PUT",
@@ -296,24 +295,23 @@ export class RemoteService {
 
     return res.json();
   }
-async createBooking(data) {
-  const res = await fetch(`${BASE_URL}booking/`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-CSRF-Token": getXsrfToken(), // لو انت مستخدم csrf
-    },
-    body: JSON.stringify(data),
-  });
+  async createBooking(data) {
+    const res = await fetch(`${BASE_URL}booking/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": getXsrfToken(), // لو انت مستخدم csrf
+      },
+      body: JSON.stringify(data),
+    });
 
-  if (!res.ok) {
-    const error = await res.json();
-    throw new Error(error.message || "Failed to create booking");
+    if (!res.ok) {
+      const error = await res.json();
+      throw new Error(error.message || "Failed to create booking");
+    }
+
+    return res.json();
   }
-
-  return res.json();
-}
-
 }
 
 export { LocalService, RemoteService };

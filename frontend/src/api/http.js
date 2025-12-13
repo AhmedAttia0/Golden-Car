@@ -1,4 +1,4 @@
-const DEFAULT_BASE = "http://localhost:3000";
+const DEFAULT_BASE = "http://localhost:5000";
 const BASE_URL = (import.meta.env.VITE_API_BASE_URL || DEFAULT_BASE).replace(
   /\/$/,
   ""
@@ -80,7 +80,7 @@ export function getCSRFToken() {
 
 export const resumeSession = async () => {
   try {
-    const response = await fetch(`${BASE_URL}/`, {
+    const response = await fetch(`${import.meta.env.BASE_URL}`, {
       method: "GET",
       // THIS IS THE KEY PART: It tells the browser to include
       // any session cookies associated with the backend domain.
